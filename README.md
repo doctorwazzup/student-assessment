@@ -33,9 +33,10 @@ Hệ thống khảo sát năng lực sinh viên: sinh viên làm khảo sát ở
 
 - Python **3.13** ( `.python-version`)
 - [uv](https://docs.astral.sh/uv/) manage environment 
-## 1. Cài đặt
+## 1. Install
 
 ```bash
+git clone https://github.com/doctorwazzup/student-assessment.git
 cd student-assessment
 uv sync          
 ```
