@@ -22,11 +22,11 @@ Early Warning System: Instantly detect early red flags of disorientation, declin
 Personalized Intervention: Provide foundational, actionable insights that enable academic institutions and mentors to deliver timely, tailored support and optimized career guidance to students exactly when they need it most.
 Hệ thống khảo sát năng lực sinh viên: sinh viên làm khảo sát ở frontend → backend chấm điểm (LLM), sinh báo cáo PDF (radar + bảng năng lực) và gửi qua email.
 
-## Architecture
+## Service
 
 | Component | Folder | Port  | Role |
 |---|---|---|---|
-| Backend API | `backend/` (FastAPI) | `8000` | generate report, send mail |
+| Backend | `backend/` (FastAPI) | `8000` | generate report, send mail |
 | Frontend | `frontend/` (HTTP server) | `8080` | UI form survey, dashboard, admin |
 
 ## Requirements
