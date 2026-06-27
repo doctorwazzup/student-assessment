@@ -1,0 +1,7 @@
+{
+    "stage_1": {"wellbeing_integration": ">=3.0", "academic_progress": ">=3.0", "extracurricular": ">=2.0", "career_direction": ">=2.2", "motivation_engagement": ">=2.2"},
+    "stage_2": {"wellbeing_integration": ">=3.0", "academic_progress": ">=3.2", "extracurricular": ">=2.5", "career_direction": ">=2.5", "motivation_engagement": ">=2.5"},
+    "stage_3": {"wellbeing_integration": ">=2.8", "academic_progress": ">=3.5", "extracurricular": ">=2.8", "career_direction": ">=2.8", "motivation_engagement": ">=2.8"},
+    "stage_4": {"wellbeing_integration": ">=3.0", "academic_progress": ">=3.0", "extracurricular": ">=2.5", "career_direction": ">=3.2", "motivation_engagement": ">=2.8"},
+    "stage_5": {"wellbeing_integration": ">=3.0", "academic_progress": ">=3.5", "extracurricular": ">=2.5", "career_direction": ">=3.4", "motivation_engagement": ">=3.2"}
+}

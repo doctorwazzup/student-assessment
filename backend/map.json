@@ -1,0 +1,3319 @@
+{
+  "note": "Bản đồ câu hỏi & lựa chọn theo đúng thứ tự Q1–Q5 trong file kết quả gửi lên link. value = giá trị xuất ra sheet, text = ý nghĩa.",
+  "generated_from": "index.html",
+  "stages": [
+    {
+      "stage": 1,
+      "stage_name": "Nhập môn & Thích nghi (Integration Stage)",
+      "categories": [
+        {
+          "category_id": "ST1_WB",
+          "category_title": "Wellbeing & Integration (Thích nghi và chuyển đổi)",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST1_WB_Q1",
+              "input": "single",
+              "question_text": "Trải nghiệm kết nối bạn bè tại trường của bạn hiện nay thế nào?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Bạn đã có một nhóm bạn thân hợp cạ để cùng học và chơi."
+                },
+                {
+                  "value": "B",
+                  "text": "Bạn có nói chuyện xã giao với vài bạn nhưng chưa thực sự thân."
+                },
+                {
+                  "value": "C",
+                  "text": "Bạn hầu như đi học một mình và chưa kết nối được với ai."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn chủ động chọn lối sống khép kín, không có nhu cầu kết nối bạn bè ở trường."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST1_WB_Q2",
+              "input": "multiple",
+              "question_text": "Mức độ thích nghi của bạn với không gian và nhịp sống đại học?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Hoàn toàn thoải mái và nhanh chóng hòa nhập."
+                },
+                {
+                  "value": "B",
+                  "text": "Gặp chút khó khăn lúc đầu nhưng hiện tại đã ổn định."
+                },
+                {
+                  "value": "C",
+                  "text": "Cảm thấy lạc lõng, mệt mỏi với môi trường mới này."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn cảm thấy môi trường này không phù hợp và đang có ý định chuyển trường hoặc nghỉ học."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST1_WB_Q3",
+              "input": "single",
+              "question_text": "Khi gặp áp lực hoặc stress ở trường, bạn thường làm gì?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Chủ động chia sẻ với bạn bè, người thân hoặc Cố vấn học tập."
+                },
+                {
+                  "value": "B",
+                  "text": "Tự tìm cách giải tỏa bằng sở thích cá nhân (nghe nhạc, xem phim)."
+                },
+                {
+                  "value": "C",
+                  "text": "Chịu đựng một mình và cố gắng đợi nó tự qua đi."
+                },
+                {
+                  "value": "D",
+                  "text": "Trốn tránh thực tế bằng cách cúp học, chơi game hoặc sa đà vào các thói quen không lành mạnh."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST1_WB_Q4",
+              "input": "multiple",
+              "question_text": "Bạn tự đánh giá sự cân bằng thời gian cá nhân hiện tại như thế nào?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất tốt, bạn vẫn có thời gian nghỉ ngơi đầy đủ bên cạnh việc học."
+                },
+                {
+                  "value": "B",
+                  "text": "Tạm ổn, đôi khi hơi thiếu ngủ vào những tuần chạy bài tập."
+                },
+                {
+                  "value": "C",
+                  "text": "Đang bị đảo lộn hoàn toàn, lịch sinh hoạt cá nhân bị quá tải."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn đang phải đi làm thêm quá nhiều nên hoàn toàn không có thời gian nghỉ ngơi hay tự học."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST1_WB_Q5",
+              "input": "single",
+              "question_text": "Bạn có biết các kênh hỗ trợ tâm lý hoặc dịch vụ sinh viên của trường ở đâu không?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Biết rất rõ và sẵn sàng tìm đến nếu có nhu cầu."
+                },
+                {
+                  "value": "B",
+                  "text": "Có nghe qua nhưng chưa tìm hiểu kỹ vị trí hay cách liên hệ."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn không biết trường có các dịch vụ hỗ trợ này."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn biết nhưng không tin tưởng vào hiệu quả của các phòng hỗ trợ tại trường."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST1_AC",
+          "category_title": "Academic Progress",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST1_AC_Q1",
+              "input": "multiple",
+              "question_text": "Khả năng tiếp thu kiến thức các môn học trên lớp của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Hiểu bài tốt và bắt kịp hoàn toàn tốc độ của giảng viên."
+                },
+                {
+                  "value": "B",
+                  "text": "Đôi chỗ nghe chưa kịp, cần về nhà đọc lại tài liệu mới hiểu."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn bị ngợp và không theo kịp nhịp độ bài giảng."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn cảm thấy kiến thức quá nặng và không có động lực để cố gắng hiểu bài."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST1_AC_Q2",
+              "input": "single",
+              "question_text": "Tình trạng hoàn thành và nộp bài tập về nhà của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Luôn hoàn thành đầy đủ và nộp đúng hạn hoặc sớm hơn."
+                },
+                {
+                  "value": "B",
+                  "text": "Đôi khi nộp sát giờ, có một vài bài làm chưa thực sự chỉn chu."
+                },
+                {
+                  "value": "C",
+                  "text": "Thường xuyên trễ hạn hoặc bỏ qua không nộp một số bài tập."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn không quan tâm đến bài tập và gần như bỏ trống toàn bộ."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST1_AC_Q3",
+              "input": "multiple",
+              "question_text": "Phương pháp ghi chép và tập trung của bạn trong giờ học?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Tập trung cao độ, ghi chép đầy đủ các từ khóa quan trọng."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ ghi chép những phần giảng viên yêu cầu bắt buộc."
+                },
+                {
+                  "value": "C",
+                  "text": "Dễ bị xao nhãng bởi điện thoại hoặc nói chuyện riêng trong lớp."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn thường xuyên cúp học hoặc vào lớp chỉ để ngủ, không ghi chép gì."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST1_AC_Q4",
+              "input": "single",
+              "question_text": "Bạn đánh giá mức độ hiểu rõ quy chế học tập (tín chỉ, cách tính GPA) của mình như thế nào?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Nắm rất rõ và tự tính toán được lộ trình học tập của mình."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ biết sơ bộ qua buổi phổ biến đầu năm, chưa đọc kỹ văn bản."
+                },
+                {
+                  "value": "C",
+                  "text": "Khá mơ hồ, không rõ điều kiện để đạt hoặc bị cảnh cáo học vụ."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn hoàn toàn không biết gì về hệ thống tín chỉ và quy chế đào tạo của trường."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST1_AC_Q5",
+              "input": "multiple",
+              "question_text": "Khi gặp bài tập đại cương khó, giải pháp của bạn là gì?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Chủ động thảo luận với nhóm, hỏi bạn giỏi hoặc hỏi giảng viên."
+                },
+                {
+                  "value": "B",
+                  "text": "Tự tra cứu trên mạng và cố gắng tự giải quyết một mình."
+                },
+                {
+                  "value": "C",
+                  "text": "Để đó từ từ tính hoặc đợi chép bài của các bạn khác."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn bỏ cuộc ngay lập tức và chấp nhận mất điểm phần bài tập đó."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST1_MO",
+          "category_title": "Motivation & Efficacy",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "M1_SQ1",
+              "input": "multiple",
+              "question_text": "Khi bắt đầu một nhiệm vụ học tập mới, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Chủ động tìm hiểu trước khi làm",
+                  "text": "Chủ động tìm hiểu trước khi làm"
+                },
+                {
+                  "value": "Làm theo hướng dẫn từng bước",
+                  "text": "Làm theo hướng dẫn từng bước"
+                },
+                {
+                  "value": "Học khi có deadline hoặc yêu cầu",
+                  "text": "Học khi có deadline hoặc yêu cầu"
+                },
+                {
+                  "value": "Học theo nhóm hoặc khi có người cùng học",
+                  "text": "Học theo nhóm hoặc khi có người cùng học"
+                },
+                {
+                  "value": "Thường trì hoãn bắt đầu",
+                  "text": "Thường trì hoãn bắt đầu"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "M1_SQ2",
+              "input": "multiple",
+              "question_text": "Khi không hiểu bài trên lớp, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Tự tìm tài liệu để hiểu thêm",
+                  "text": "Tự tìm tài liệu để hiểu thêm"
+                },
+                {
+                  "value": "Hỏi bạn bè hoặc giảng viên",
+                  "text": "Hỏi bạn bè hoặc giảng viên"
+                },
+                {
+                  "value": "Ghi lại để xem lại sau",
+                  "text": "Ghi lại để xem lại sau"
+                },
+                {
+                  "value": "Chờ đến khi ôn tập mới học",
+                  "text": "Chờ đến khi ôn tập mới học"
+                },
+                {
+                  "value": "Thường bỏ qua phần không hiểu",
+                  "text": "Thường bỏ qua phần không hiểu"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "M1_SQ3",
+              "input": "multiple",
+              "question_text": "Trong quá trình học, bạn duy trì việc học như thế nào: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Học đều theo kế hoạch",
+                  "text": "Học đều theo kế hoạch"
+                },
+                {
+                  "value": "Học theo deadline",
+                  "text": "Học theo deadline"
+                },
+                {
+                  "value": "Học theo cảm hứng",
+                  "text": "Học theo cảm hứng"
+                },
+                {
+                  "value": "Học khi có nhóm bạn",
+                  "text": "Học khi có nhóm bạn"
+                },
+                {
+                  "value": "Không duy trì ổn định",
+                  "text": "Không duy trì ổn định"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "M1_SQ4",
+              "input": "multiple",
+              "question_text": "Khi gặp khó khăn kéo dài, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Điều chỉnh cách học",
+                  "text": "Điều chỉnh cách học"
+                },
+                {
+                  "value": "Cố gắng giữ cách học hiện tại",
+                  "text": "Cố gắng giữ cách học hiện tại"
+                },
+                {
+                  "value": "Giảm dần nỗ lực",
+                  "text": "Giảm dần nỗ lực"
+                },
+                {
+                  "value": "Tìm người hỗ trợ",
+                  "text": "Tìm người hỗ trợ"
+                },
+                {
+                  "value": "Thường bỏ luôn",
+                  "text": "Thường bỏ luôn"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "M1_SQ5",
+              "input": "open",
+              "question_text": "Điều gì khiến bạn dễ mất động lực khi học một môn khó?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST1_CR",
+          "category_title": "Career & Direction",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "S1_SQ1",
+              "input": "multiple",
+              "question_text": "Khi tìm hiểu về ngành học hiện tại, bạn thường quan tâm đến những yếu tố nào? (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Công việc tương lai",
+                  "text": "Công việc tương lai"
+                },
+                {
+                  "value": "Kiến thức chuyên môn",
+                  "text": "Kiến thức chuyên môn"
+                },
+                {
+                  "value": "Môi trường học tập",
+                  "text": "Môi trường học tập"
+                },
+                {
+                  "value": "Cơ hội phát triển bản thân",
+                  "text": "Cơ hội phát triển bản thân"
+                },
+                {
+                  "value": "Thu nhập trong tương lai",
+                  "text": "Thu nhập trong tương lai"
+                },
+                {
+                  "value": "Chưa xác định rõ",
+                  "text": "Chưa xác định rõ"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "S1_SQ2",
+              "input": "multiple",
+              "question_text": "Điều nào khiến bạn hứng thú nhất khi học ngành này? (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Nghề nghiệp tương lai",
+                  "text": "Nghề nghiệp tương lai"
+                },
+                {
+                  "value": "Nội dung các môn học",
+                  "text": "Nội dung các môn học"
+                },
+                {
+                  "value": "Cơ hội phát triển bản thân",
+                  "text": "Cơ hội phát triển bản thân"
+                },
+                {
+                  "value": "Môi trường và bạn bè",
+                  "text": "Môi trường và bạn bè"
+                },
+                {
+                  "value": "Cơ hội thực hành thực tế",
+                  "text": "Cơ hội thực hành thực tế"
+                },
+                {
+                  "value": "Chưa thấy điều gì thật sự hấp dẫn",
+                  "text": "Chưa thấy điều gì thật sự hấp dẫn"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "S1_SQ3",
+              "input": "single",
+              "question_text": "Khi ai đó hỏi: 'Ngành này sau này làm gì?', bạn thường:",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Trả lời khá rõ"
+                },
+                {
+                  "value": "B",
+                  "text": "Biết một vài hướng"
+                },
+                {
+                  "value": "C",
+                  "text": "Trả lời còn khá mơ hồ"
+                },
+                {
+                  "value": "D",
+                  "text": "Không biết trả lời thế nào"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "S1_SQ4",
+              "input": "open",
+              "question_text": "Reflection Question: Điều gì khiến bạn cảm thấy chưa chắc chắn nhất về ngành học hiện tại?",
+              "allow_other": false
+            },
+            {
+              "slot": "Q5",
+              "id": "ST1_CR_Q1",
+              "input": "single",
+              "question_text": "Mức độ hiểu biết và hứng thú của bạn với ngành học hiện tại?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Hiểu rất rõ và cảm thấy cực kỳ phù hợp với bản thân."
+                },
+                {
+                  "value": "B",
+                  "text": "Thấy bình thường, học vì đây là ngành hot dễ xin việc."
+                },
+                {
+                  "value": "C",
+                  "text": "Mông lung, thấy ngành này không giống như bạn tưởng tượng."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST1_EX",
+          "category_title": "Extracurricular Engagement",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST1_EX_Q1",
+              "input": "single",
+              "question_text": "Bạn có ý định hoặc đã gia nhập câu lạc bộ (CLB) nào ở trường chưa?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đã ứng tuyển và trở thành thành viên chính thức của ít nhất một CLB."
+                },
+                {
+                  "value": "B",
+                  "text": "Đang tìm hiểu và dự định sẽ đăng ký vào thời gian tới."
+                },
+                {
+                  "value": "C",
+                  "text": "Không có ý định tham gia CLB, chỉ muốn tập trung học."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST1_EX_Q2",
+              "input": "multiple",
+              "question_text": "Mức độ tham gia các hoạt động chào đón, tuần định hướng (Orientation Week) của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Tham gia đầy đủ, tích cực tương tác và kết nối."
+                },
+                {
+                  "value": "B",
+                  "text": "Có đi tham gia cho biết nhưng chỉ ngồi nghe thụ động."
+                },
+                {
+                  "value": "C",
+                  "text": "Cúp hoặc bỏ qua vì thấy không thiết thực."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST1_EX_Q3",
+              "input": "single",
+              "question_text": "Tần suất bạn cập nhật thông tin sự kiện, thông báo trên các trang chính thức của trường?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Hàng ngày, bạn luôn nắm bắt thông tin rất nhanh chóng."
+                },
+                {
+                  "value": "B",
+                  "text": "Vài ngày mới xem một lần hoặc khi có bạn bè gắn thẻ (tag)."
+                },
+                {
+                  "value": "C",
+                  "text": "Hầu như không xem, chỉ khi nào có lịch thi mới vào tra cứu."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST1_EX_Q4",
+              "input": "multiple",
+              "question_text": "Thái độ của bạn đối với các hoạt động phong trào Đoàn - Hội xã hội?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thấy bổ ích, là cơ hội tốt để rèn luyện kỹ năng mềm."
+                },
+                {
+                  "value": "B",
+                  "text": "Tham gia nếu được cộng điểm rèn luyện hoặc bắt buộc."
+                },
+                {
+                  "value": "C",
+                  "text": "Thấy phiền phức, tốn thời gian và không mang lại giá trị."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST1_EX_Q5",
+              "input": "single",
+              "question_text": "Bạn có sẵn sàng tham gia các giải đấu thể thao hoặc đêm nhạc giao lưu của trường không?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Sẵn sàng đăng ký tham gia hoặc đi cổ vũ nhiệt tình."
+                },
+                {
+                  "value": "B",
+                  "text": "Có thể đi nếu có nhóm bạn rủ cùng đi."
+                },
+                {
+                  "value": "C",
+                  "text": "Không quan tâm, thời gian đó bạn thích ở nhà hơn."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "stage_name": "Identity Stage (Khám phá & Định hình bản thân)",
+      "categories": [
+        {
+          "category_id": "ST2_WB",
+          "category_title": "Wellbeing & Integration",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST2_WB_Q1",
+              "input": "single",
+              "question_text": "Mối quan hệ của bạn với các bạn học cùng lớp hiện tại ra sao?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Gắn kết chặt chẽ, có nhóm cạ cứng cùng chạy deadline môn cơ sở ngành."
+                },
+                {
+                  "value": "B",
+                  "text": "Hòa đồng với mọi người nhưng chỉ dừng ở mức xã giao trên lớp."
+                },
+                {
+                  "value": "C",
+                  "text": "Thấy khó tìm tiếng nói chung, có xu hướng cô lập bản thân."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn chủ động chọn lối sống khép kín, không có nhu cầu giao lưu hay kết bạn."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST2_WB_Q2",
+              "input": "multiple",
+              "question_text": "Bạn đối diện với áp lực đồng lứa khi thấy các bạn xung quanh quá giỏi như thế nào?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Coi đó là động lực tích cực để bản thân cố gắng đuổi kịp."
+                },
+                {
+                  "value": "B",
+                  "text": "Hơi tự ti một chút nhưng cố gắng tập trung vào lộ trình cá nhân."
+                },
+                {
+                  "value": "C",
+                  "text": "Cực kỳ stress, lo âu kéo dài và luôn cảm thấy bản thân kém cỏi."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn thờ ơ, không quan tâm đến thành tích hay việc người khác làm gì."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST2_WB_Q3",
+              "input": "single",
+              "question_text": "Tình trạng sức khỏe thể chất phục vụ cho việc học tập của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất tốt, bạn duy trì ăn uống và tập luyện điều độ."
+                },
+                {
+                  "value": "B",
+                  "text": "Bình thường, thỉnh thoảng mệt mỏi do thức đêm làm bài tập lớn."
+                },
+                {
+                  "value": "C",
+                  "text": "Thường xuyên suy nhược, bỏ bữa hoặc mất ngủ kéo dài."
+                },
+                {
+                  "value": "D",
+                  "text": "Sức khỏe chuyển biến xấu nghiêm trọng, đang phải điều trị y tế dài ngày."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST2_WB_Q4",
+              "input": "multiple",
+              "question_text": "Khi gặp khó khăn lớn trong cuộc sống, ai là người bạn cởi mở chia sẻ đầu tiên?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Bạn bè thân, gia đình hoặc chủ động hẹn gặp Cố vấn học tập."
+                },
+                {
+                  "value": "B",
+                  "text": "Bạn tự tìm cách giải quyết và ít khi nói cho người khác biết."
+                },
+                {
+                  "value": "C",
+                  "text": "Không có ai để chia sẻ, chọn cách im lặng và dồn nén cảm xúc."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn tìm đến các cộng đồng hoặc người lạ trên mạng xã hội để giải tỏa ẩn danh."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST2_WB_Q5",
+              "input": "single",
+              "question_text": "Mức độ ổn định của môi trường sống hiện tại (Ký túc xá/Nhà trọ/Gia đình) đối với bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất an toàn, yên tĩnh và hỗ trợ tốt cho việc tự học."
+                },
+                {
+                  "value": "B",
+                  "text": "Thỉnh thoảng có bất tiện (ồn ào, xa trường) nhưng vẫn khắc phục được."
+                },
+                {
+                  "value": "C",
+                  "text": "Thường xuyên xảy ra xung đột hoặc không gian quá tệ gây ảnh hưởng tâm lý."
+                },
+                {
+                  "value": "D",
+                  "text": "Môi trường sống cực kỳ bất ổn, bạn đang phải liên tục chuyển chỗ ở hoặc tìm nơi mới."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST2_AC",
+          "category_title": "Academic Progress",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST2_AC_Q1",
+              "input": "multiple",
+              "question_text": "Kết quả điểm số (GPA) học kỳ gần nhất có đạt mục tiêu bạn đề ra?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đạt hoặc vượt mức mong đợi, duy trì phong độ tốt."
+                },
+                {
+                  "value": "B",
+                  "text": "Đạt mức trung bình, vừa đủ điều kiện qua môn nhưng chưa bứt phá."
+                },
+                {
+                  "value": "C",
+                  "text": "Bị tụt điểm nghiêm trọng, có môn phải học lại/thi lại."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn không hề quan tâm đến GPA và cũng không đặt mục tiêu điểm số."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST2_AC_Q2",
+              "input": "single",
+              "question_text": "Trải nghiệm và vai trò của bạn khi làm việc nhóm trong các bài tập lớn cơ sở ngành?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Chủ động gánh vác trách nhiệm (Leader) hoặc hoàn thành xuất sắc phần việc."
+                },
+                {
+                  "value": "B",
+                  "text": "Phối hợp tròn vai, hoàn thành đúng tiến độ nhóm giao."
+                },
+                {
+                  "value": "C",
+                  "text": "Nhóm thường xuyên xảy ra xung đột, chia việc không đều hoặc bạn phải gánh team một mình."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn hoàn toàn thụ động, biến mất và để mặc các thành viên khác làm hộ."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST2_AC_Q3",
+              "input": "multiple",
+              "question_text": "Tần suất tương tác, phát biểu đóng góp xây dựng bài của bạn trong giờ học?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thường xuyên chủ động phát biểu hoặc đặt câu hỏi phản biện cho giảng viên."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ trả lời khi giảng viên chỉ định đích danh hoặc khi làm bài thuyết trình nhóm."
+                },
+                {
+                  "value": "C",
+                  "text": "Ngồi nghe thụ động, hầu như không bao giờ phát biểu trên lớp."
+                },
+                {
+                  "value": "D",
+                  "text": "Thường xuyên làm việc riêng hoặc làm bài môn khác, không chú ý bài giảng."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST2_AC_Q4",
+              "input": "single",
+              "question_text": "Khả năng tự nghiên cứu, làm tiểu luận hoặc bài tập lớn cá nhân của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Biết cách tìm kiếm tài liệu chuẩn, lập luận logic cấu trúc bài tốt."
+                },
+                {
+                  "value": "B",
+                  "text": "Làm ở mức cơ bản, chủ yếu xào nấu dữ liệu từ mạng Internet."
+                },
+                {
+                  "value": "C",
+                  "text": "Gặp khó khăn lớn, không biết cấu trúc bài viết và tìm nguồn tham khảo ở đâu."
+                },
+                {
+                  "value": "D",
+                  "text": "Phụ thuộc hoàn toàn vào các công cụ AI hoặc sao chép bài của người khác để nộp."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST2_AC_Q5",
+              "input": "multiple",
+              "question_text": "Mức độ hiểu và nắm vững kiến thức các môn nền tảng ngành vừa qua của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Nắm rất chắc bản chất, có thể ứng dụng làm project thực tế nhỏ."
+                },
+                {
+                  "value": "B",
+                  "text": "Học thuộc lòng để đi thi, thi xong không còn nhớ rõ bản chất."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn lơ mơ, không hiểu mối liên hệ giữa các môn học."
+                },
+                {
+                  "value": "D",
+                  "text": "Cảm thấy kiến thức quá nặng, mất gốc hoàn toàn và không thể tiếp thu."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST2_MO",
+          "category_title": "Motivation & Efficacy",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "M2_SQ1",
+              "input": "multiple",
+              "question_text": "Khi có thời gian rảnh, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Tự học điều mình quan tâm",
+                  "text": "Tự học điều mình quan tâm"
+                },
+                {
+                  "value": "Học khi có bài tập hoặc deadline",
+                  "text": "Học khi có bài tập hoặc deadline"
+                },
+                {
+                  "value": "Học theo nhóm hoặc bạn bè",
+                  "text": "Học theo nhóm hoặc bạn bè"
+                },
+                {
+                  "value": "Lên kế hoạch học nhưng không duy trì đều",
+                  "text": "Lên kế hoạch học nhưng không duy trì đều"
+                },
+                {
+                  "value": "Chủ yếu giải trí",
+                  "text": "Chủ yếu giải trí"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "M2_SQ2",
+              "input": "multiple",
+              "question_text": "Khi bắt đầu học một chủ đề mới, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Tìm hiểu sâu ngay từ đầu",
+                  "text": "Tìm hiểu sâu ngay từ đầu"
+                },
+                {
+                  "value": "Tìm hiểu sơ bộ rồi dừng",
+                  "text": "Tìm hiểu sơ bộ rồi dừng"
+                },
+                {
+                  "value": "Chỉ học khi cần thiết",
+                  "text": "Chỉ học khi cần thiết"
+                },
+                {
+                  "value": "Học theo yêu cầu môn học",
+                  "text": "Học theo yêu cầu môn học"
+                },
+                {
+                  "value": "Ít khi chủ động tìm hiểu",
+                  "text": "Ít khi chủ động tìm hiểu"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "M2_SQ3",
+              "input": "multiple",
+              "question_text": "Điều khiến bạn có động lực học nhất là: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Thấy mình tiến bộ",
+                  "text": "Thấy mình tiến bộ"
+                },
+                {
+                  "value": "Hoàn thành mục tiêu",
+                  "text": "Hoàn thành mục tiêu"
+                },
+                {
+                  "value": "Được công nhận",
+                  "text": "Được công nhận"
+                },
+                {
+                  "value": "Có deadline rõ ràng",
+                  "text": "Có deadline rõ ràng"
+                },
+                {
+                  "value": "Không rõ yếu tố nào tạo động lực",
+                  "text": "Không rõ yếu tố nào tạo động lực"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "M2_SQ4",
+              "input": "multiple",
+              "question_text": "Khi học một môn học, bạn thường duy trì như thế nào: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Học đều theo kế hoạch",
+                  "text": "Học đều theo kế hoạch"
+                },
+                {
+                  "value": "Học theo deadline",
+                  "text": "Học theo deadline"
+                },
+                {
+                  "value": "Học theo cảm hứng",
+                  "text": "Học theo cảm hứng"
+                },
+                {
+                  "value": "Học khi có nhóm bạn",
+                  "text": "Học khi có nhóm bạn"
+                },
+                {
+                  "value": "Không duy trì ổn định",
+                  "text": "Không duy trì ổn định"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "M2_SQ5",
+              "input": "open",
+              "question_text": "Điều gì khiến bạn muốn tiếp tục hoặc dừng việc học một môn?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST2_CR",
+          "category_title": "Career & Direction",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "S2_SQ1",
+              "input": "multiple",
+              "question_text": "Bạn muốn thử trải nghiệm nào nhất? (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Thực tập ngắn hạn",
+                  "text": "Thực tập ngắn hạn"
+                },
+                {
+                  "value": "Workshop nghề nghiệp",
+                  "text": "Workshop nghề nghiệp"
+                },
+                {
+                  "value": "Dự án thực tế",
+                  "text": "Dự án thực tế"
+                },
+                {
+                  "value": "Cuộc thi học thuật",
+                  "text": "Cuộc thi học thuật"
+                },
+                {
+                  "value": "Hoạt động cộng đồng",
+                  "text": "Hoạt động cộng đồng"
+                },
+                {
+                  "value": "Chưa muốn tham gia",
+                  "text": "Chưa muốn tham gia"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "S2_SQ2",
+              "input": "multiple",
+              "question_text": "Khi làm việc, bạn thấy mình thường thấy thoải mái nhất trong môi trường nào?",
+              "options": [
+                {
+                  "value": "Có dữ liệu / logic rõ ràng",
+                  "text": "Có dữ liệu / logic rõ ràng"
+                },
+                {
+                  "value": "Có tương tác với con người",
+                  "text": "Có tương tác với con người"
+                },
+                {
+                  "value": "Có sự sáng tạo tự do",
+                  "text": "Có sự sáng tạo tự do"
+                },
+                {
+                  "value": "Có mục tiêu kinh doanh rõ ràng",
+                  "text": "Có mục tiêu kinh doanh rõ ràng"
+                },
+                {
+                  "value": "Chưa có môi trường nào cảm thấy phù hợp",
+                  "text": "Chưa có môi trường nào cảm thấy phù hợp"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "S2_SQ3",
+              "input": "multiple",
+              "question_text": "Bạn thường bị thu hút nhất khi xem nội dung nào vì bạn cảm thấy nó gần với bản thân? (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Công nghệ",
+                  "text": "Công nghệ"
+                },
+                {
+                  "value": "Kinh doanh",
+                  "text": "Kinh doanh"
+                },
+                {
+                  "value": "Sáng tạo",
+                  "text": "Sáng tạo"
+                },
+                {
+                  "value": "Kỹ năng sống",
+                  "text": "Kỹ năng sống"
+                },
+                {
+                  "value": "Giáo dục",
+                  "text": "Giáo dục"
+                },
+                {
+                  "value": "Khởi nghiệp",
+                  "text": "Khởi nghiệp"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "S2_SQ4",
+              "input": "multiple",
+              "question_text": "Nếu phải bắt đầu phát triển một năng lực trong thời gian tới, bạn thấy dễ bắt đầu nhất với: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Data / AI",
+                  "text": "Data / AI"
+                },
+                {
+                  "value": "Business",
+                  "text": "Business"
+                },
+                {
+                  "value": "Design",
+                  "text": "Design"
+                },
+                {
+                  "value": "Communication",
+                  "text": "Communication"
+                },
+                {
+                  "value": "Leadership",
+                  "text": "Leadership"
+                },
+                {
+                  "value": "Ngoại ngữ",
+                  "text": "Ngoại ngữ"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "S2_SQ5",
+              "input": "open",
+              "question_text": "Hiện tại bạn tò mò hoặc muốn tìm hiểu sâu hơn về lĩnh vực nào?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST2_EX",
+          "category_title": "Extracurricular Engagement",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST2_EX_Q1",
+              "input": "single",
+              "question_text": "Vai trò hiện tại của bạn trong các Câu lạc bộ/Đội nhóm chuyên môn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Trở thành nhân sự nòng cốt, tích cực đóng góp xây dựng CLB."
+                },
+                {
+                  "value": "B",
+                  "text": "Là thành viên bình thường, đi sinh hoạt đầy đủ nhưng ít lên tiếng."
+                },
+                {
+                  "value": "C",
+                  "text": "Đã rút lui hoặc chỉ đăng ký tên chứ không tham gia hoạt động nào."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn không tham gia bất kỳ câu lạc bộ nào từ trước đến nay."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST2_EX_Q2",
+              "input": "multiple",
+              "question_text": "Bạn đã từng thử sức tham gia một cuộc thi kỹ năng hoặc học thuật nào chưa?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đã từng lập đội tham gia thử sức để cọ xát năng lực."
+                },
+                {
+                  "value": "B",
+                  "text": "Chưa tham gia thi nhưng có đi xem cổ vũ và học hỏi kinh nghiệm."
+                },
+                {
+                  "value": "C",
+                  "text": "Chưa từng quan tâm đến các cuộc thi học thuật của trường."
+                },
+                {
+                  "value": "D",
+                  "text": "Muốn tham gia nhưng sợ thất bại, tự ti về năng lực nên không dám đăng ký."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST2_EX_Q3",
+              "input": "single",
+              "question_text": "Hoạt động ngoại khóa có giúp bạn cải thiện các kỹ năng mềm không?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất nhiều, bạn thấy bản thân tự tin và khéo léo hơn trong giao tiếp."
+                },
+                {
+                  "value": "B",
+                  "text": "Có cải thiện một chút ở kỹ năng thuyết trình trước đám đông."
+                },
+                {
+                  "value": "C",
+                  "text": "Không thấy có tác dụng gì hoặc làm bản thân tốn thêm thời gian."
+                },
+                {
+                  "value": "D",
+                  "text": "Hoạt động ngoại khóa khiến bạn mệt mỏi, áp lực vì phải tương tác xã hội nhiều."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST2_EX_Q4",
+              "input": "multiple",
+              "question_text": "Mức độ mở rộng vòng kết nối xã hội (Networking) của bạn thông qua các hoạt động trường?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất tốt, bạn quen biết thêm nhiều anh chị khóa trên và bạn bè ngành khác."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ quen thêm một vài bạn làm chung sự kiện, sau đó ít tương tác."
+                },
+                {
+                  "value": "C",
+                  "text": "Không quen thêm ai, vòng kết nối chỉ luẩn quẩn vài bạn cùng lớp."
+                },
+                {
+                  "value": "D",
+                  "text": "Mối quan hệ bị thu hẹp lại do bạn chủ động cắt đứt các kết nối không cần thiết."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST2_EX_Q5",
+              "input": "single",
+              "question_text": "Bạn có hứng thú tham gia các Workshop kỹ năng mềm do trường phối hợp với doanh nghiệp tổ chức không?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất hào hứng, luôn canh lịch đăng ký sớm để giữ chỗ."
+                },
+                {
+                  "value": "B",
+                  "text": "Có tham gia nếu lịch trống và nội dung đánh đúng chủ đề quan tâm."
+                },
+                {
+                  "value": "C",
+                  "text": "Thấy tốn thời gian, thà ở nhà tự học hoặc đi ngủ."
+                },
+                {
+                  "value": "D",
+                  "text": "Chỉ đăng ký tham gia mang tính đối phó để lấy điểm rèn luyện đủ chỉ tiêu bắt buộc."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "stage_name": "Competency Development & Consolidation (Phát triển và củng cố năng lực)",
+      "categories": [
+        {
+          "category_id": "ST3_WB",
+          "category_title": "Wellbeing & Integration",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST3_WB_Q1",
+              "input": "single",
+              "question_text": "Khả năng quản lý áp lực khi bước vào giai đoạn đồ án chuyên ngành dày đặc của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Quản lý tốt, biết cách xả stress lành mạnh và giữ cái đầu lạnh."
+                },
+                {
+                  "value": "B",
+                  "text": "Khá căng thẳng, đôi khi bị mất kiểm soát cảm xúc nhưng vẫn trụ được."
+                },
+                {
+                  "value": "C",
+                  "text": "Bị kiệt sức (burnout) nghiêm trọng, tinh thần suy sụp và muốn bỏ ngang."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn chọn cách né tránh, trì hoãn đồ án và buông xuôi kết quả."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST3_WB_Q2",
+              "input": "multiple",
+              "question_text": "Hệ thống hỗ trợ tinh thần (Support system) của bạn tại trường vào năm 3?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Có nhóm bạn cực kỳ khăng khít, sẵn sàng chia sẻ cả học tập lẫn cuộc sống."
+                },
+                {
+                  "value": "B",
+                  "text": "Có bạn cùng tiến trong học thuật nhưng chuyện cá nhân ít khi tâm sự."
+                },
+                {
+                  "value": "C",
+                  "text": "Cảm thấy đơn độc, phải tự gồng gánh mọi áp lực một mình."
+                },
+                {
+                  "value": "D",
+                  "text": "Mối quan hệ bạn bè rạn nứt do những xung đột khi làm bài tập lớn chuyên ngành."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST3_WB_Q3",
+              "input": "single",
+              "question_text": "Thời gian ngủ và nghỉ ngơi trung bình của bạn mỗi ngày?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đảm bảo từ 6-7 tiếng, ngủ đủ giấc để não bộ hoạt động tốt."
+                },
+                {
+                  "value": "B",
+                  "text": "Thường xuyên ngủ muộn (sau 1-2h sáng) vì phải làm đồ án."
+                },
+                {
+                  "value": "C",
+                  "text": "Ngủ không sâu giấc, thường xuyên thức trắng đêm chạy bài tập lớn."
+                },
+                {
+                  "value": "D",
+                  "text": "Đang bị rối loạn giấc ngủ nặng, thường xuyên phải lạm dụng chất kích thích/cà phê để thức."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST3_WB_Q4",
+              "input": "multiple",
+              "question_text": "Mức độ hài lòng chung với cuộc sống sinh viên hiện tại của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất hài lòng, thấy bản thân trưởng thành và học được nhiều điều bổ ích."
+                },
+                {
+                  "value": "B",
+                  "text": "Bình thường, cuộc sống trôi qua đều đều không có gì quá nổi bật."
+                },
+                {
+                  "value": "C",
+                  "text": "Thấy chán nản, mệt mỏi và chỉ muốn mau chóng kết thúc thời sinh viên."
+                },
+                {
+                  "value": "D",
+                  "text": "Hối hận sâu sắc vì đã chọn ngôi trường/ngành học này, cảm thấy lãng phí thời gian."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST3_WB_Q5",
+              "input": "single",
+              "question_text": "Khả năng thiết lập ranh giới (biết từ chối các việc ngoài lề để tập trung cho học tập) của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất quyết đoán, biết ưu tiên việc quan trọng nhất cho bản thân."
+                },
+                {
+                  "value": "B",
+                  "text": "Đôi khi nể bạn bè nên vẫn nhận lời đi chơi/ôm đồm việc CLB dù đang bận."
+                },
+                {
+                  "value": "C",
+                  "text": "Luôn bị phân tâm bởi các cuộc vui bên ngoài làm ảnh hưởng tiến độ học."
+                },
+                {
+                  "value": "D",
+                  "text": "Bị cuốn hoàn toàn vào công việc làm thêm kiếm tiền phi kỹ thuật, bỏ bê việc học chuyên ngành."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST3_AC",
+          "category_title": "Academic Progress",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST3_AC_Q1",
+              "input": "multiple",
+              "question_text": "Mức độ làm chủ các công cụ, phần mềm hoặc phương pháp nghiên cứu chuyên ngành sâu của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thành thạo, có thể tự tay xây dựng hoặc xử lý được sản phẩm/đề án chạy ổn định."
+                },
+                {
+                  "value": "B",
+                  "text": "Biết sử dụng ở mức cơ bản để làm bài tập, chưa tối ưu được hiệu quả công việc."
+                },
+                {
+                  "value": "C",
+                  "text": "Rất yếu, thao tác lỗi liên tục và không hiểu cách vận hành của các công cụ chuyên ngành."
+                },
+                {
+                  "value": "D",
+                  "text": "Hoàn toàn không theo kịp, phải sao chép hoặc nhờ người làm bài tập/đồ án hộ để qua môn."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST3_AC_Q2",
+              "input": "single",
+              "question_text": "Tiến độ và chất lượng nghiệm thu các đồ án chuyên ngành của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Luôn đạt kết quả tốt, sản phẩm có tính ứng dụng cao, nộp đúng hạn."
+                },
+                {
+                  "value": "B",
+                  "text": "Đạt yêu cầu vừa đủ để qua môn, sản phẩm còn nhiều lỗi vặt."
+                },
+                {
+                  "value": "C",
+                  "text": "Thường xuyên trễ tiến độ đồ án, sản phẩm không chạy được khi nghiệm thu."
+                },
+                {
+                  "value": "D",
+                  "text": "Bị đánh trượt đồ án chuyên ngành, đang phải chờ đăng ký làm lại vào kỳ sau."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST3_AC_Q3",
+              "input": "multiple",
+              "question_text": "Khả năng đọc hiểu tài liệu nghiên cứu và cập nhật kiến thức mới bằng Tiếng Anh chuyên ngành của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thành thạo, bạn có thể tự đọc hiểu tài liệu chuyên ngành bằng Tiếng Anh mà không cần dịch."
+                },
+                {
+                  "value": "B",
+                  "text": "Đọc hiểu được khoảng 60-70%, những chỗ khó vẫn phải dùng công cụ dịch hỗ trợ."
+                },
+                {
+                  "value": "C",
+                  "text": "Rất kém, lười đọc tài liệu Tiếng Anh, chỉ tìm kiếm các bài hướng dẫn bằng Tiếng Việt."
+                },
+                {
+                  "value": "D",
+                  "text": "Rào cản ngôn ngữ khiến bạn hoàn toàn bế tắc khi các kiến thức mới không có tài liệu Tiếng Việt."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST3_AC_Q4",
+              "input": "single",
+              "question_text": "Mức độ tích cực và hiệu quả của bạn khi tham gia thảo luận, làm việc nhóm trong các bài tập chuyên ngành?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thường xuyên đóng vai trò dẫn dắt (Leader) hoặc đóng góp chính, phối hợp rất tốt với các thành viên."
+                },
+                {
+                  "value": "B",
+                  "text": "Hoàn thành đúng phần việc được giao, ít khi chủ động đưa ra ý tưởng đột phá cho nhóm."
+                },
+                {
+                  "value": "C",
+                  "text": "Làm việc hời hợt, để đồng đội phải nhắc nhở liên tục về tiến độ và chất lượng phần việc của mình."
+                },
+                {
+                  "value": "D",
+                  "text": "Gần như biến mất (free-rider), phó mặc hoàn toàn cho nhóm và chỉ chờ được ké tên vào danh sách nộp bài."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST3_AC_Q5",
+              "input": "multiple",
+              "question_text": "Bạn tự đánh giá thế nào về điểm số trung bình tích lũy (GPA) các môn chuyên ngành của mình tính đến thời điểm hiện tại?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất xuất sắc, thuộc top đầu của lớp và luôn giữ vững phong độ học tập ổn định."
+                },
+                {
+                  "value": "B",
+                  "text": "Ở mức khá - trung bình, điểm số đủ an toàn nhưng chưa thực sự bứt phá như kỳ vọng."
+                },
+                {
+                  "value": "C",
+                  "text": "Điểm số lẹt đẹt, suýt soát mức trung bình và có nguy cơ bị cảnh cáo học tập nếu không cải thiện."
+                },
+                {
+                  "value": "D",
+                  "text": "Bị tụt dốc không phanh, nợ môn chồng chất và không còn động lực để kéo lại điểm số chuyên ngành."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST3_MO",
+          "category_title": "Motivation & Efficacy",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "M3_SQ1",
+              "input": "multiple",
+              "question_text": "Khi thất bại trong một nhiệm vụ, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Phân tích lỗi và thử lại",
+                  "text": "Phân tích lỗi và thử lại"
+                },
+                {
+                  "value": "Nghỉ một thời gian rồi thử lại",
+                  "text": "Nghỉ một thời gian rồi thử lại"
+                },
+                {
+                  "value": "Chờ người khác hướng dẫn",
+                  "text": "Chờ người khác hướng dẫn"
+                },
+                {
+                  "value": "Chỉ sửa khi bị yêu cầu",
+                  "text": "Chỉ sửa khi bị yêu cầu"
+                },
+                {
+                  "value": "Thường bỏ qua",
+                  "text": "Thường bỏ qua"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "M3_SQ2",
+              "input": "multiple",
+              "question_text": "Khi học kỹ năng mới, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Tự học chủ động",
+                  "text": "Tự học chủ động"
+                },
+                {
+                  "value": "Học qua khóa học online",
+                  "text": "Học qua khóa học online"
+                },
+                {
+                  "value": "Học qua dự án thực tế",
+                  "text": "Học qua dự án thực tế"
+                },
+                {
+                  "value": "Học khi có người hướng dẫn",
+                  "text": "Học khi có người hướng dẫn"
+                },
+                {
+                  "value": "Chỉ học khi cần thiết",
+                  "text": "Chỉ học khi cần thiết"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "M3_SQ3",
+              "input": "multiple",
+              "question_text": "Khi làm project dài hạn, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Duy trì đến cuối",
+                  "text": "Duy trì đến cuối"
+                },
+                {
+                  "value": "Có lúc giảm nhưng vẫn hoàn thành",
+                  "text": "Có lúc giảm nhưng vẫn hoàn thành"
+                },
+                {
+                  "value": "Làm theo từng deadline nhỏ",
+                  "text": "Làm theo từng deadline nhỏ"
+                },
+                {
+                  "value": "Dễ mất tập trung",
+                  "text": "Dễ mất tập trung"
+                },
+                {
+                  "value": "Khó theo đến cuối",
+                  "text": "Khó theo đến cuối"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "M3_SQ4",
+              "input": "multiple",
+              "question_text": "Khi thấy người khác giỏi hơn mình, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Xem đó là động lực",
+                  "text": "Xem đó là động lực"
+                },
+                {
+                  "value": "Vừa động lực vừa áp lực",
+                  "text": "Vừa động lực vừa áp lực"
+                },
+                {
+                  "value": "Dễ nản",
+                  "text": "Dễ nản"
+                },
+                {
+                  "value": "Tránh so sánh",
+                  "text": "Tránh so sánh"
+                },
+                {
+                  "value": "Không quan tâm",
+                  "text": "Không quan tâm"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "M3_SQ5",
+              "input": "open",
+              "question_text": "Điều gì giúp bạn kiên trì theo đuổi một kỹ năng lâu dài?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST3_CR",
+          "category_title": "Career & Direction",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "S3_SQ1",
+              "input": "multiple",
+              "question_text": "Khi làm nhóm, bạn thường đảm nhận: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Phân tích thông tin",
+                  "text": "Phân tích thông tin"
+                },
+                {
+                  "value": "Lập kế hoạch",
+                  "text": "Lập kế hoạch"
+                },
+                {
+                  "value": "Điều phối nhóm",
+                  "text": "Điều phối nhóm"
+                },
+                {
+                  "value": "Thực hiện chuyên môn",
+                  "text": "Thực hiện chuyên môn"
+                },
+                {
+                  "value": "Trình bày kết quả",
+                  "text": "Trình bày kết quả"
+                },
+                {
+                  "value": "Làm theo phân công",
+                  "text": "Làm theo phân công"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "S3_SQ2",
+              "input": "multiple",
+              "question_text": "Bạn thường học kỹ năng mới bằng: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Tự học",
+                  "text": "Tự học"
+                },
+                {
+                  "value": "Khóa học online",
+                  "text": "Khóa học online"
+                },
+                {
+                  "value": "Dự án thực tế",
+                  "text": "Dự án thực tế"
+                },
+                {
+                  "value": "Học từ người khác",
+                  "text": "Học từ người khác"
+                },
+                {
+                  "value": "Học qua tài liệu",
+                  "text": "Học qua tài liệu"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "S3_SQ3",
+              "input": "single",
+              "question_text": "Improvement Behavior — Khi có kĩ năng quan trọng còn yếu, bạn sẽ:",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Chủ động cải thiện ngay"
+                },
+                {
+                  "value": "B",
+                  "text": "Cải thiện khi cần"
+                },
+                {
+                  "value": "C",
+                  "text": "Để sau"
+                },
+                {
+                  "value": "D",
+                  "text": "Thường bỏ qua"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "S3_SQ4",
+              "input": "multiple",
+              "question_text": "Bạn muốn được đánh giá cao ở năng lực: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Chuyên môn",
+                  "text": "Chuyên môn"
+                },
+                {
+                  "value": "Giải quyết vấn đề",
+                  "text": "Giải quyết vấn đề"
+                },
+                {
+                  "value": "Giao tiếp",
+                  "text": "Giao tiếp"
+                },
+                {
+                  "value": "Làm việc nhóm",
+                  "text": "Làm việc nhóm"
+                },
+                {
+                  "value": "Sáng tạo",
+                  "text": "Sáng tạo"
+                },
+                {
+                  "value": "Lãnh đạo",
+                  "text": "Lãnh đạo"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "S3_SQ5",
+              "input": "open",
+              "question_text": "Kỹ năng nào khiến bạn thiếu tự tin nhất? Vì sao?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST3_EX",
+          "category_title": "Extracurricular Engagement",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST3_EX_Q1",
+              "input": "single",
+              "question_text": "Vai trò quản lý/lãnh đạo của bạn trong các tổ chức, câu lạc bộ hoặc dự án?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đảm nhận vị trí Chủ nhiệm, Trưởng ban hoặc Leader điều phối dự án lớn."
+                },
+                {
+                  "value": "B",
+                  "text": "Là cố vấn chuyên môn, hỗ trợ thế hệ khóa dưới chạy sự kiện học thuật."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn rút lui khỏi hoạt động ngoại khóa để tập trung đi làm/đi học."
+                },
+                {
+                  "value": "D",
+                  "text": "Bị ép nhận vị trí quản lý nhưng làm việc hời hợt, gây mất đoàn kết nội bộ."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST3_EX_Q2",
+              "input": "multiple",
+              "question_text": "Bạn có tham gia vào các cuộc thi học thuật quy mô lớn cấp Thành phố/Quốc gia không?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đang hoặc đã từng tham gia chinh chiến tại các giải đấu lớn (Hackathon, Olympic...)."
+                },
+                {
+                  "value": "B",
+                  "text": "Có ý định tham gia nhưng chưa tìm được đội nhóm hoặc mentor phù hợp."
+                },
+                {
+                  "value": "C",
+                  "text": "Không tham gia, thấy các cuộc thi đó quá tầm và mất thời gian cày cuốc."
+                },
+                {
+                  "value": "D",
+                  "text": "Từng tham gia nhưng thất bại thảm hại ở vòng loại khiến bạn mất sạch tự tin học thuật."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST3_EX_Q3",
+              "input": "single",
+              "question_text": "Khả năng ứng dụng kiến thức chuyên môn vào giải quyết bài toán thực tế của cộng đồng/CLB của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đã trực tiếp xây dựng hệ thống/tool/giải pháp thực tế giúp tối ưu vận hành cho CLB hoặc Khoa."
+                },
+                {
+                  "value": "B",
+                  "text": "Có hỗ trợ phần kỹ thuật nhỏ nhưng chưa tạo ra sản phẩm hoàn chỉnh nào."
+                },
+                {
+                  "value": "C",
+                  "text": "Chưa từng ứng dụng kiến thức chuyên môn vào bất cứ hoạt động ngoại khóa nào."
+                },
+                {
+                  "value": "D",
+                  "text": "Kiến thức của bạn quá yếu để có thể đóng góp phần kỹ thuật thực tế cho tổ chức."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST3_EX_Q4",
+              "input": "multiple",
+              "question_text": "Mạng lưới mối quan hệ với cựu sinh viên (Alumni Networking) của bạn thế nào?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Quen biết nhiều anh chị đi trước, thường xuyên xin lời khuyên về nghề nghiệp/referral việc làm."
+                },
+                {
+                  "value": "B",
+                  "text": "Biết một vài anh chị khóa trên thông qua CLB, thỉnh thoảng có tương tác xã giao."
+                },
+                {
+                  "value": "C",
+                  "text": "Không quen biết bất kỳ cựu sinh viên nào đang đi làm ngoài ngành."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn không tin tưởng vào mạng lưới quan hệ và cho rằng năng lực tự thân mới là quyết định."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST3_EX_Q5",
+              "input": "single",
+              "question_text": "Ý thức đóng góp xây dựng hình ảnh thương hiệu cho Khoa/Trường của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Tích cực tham gia đội ngũ hỗ trợ tuyển sinh, truyền thông hoặc làm đại diện hình ảnh sinh viên xuất sắc."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ tham gia chia sẻ kinh nghiệm khi được các thầy cô trực tiếp mở lời nhờ hỗ trợ."
+                },
+                {
+                  "value": "C",
+                  "text": "Thờ ơ, không quan tâm đến các hoạt động quảng bá hình ảnh của nhà trường."
+                },
+                {
+                  "value": "D",
+                  "text": "Có những bài viết tiêu cực, bất mãn về quy chế của trường công khai trên mạng xã hội."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage": 4,
+      "stage_name": "Professtional Aligment (Định hướng nghề nghiệp)",
+      "categories": [
+        {
+          "category_id": "ST4_WB",
+          "category_title": "Wellbeing & Integration",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST4_WB_Q1",
+              "input": "single",
+              "question_text": "Mức độ thích nghi của bạn với môi trường công sở và văn hóa doanh nghiệp?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thích nghi cực nhanh, nắm bắt tốt văn hóa và quy trình làm việc của công ty."
+                },
+                {
+                  "value": "B",
+                  "text": "Hơi bỡ ngỡ tuần đầu, hiện tại đã quen việc và giao tiếp ổn định với mọi người."
+                },
+                {
+                  "value": "C",
+                  "text": "Cảm thấy lạc lõng, không hợp với văn hóa công ty và gặp khó khăn khi hòa nhập."
+                },
+                {
+                  "value": "D",
+                  "text": "Sốc văn hóa nặng nề, hoàn toàn không chịu nổi áp lực công sở và muốn xin nghỉ việc."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST4_WB_Q2",
+              "input": "multiple",
+              "question_text": "Mối quan hệ công việc giữa bạn với Mentor và đồng nghiệp tại công ty thực tập?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất tốt, được mọi người quý mến, sẵn sàng chỉ bảo và hướng dẫn nhiệt tình."
+                },
+                {
+                  "value": "B",
+                  "text": "Ở mức bình thường, trao đổi công việc đúng phận sự chứ ít khi trò chuyện ngoài lề."
+                },
+                {
+                  "value": "C",
+                  "text": "Có xung đột ngầm hoặc bị đồng nghiệp ngó lơ, không mặn mà hỗ trợ."
+                },
+                {
+                  "value": "D",
+                  "text": "Bị cô lập hoặc bị Mentor khiển trách nặng nề nhiều lần vì thái độ làm việc kém."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST4_WB_Q3",
+              "input": "single",
+              "question_text": "Tình trạng stress khi bạn phải vừa đi làm thực tập vừa hoàn thành báo cáo/môn học ở trường?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Kiểm soát tốt, biết cách phân bổ thời gian hợp lý cho cả hai bên."
+                },
+                {
+                  "value": "B",
+                  "text": "Thường xuyên rơi vào trạng thái căng thẳng, phải vắt kiệt sức vào cuối tuần."
+                },
+                {
+                  "value": "C",
+                  "text": "Khủng hoảng nặng nề, kiệt sức, muốn bỏ học hoặc xin nghỉ thực tập ngay lập tức."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn chấp nhận nợ môn học ở trường để dồn toàn lực đi làm kiếm tiền tại công ty."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST4_WB_Q4",
+              "input": "multiple",
+              "question_text": "Chế độ ăn uống, sinh hoạt cá nhân của bạn khi bắt đầu đi làm?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Duy trì sinh hoạt điều độ, ăn uống đủ chất và không bỏ bữa."
+                },
+                {
+                  "value": "B",
+                  "text": "Ở mức trung bình, hay mắc các bệnh văn phòng vặt (đau lưng, mỏi mắt, đau dạ dày)."
+                },
+                {
+                  "value": "C",
+                  "text": "Sức khỏe suy giảm nghiêm trọng do thói quen thức đêm và áp lực công việc kéo dài."
+                },
+                {
+                  "value": "D",
+                  "text": "Thường xuyên lạm dụng đồ ăn nhanh, trà sữa và bỏ bữa liên tục do quá tải task."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST4_WB_Q5",
+              "input": "single",
+              "question_text": "Khả năng cân bằng giữa công việc và cuộc sống cá nhân (Work-Life Balance) của bạn hiện tại như thế nào?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Cân bằng hoàn hảo, có thời gian dành cho gia đình, bạn bè và sở thích cá nhân sau giờ làm."
+                },
+                {
+                  "value": "B",
+                  "text": "Tạm ổn, thỉnh thoảng phải đem việc về nhà làm nốt vào buổi tối nhưng không thường xuyên."
+                },
+                {
+                  "value": "C",
+                  "text": "Mất cân bằng, liên tục OT (làm thêm giờ) hoặc luôn trong trạng thái ám ảnh về deadline ngay cả khi đã tan làm."
+                },
+                {
+                  "value": "D",
+                  "text": "Hoàn toàn bị cuốn vào guồng quay công việc, không còn thời gian tái tạo năng lượng và dần xa lánh các mối quan hệ xung quanh."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST4_AC",
+          "category_title": "Academic Progress",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST4_AC_Q1",
+              "input": "multiple",
+              "question_text": "Khả năng vận dụng các kiến thức lý thuyết đã học ở trường vào xử lý các task công việc thực tế tại công ty?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Áp dụng rất tốt, thấy kiến thức nền tảng trường dạy cực kỳ thực tế và hữu ích."
+                },
+                {
+                  "value": "B",
+                  "text": "Vận dụng được khoảng 50%, còn lại phải tự học thêm kiến thức theo yêu cầu dự án."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn không áp dụng được gì, thấy kiến thức thực tế khác xa hoàn toàn lý thuyết học đường."
+                },
+                {
+                  "value": "D",
+                  "text": "Sản phẩm thực tế của bạn liên tục bị lỗi hệ thống lớn và Mentor phải sửa hộ hoàn toàn."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST4_AC_Q2",
+              "input": "single",
+              "question_text": "Tiến độ xây dựng và hoàn thiện Báo cáo thực tập tốt nghiệp / Nhật ký thực tập của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Bám sát tiến độ, ghi chép nhật ký đầy đủ và đã có sườn báo cáo chỉn chu."
+                },
+                {
+                  "value": "B",
+                  "text": "Chưa viết được nhiều, đợi đến gần tuần cuối cùng mới tổng hợp viết một thể."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn chưa viết gì, lơ mơ không biết quy chuẩn trình bày báo cáo của khoa ra sao."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn có ý định copy-paste nội dung báo cáo cũ của các khóa trước để nộp cho nhanh."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST4_AC_Q3",
+              "input": "multiple",
+              "question_text": "Mức độ chủ động tự học và cập nhật các kiến thức, phương pháp mới ngoài trường học để đáp ứng yêu cầu công việc?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Cực kỳ chủ động, tự tìm tòi và nắm bắt rất nhanh để tối ưu hóa hiệu suất làm việc."
+                },
+                {
+                  "value": "B",
+                  "text": "Có cố gắng tự học khi được giao việc mới, nhưng tốc độ tiếp thu còn chậm và cần được hướng dẫn thêm."
+                },
+                {
+                  "value": "C",
+                  "text": "Khá thụ động, chỉ học những gì được giao và gặp nhiều khó khăn khi tiếp cận việc nằm ngoài sách vở."
+                },
+                {
+                  "value": "D",
+                  "text": "Né tránh các phần việc đòi hỏi kiến thức mới, chỉ muốn làm những việc quen thuộc, an toàn."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST4_AC_Q4",
+              "input": "single",
+              "question_text": "Sau một thời gian thực tập, bạn nhận ra bản thân còn thiếu sót lớn nhất ở nhóm kỹ năng nào để cần cải thiện?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Nhận diện rõ ràng các lỗ hổng (chuyên môn hoặc kỹ năng mềm) và đã có kế hoạch tự trau dồi cụ thể."
+                },
+                {
+                  "value": "B",
+                  "text": "Nhận ra mình còn yếu nhiều thứ nhưng chưa biết phải bắt đầu học lại từ đâu hoặc theo lộ trình nào."
+                },
+                {
+                  "value": "C",
+                  "text": "Cảm thấy hoang mang vì thấy bản thân hổng kiến thức quá nặng, mất phương hướng về năng lực cá nhân."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn cho rằng năng lực hiện tại đã quá đủ để đi làm và không cần thiết phải học hỏi thêm gì nữa."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST4_AC_Q5",
+              "input": "multiple",
+              "question_text": "Mức độ tương tác và nhận sự hỗ trợ từ Giảng viên hướng dẫn (GVHD) của trường trong quá trình bạn đi thực tập?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất tốt, GVHD luôn phản hồi nhanh chóng, định hướng đề tài và sửa bài nhiệt tình."
+                },
+                {
+                  "value": "B",
+                  "text": "Ở mức vừa phải, chỉ chủ động liên hệ với GVHD khi đến hạn nộp bài hoặc cần ký giấy tờ."
+                },
+                {
+                  "value": "C",
+                  "text": "Gặp khó khăn khi kết nối, GVHD bận rộn nên phản hồi rất chậm khiến tiến độ bài vở bị trì hoãn."
+                },
+                {
+                  "value": "D",
+                  "text": "Hoàn toàn mất liên lạc với GVHD hoặc tự ý làm mọi thứ mà không thông qua sự kiểm duyệt của thầy cô."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST4_MO",
+          "category_title": "Motivation & Efficacy",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "M4_SQ1",
+              "input": "multiple",
+              "question_text": "Khi phải tự học một kỹ năng mới, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Tự tìm tài liệu và bắt đầu thử ngay",
+                  "text": "Tự tìm tài liệu và bắt đầu thử ngay"
+                },
+                {
+                  "value": "Tìm roadmap hoặc hướng dẫn trước khi học",
+                  "text": "Tìm roadmap hoặc hướng dẫn trước khi học"
+                },
+                {
+                  "value": "Học theo khóa học có cấu trúc sẵn",
+                  "text": "Học theo khóa học có cấu trúc sẵn"
+                },
+                {
+                  "value": "Chỉ học khi có người hướng dẫn trực tiếp",
+                  "text": "Chỉ học khi có người hướng dẫn trực tiếp"
+                },
+                {
+                  "value": "Thường trì hoãn vì không biết bắt đầu từ đâu",
+                  "text": "Thường trì hoãn vì không biết bắt đầu từ đâu"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "M4_SQ2",
+              "input": "multiple",
+              "question_text": "Khi gặp nhiệm vụ khó trong học hoặc dự án, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Tự chia nhỏ và giải quyết từng bước",
+                  "text": "Tự chia nhỏ và giải quyết từng bước"
+                },
+                {
+                  "value": "Tìm tài liệu hoặc ví dụ tương tự",
+                  "text": "Tìm tài liệu hoặc ví dụ tương tự"
+                },
+                {
+                  "value": "Hỏi người khác để được hướng dẫn",
+                  "text": "Hỏi người khác để được hướng dẫn"
+                },
+                {
+                  "value": "Chờ đến khi có yêu cầu rõ ràng hơn mới làm",
+                  "text": "Chờ đến khi có yêu cầu rõ ràng hơn mới làm"
+                },
+                {
+                  "value": "Thường bỏ qua nếu thấy quá khó",
+                  "text": "Thường bỏ qua nếu thấy quá khó"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "M4_SQ3",
+              "input": "multiple",
+              "question_text": "Khi nhận phản hồi về kỹ năng của mình, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Dùng phản hồi để cải thiện ngay",
+                  "text": "Dùng phản hồi để cải thiện ngay"
+                },
+                {
+                  "value": "Suy nghĩ rồi cải thiện dần",
+                  "text": "Suy nghĩ rồi cải thiện dần"
+                },
+                {
+                  "value": "Cần thời gian mới tiếp nhận được",
+                  "text": "Cần thời gian mới tiếp nhận được"
+                },
+                {
+                  "value": "Dễ mất tự tin",
+                  "text": "Dễ mất tự tin"
+                },
+                {
+                  "value": "Thường tránh nhận phản hồi",
+                  "text": "Thường tránh nhận phản hồi"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "M4_SQ4",
+              "input": "single",
+              "question_text": "Điều mô tả bạn đúng nhất:",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Tôi có thể tự học nếu cần"
+                },
+                {
+                  "value": "B",
+                  "text": "Tôi học tốt hơn khi có hướng dẫn rõ ràng"
+                },
+                {
+                  "value": "C",
+                  "text": "Tôi thường khó bắt đầu nếu không có chỉ dẫn"
+                },
+                {
+                  "value": "D",
+                  "text": "Tôi dễ bỏ khi gặp khó"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "M4_SQ5",
+              "input": "open",
+              "question_text": "Điều gì khiến bạn chưa tự tin khi học kỹ năng mới?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST4_CR",
+          "category_title": "Career & Direction",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "S4_SQ1",
+              "input": "multiple",
+              "question_text": "Bạn đã từng làm điều nào sau đây? (Chọn tất cả phù hợp)",
+              "options": [
+                {
+                  "value": "Viết CV",
+                  "text": "Viết CV"
+                },
+                {
+                  "value": "Làm portfolio",
+                  "text": "Làm portfolio"
+                },
+                {
+                  "value": "Tìm hiểu JD",
+                  "text": "Tìm hiểu JD"
+                },
+                {
+                  "value": "LinkedIn",
+                  "text": "LinkedIn"
+                },
+                {
+                  "value": "Phỏng vấn thử",
+                  "text": "Phỏng vấn thử"
+                },
+                {
+                  "value": "Chưa làm gì",
+                  "text": "Chưa làm gì"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "S4_SQ2",
+              "input": "multiple",
+              "question_text": "Bạn thường cập nhật thông tin nghề nghiệp bằng cách nào? (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "LinkedIn",
+                  "text": "LinkedIn"
+                },
+                {
+                  "value": "Website tuyển dụng",
+                  "text": "Website tuyển dụng"
+                },
+                {
+                  "value": "Giảng viên",
+                  "text": "Giảng viên"
+                },
+                {
+                  "value": "Bạn bè",
+                  "text": "Bạn bè"
+                },
+                {
+                  "value": "Cựu sinh viên",
+                  "text": "Cựu sinh viên"
+                },
+                {
+                  "value": "Không tìm hiểu",
+                  "text": "Không tìm hiểu"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "S4_SQ3",
+              "input": "single",
+              "question_text": "Khi giới thiệu bản thân với nhà tuyển dụng, bạn:",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Tự tin rõ ràng"
+                },
+                {
+                  "value": "B",
+                  "text": "Tương đối ổn"
+                },
+                {
+                  "value": "C",
+                  "text": "Lúng túng"
+                },
+                {
+                  "value": "D",
+                  "text": "Không biết bắt đầu"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "S4_SQ4",
+              "input": "multiple",
+              "question_text": "Điều khiến bạn lo lắng nhất khi nghĩ tới việc đi làm là: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Thiếu kinh nghiệm",
+                  "text": "Thiếu kinh nghiệm"
+                },
+                {
+                  "value": "Thiếu kỹ năng",
+                  "text": "Thiếu kỹ năng"
+                },
+                {
+                  "value": "Thiếu định hướng",
+                  "text": "Thiếu định hướng"
+                },
+                {
+                  "value": "Thiếu kết nối",
+                  "text": "Thiếu kết nối"
+                },
+                {
+                  "value": "Phỏng vấn",
+                  "text": "Phỏng vấn"
+                },
+                {
+                  "value": "Cạnh tranh",
+                  "text": "Cạnh tranh"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "S4_SQ5",
+              "input": "open",
+              "question_text": "Điều gì khiến bạn chưa sẵn sàng đi làm?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST4_EX",
+          "category_title": "Extracurricular Engagement",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST4_EX_Q1",
+              "input": "single",
+              "question_text": "Bạn có tham gia các hoạt động gắn kết tập thể (Teambuilding, Company Trip, Happy Hour) tại công ty không?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Tham gia đầy đủ, nhiệt tình và hòa nhập tốt với mọi người ở công ty."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ đi các buổi bắt buộc, còn lại các buổi ăn chơi tự phát thì xin phép vắng mặt."
+                },
+                {
+                  "value": "C",
+                  "text": "Từ chối toàn bộ vì thấy phiền phức, muốn giữ khoảng cách tuyệt đối."
+                },
+                {
+                  "value": "D",
+                  "text": "Nói xấu các hoạt động tập thể của công ty với các bạn thực tập sinh khác."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST4_EX_Q2",
+              "input": "multiple",
+              "question_text": "Mức độ tương tác của bạn với mạng lưới Cựu sinh viên (Alumni Network) của khoa?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thường xuyên tham gia các buổi tọa đàm chuyên đề do cựu sinh viên tổ chức để cập nhật xu hướng ngành."
+                },
+                {
+                  "value": "B",
+                  "text": "Có biết một vài anh chị cựu sinh viên nổi bật nhưng ít khi tương tác hay tham gia sinh hoạt mạng lưới."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn không biết đến sự tồn tại của mạng lưới cựu sinh viên trường."
+                },
+                {
+                  "value": "D",
+                  "text": "Mạng lưới cựu sinh viên chỉ hoạt động hình thức, không mang lại giá trị referral thực tế cho bạn."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST4_EX_Q3",
+              "input": "single",
+              "question_text": "Mức độ tham gia của bạn vào các cuộc thi học thuật, hội thảo hoặc dự án cộng đồng bên ngoài giờ làm?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Chủ động tham gia tích cực để mở rộng tư duy thực tế và làm đẹp hồ sơ năng lực cá nhân."
+                },
+                {
+                  "value": "B",
+                  "text": "Có quan tâm theo dõi nhưng chỉ dừng lại ở mức đi nghe chia sẻ chứ chưa trực tiếp tham gia."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn không tham gia vì áp lực từ việc học ở trường và việc đi làm đã quá tải."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn cho rằng các hoạt động, cuộc thi này mang tính phong trào và không thực chất."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST4_EX_Q4",
+              "input": "multiple",
+              "question_text": "Mức độ duy trì sinh hoạt và hỗ trợ các Câu lạc bộ/Đội nhóm tại trường sau khi bạn đã đi thực tập?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Vẫn sắp xếp thời gian quay lại hỗ trợ, truyền đạt kinh nghiệm thực tế cho các thành viên khóa dưới."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ giữ liên lạc xã giao, thỉnh thoảng tương tác qua mạng xã hội chứ không còn tham gia sinh hoạt trực tiếp."
+                },
+                {
+                  "value": "C",
+                  "text": "Rút lui hoàn toàn khỏi các câu lạc bộ ở trường vì không còn thời gian và điểm chung với khóa dưới."
+                },
+                {
+                  "value": "D",
+                  "text": "Cắt đứt liên lạc và có ấn tượng không tốt về cách vận hành của các câu lạc bộ sinh viên."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST4_EX_Q5",
+              "input": "single",
+              "question_text": "Mức độ chủ động tham gia và tương tác trong các cộng đồng, diễn đàn chuyên môn trực tuyến theo ngành nghề của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thường xuyên theo dõi, thảo luận và cập nhật kiến thức thực tế từ các chuyên gia trong cộng đồng."
+                },
+                {
+                  "value": "B",
+                  "text": "Có tham gia các group chuyên môn nhưng chỉ ở chế độ ẩn danh đọc tin tức chứ ít khi tương tác, bình luận."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn không tham gia cộng đồng mạng xã hội nào, chỉ lướt web giải trí thông thường."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn thấy thông tin trên các cộng đồng mạng đa số là chia sẻ sáo rỗng và không đáng tin cậy."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage": 5,
+      "stage_name": "Professional Launch (Tốt nghiệp & Khởi nghiệp)",
+      "categories": [
+        {
+          "category_id": "ST5_WB",
+          "category_title": "Wellbeing & Integration",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST5_WB_Q1",
+              "input": "single",
+              "question_text": "Trạng thái tâm lý của bạn khi đứng trước ngưỡng cửa chuyển giao từ sinh viên thành người đi làm thực thụ?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Tự tin, hứng khởi và tràn đầy kỳ vọng vào hành trình sự nghiệp mới."
+                },
+                {
+                  "value": "B",
+                  "text": "Hơi lo lắng, bất an nhẹ về áp lực cơm áo gạo tiền nhưng vẫn giữ lạc quan."
+                },
+                {
+                  "value": "C",
+                  "text": "Khủng hoảng tâm lý nghiêm trọng, sợ hãi thế giới người lớn và muốn trì hoãn việc ra trường."
+                },
+                {
+                  "value": "D",
+                  "text": "Bị trầm cảm, stress nặng nề do thất bại trong đợt phỏng vấn tốt nghiệp vừa qua."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST5_WB_Q2",
+              "input": "multiple",
+              "question_text": "Mức độ ảnh hưởng của áp lực đồng trang lứa (Peer Pressure) khi thấy bạn bè xung quanh có việc làm xịn hoặc lương cao?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Không bị ảnh hưởng, tập trung hoàn toàn vào lộ trình và tốc độ phát triển của riêng mình."
+                },
+                {
+                  "value": "B",
+                  "text": "Có chút chạnh lòng nhưng lấy đó làm động lực để cố gắng hoàn thiện bản thân hơn."
+                },
+                {
+                  "value": "C",
+                  "text": "Áp lực nặng nề, thường xuyên tự ti và rơi vào trạng thái nghi ngờ năng lực cá nhân."
+                },
+                {
+                  "value": "D",
+                  "text": "Ghen tị sâu sắc, dẫn đến việc tự cô lập và cắt đứt liên lạc với nhóm bạn thân thiết."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST5_WB_Q3",
+              "input": "single",
+              "question_text": "Tình trạng sức khỏe thể chất và năng lượng sống của bạn trong giai đoạn vừa hoàn thành thủ tục ra trường vừa tìm việc?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Duy trì sức khỏe tốt, ăn ngủ điều độ và luôn tràn đầy năng lượng tích cực."
+                },
+                {
+                  "value": "B",
+                  "text": "Hơi mệt mỏi do lịch sinh hoạt đảo lộn, thỉnh thoảng sụt cân hoặc mất ngủ vì lo nghĩ."
+                },
+                {
+                  "value": "C",
+                  "text": "Sức khỏe suy kiệt, liên tục kiệt sức (burnout) và phải phụ thuộc vào các chất kích thích như cà phê, thuốc lá."
+                },
+                {
+                  "value": "D",
+                  "text": "Đã phải nhập viện hoặc điều trị y tế do bỏ bê bản thân và chịu áp lực quá tải kéo dài."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST5_WB_Q4",
+              "input": "multiple",
+              "question_text": "Khả năng quản lý tài chính cá nhân và mức độ tự chủ kinh tế của bạn ngay khi vừa tốt nghiệp?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đã tự chủ tài chính hoàn toàn nhờ công việc bán thời gian hoặc thực tập có lương, biết chi tiêu khoa học."
+                },
+                {
+                  "value": "B",
+                  "text": "Vẫn cần gia đình hỗ trợ một phần chi phí sinh hoạt nhưng đã biết tiết kiệm và hạn chế mua sắm vô tội vạ."
+                },
+                {
+                  "value": "C",
+                  "text": "Rơi vào khủng hoảng tài chính, nợ nần thẻ tín dụng hoặc các ứng dụng vay tiền do thói quen chi tiêu quá tay."
+                },
+                {
+                  "value": "D",
+                  "text": "Hoàn toàn phụ thuộc vào chu cấp của cha mẹ, lười tìm việc và không có ý niệm gì về giá trị đồng tiền."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST5_WB_Q5",
+              "input": "single",
+              "question_text": "Mức độ thích nghi của bạn với việc thay đổi môi trường sống và các mối quan hệ xã hội sau khi rời ghế nhà trường?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thích nghi tốt, nhanh chóng xây dựng được lối sống trưởng thành và mở rộng các mối quan hệ chất lượng."
+                },
+                {
+                  "value": "B",
+                  "text": "Hơi hụt hẫng vì không còn được tụ tập bạn bè đại học thường xuyên, nhưng đang dần quen với nhịp sống mới."
+                },
+                {
+                  "value": "C",
+                  "text": "Cảm thấy cô đơn, lạc lõng khi mối quan hệ bạn bè cũ thu hẹp lại mà chưa tìm được chỗ đứng trong môi trường mới."
+                },
+                {
+                  "value": "D",
+                  "text": "Hoàn toàn khủng hoảng, mất kết nối với xã hội và chọn cách đóng cửa ở nhà trốn tránh thực tại."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST5_AC",
+          "category_title": "Academic Progress",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST5_AC_Q1",
+              "input": "multiple",
+              "question_text": "Kết quả bảo vệ Đồ án tốt nghiệp / Khóa luận tốt nghiệp của bạn vừa qua?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Hoàn thành xuất sắc, hội đồng đánh giá cao, đủ điều kiện ra trường đúng hạn với tấm bằng đẹp."
+                },
+                {
+                  "value": "B",
+                  "text": "Đạt yêu cầu vừa đủ để tốt nghiệp, điểm số đồ án ở mức trung bình khá."
+                },
+                {
+                  "value": "C",
+                  "text": "Bị hoãn tốt nghiệp hoặc không đủ điều kiện bảo vệ đồ án do nợ môn/chưa đạt chuẩn đầu ra."
+                },
+                {
+                  "value": "D",
+                  "text": "Quyết định bỏ ngang khóa luận/đồ án sát ngày bảo vệ vì quá tải, chấp nhận nhận bằng muộn 1 năm."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST5_AC_Q2",
+              "input": "single",
+              "question_text": "Bạn tự đánh giá nền tảng tư duy học thuật tại trường giúp ích gì cho khả năng tự học kiến thức, kỹ năng mới sau này?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Giúp ích rất nhiều, nền tảng tư duy logic vững chắc giúp bạn tự nghiên cứu vấn đề mới rất nhanh."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ giúp ích phần nhỏ, thực tế đi làm bạn phải tự bơi và học theo kinh nghiệm thực chiến là chính."
+                },
+                {
+                  "value": "C",
+                  "text": "Không giúp được gì, kiến thức trường học đã lỗi thời so với tốc độ phát triển bên ngoài doanh nghiệp."
+                },
+                {
+                  "value": "D",
+                  "text": "Lối tư duy hàn lâm cũ kỹ của trường khiến bạn bị chậm nhịp và khó tiếp thu quy chuẩn thực chiến công ty."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST5_AC_Q3",
+              "input": "multiple",
+              "question_text": "Tình trạng đáp ứng các chứng chỉ chuẩn đầu ra bắt buộc (Ngoại ngữ, Tin học, Quốc phòng) của bạn?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đã hoàn thành và nộp đủ chứng chỉ từ sớm, hồ sơ xét tốt nghiệp hoàn toàn sạch đẹp."
+                },
+                {
+                  "value": "B",
+                  "text": "Vừa kịp hoàn thành sát nút kỳ hạn xét tốt nghiệp, suýt soát bị trễ."
+                },
+                {
+                  "value": "C",
+                  "text": "Đang bị kẹt lại chưa thể ra trường vì nợ chứng chỉ chuẩn đầu ra ngoại ngữ/tin học."
+                },
+                {
+                  "value": "D",
+                  "text": "Bị hủy kết quả xét tốt nghiệp đợt này do chứng chỉ ngoại ngữ nộp lên không hợp lệ/hết hạn."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST5_AC_Q4",
+              "input": "single",
+              "question_text": "Kế hoạch tiếp tục nâng cao trình độ học vấn hoặc tích lũy tri thức của bạn sau khi nhận bằng Cử nhân/Kỹ sư?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đã có kế hoạch rõ ràng để học lên cao học, săn học bổng du học hoặc thi các chứng chỉ quốc tế cấp cao."
+                },
+                {
+                  "value": "B",
+                  "text": "Dự định đi làm vài năm lấy trải nghiệm thực tế rồi mới quay lại học tiếp các khóa chuyên sâu."
+                },
+                {
+                  "value": "C",
+                  "text": "Chỉ muốn dừng lại ở việc đi làm kiếm tiền, không có ý định đầu tư thêm cho việc học hành chuyên sâu."
+                },
+                {
+                  "value": "D",
+                  "text": "Cảm thấy quá chán nản việc học, thề sẽ không bao giờ đụng vào sách vở hay thi cử thêm một lần nào nữa."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST5_AC_Q5",
+              "input": "multiple",
+              "question_text": "Khi nhìn lại toàn bộ hành trình học tập tại trường, mức độ hài lòng của bạn đối với giá trị tấm bằng tốt nghiệp nhận được là như thế nào?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất tự hào và biết ơn, chương trình học xứng đáng với chi phí và là bệ phóng vững chắc cho tương lai."
+                },
+                {
+                  "value": "B",
+                  "text": "Hài lòng ở mức trung bình, tấm bằng có giá trị về mặt thủ tục còn năng lực cốt lõi chủ yếu do bạn tự cày cuốc."
+                },
+                {
+                  "value": "C",
+                  "text": "Thấy tiếc nuối thời gian và tiền bạc, chương trình đào tạo chưa chất lượng như kỳ vọng ban đầu."
+                },
+                {
+                  "value": "D",
+                  "text": "Cực kỳ thất vọng, coi việc học đại học/cao đẳng vừa qua là một sai lầm lớn và làm mất đi phương hướng sự nghiệp."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        },
+        {
+          "category_id": "ST5_MO",
+          "category_title": "Motivation & Efficacy",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "M5_SQ1",
+              "input": "multiple",
+              "question_text": "Khi gặp khó trong công việc đầu tiên, bạn thường: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Chủ động tìm cách giải quyết",
+                  "text": "Chủ động tìm cách giải quyết"
+                },
+                {
+                  "value": "Tìm người hỗ trợ rồi xử lý",
+                  "text": "Tìm người hỗ trợ rồi xử lý"
+                },
+                {
+                  "value": "Làm theo hướng dẫn cấp trên",
+                  "text": "Làm theo hướng dẫn cấp trên"
+                },
+                {
+                  "value": "Cần thời gian để thích nghi rồi mới làm tốt",
+                  "text": "Cần thời gian để thích nghi rồi mới làm tốt"
+                },
+                {
+                  "value": "Dễ mất động lực",
+                  "text": "Dễ mất động lực"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "M5_SQ2",
+              "input": "multiple",
+              "question_text": "Khi bước vào môi trường mới, bạn thường: (Chọn tối đa 1)",
+              "max_select": 1,
+              "options": [
+                {
+                  "value": "Thích nghi nhanh",
+                  "text": "Thích nghi nhanh"
+                },
+                {
+                  "value": "Thích nghi dần theo thời gian",
+                  "text": "Thích nghi dần theo thời gian"
+                },
+                {
+                  "value": "Cần nhiều thời gian để quen",
+                  "text": "Cần nhiều thời gian để quen"
+                },
+                {
+                  "value": "Khó thích nghi",
+                  "text": "Khó thích nghi"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "M5_SQ3",
+              "input": "multiple",
+              "question_text": "Khi nghĩ về tương lai nghề nghiệp, bạn mô tả mình đúng nhất là: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Tôi đã có hướng nghề nghiệp khá rõ và đang chuẩn bị theo hướng đó",
+                  "text": "Tôi đã có hướng nghề nghiệp khá rõ và đang chuẩn bị theo hướng đó"
+                },
+                {
+                  "value": "Tôi có một vài hướng nhưng vẫn đang thử nghiệm thêm",
+                  "text": "Tôi có một vài hướng nhưng vẫn đang thử nghiệm thêm"
+                },
+                {
+                  "value": "Tôi chưa chắc về hướng đi và đang tìm kiếm thêm",
+                  "text": "Tôi chưa chắc về hướng đi và đang tìm kiếm thêm"
+                },
+                {
+                  "value": "Tôi cảm thấy chưa rõ mình phù hợp với hướng nào",
+                  "text": "Tôi cảm thấy chưa rõ mình phù hợp với hướng nào"
+                },
+                {
+                  "value": "Tôi đang cảm thấy khá áp lực vì chưa có định hướng rõ ràng",
+                  "text": "Tôi đang cảm thấy khá áp lực vì chưa có định hướng rõ ràng"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "M5_SQ4",
+              "input": "multiple",
+              "question_text": "Điều bạn ưu tiên nhất trong 1–3 năm tới: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Ổn định công việc",
+                  "text": "Ổn định công việc"
+                },
+                {
+                  "value": "Phát triển kỹ năng",
+                  "text": "Phát triển kỹ năng"
+                },
+                {
+                  "value": "Khám phá hướng đi phù hợp",
+                  "text": "Khám phá hướng đi phù hợp"
+                },
+                {
+                  "value": "Mở rộng quan hệ nghề nghiệp",
+                  "text": "Mở rộng quan hệ nghề nghiệp"
+                },
+                {
+                  "value": "Cân bằng cuộc sống",
+                  "text": "Cân bằng cuộc sống"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "M5_SQ5",
+              "input": "open",
+              "question_text": "Bạn nghĩ mình cần gì để tự tin hơn khi đi làm?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST5_CR",
+          "category_title": "Career & Direction",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "S5_SQ1",
+              "input": "multiple",
+              "question_text": "Trong 3 năm tới bạn ưu tiên: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Công việc đúng ngành",
+                  "text": "Công việc đúng ngành"
+                },
+                {
+                  "value": "Thu nhập ổn định",
+                  "text": "Thu nhập ổn định"
+                },
+                {
+                  "value": "Phát triển kỹ năng",
+                  "text": "Phát triển kỹ năng"
+                },
+                {
+                  "value": "Khám phá bản thân",
+                  "text": "Khám phá bản thân"
+                },
+                {
+                  "value": "Môi trường quốc tế",
+                  "text": "Môi trường quốc tế"
+                },
+                {
+                  "value": "Chưa xác định",
+                  "text": "Chưa xác định"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "S5_SQ2",
+              "input": "single",
+              "question_text": "Khi vào môi trường mới, bạn là người:",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Thích nghi nhanh"
+                },
+                {
+                  "value": "B",
+                  "text": "Quan sát rồi thích nghi"
+                },
+                {
+                  "value": "C",
+                  "text": "Cần hỗ trợ để thích nghi"
+                },
+                {
+                  "value": "D",
+                  "text": "Khó thích nghi"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "S5_SQ3",
+              "input": "multiple",
+              "question_text": "Khi nghĩ về tương lai, cảm xúc gần nhất của bạn là: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Hào hứng",
+                  "text": "Hào hứng"
+                },
+                {
+                  "value": "Tò mò",
+                  "text": "Tò mò"
+                },
+                {
+                  "value": "Lo lắng",
+                  "text": "Lo lắng"
+                },
+                {
+                  "value": "Mơ hồ",
+                  "text": "Mơ hồ"
+                },
+                {
+                  "value": "Tự tin",
+                  "text": "Tự tin"
+                },
+                {
+                  "value": "Áp lực",
+                  "text": "Áp lực"
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "S5_SQ4",
+              "input": "multiple",
+              "question_text": "Điều bạn muốn đạt được nhất trong giai đoạn tiếp theo là: (Chọn tối đa 2)",
+              "max_select": 2,
+              "options": [
+                {
+                  "value": "Ổn định",
+                  "text": "Ổn định"
+                },
+                {
+                  "value": "Phát triển năng lực",
+                  "text": "Phát triển năng lực"
+                },
+                {
+                  "value": "Khám phá hướng đi",
+                  "text": "Khám phá hướng đi"
+                },
+                {
+                  "value": "Quan hệ xã hội",
+                  "text": "Quan hệ xã hội"
+                },
+                {
+                  "value": "Cân bằng cuộc sống",
+                  "text": "Cân bằng cuộc sống"
+                }
+              ],
+              "allow_other": false
+            },
+            {
+              "slot": "Q5",
+              "id": "S5_SQ5",
+              "input": "open",
+              "question_text": "Bạn hình dung cuộc sống sau 3 năm như thế nào?",
+              "allow_other": false
+            }
+          ]
+        },
+        {
+          "category_id": "ST5_EX",
+          "category_title": "Extracurricular Engagement",
+          "questions": [
+            {
+              "slot": "Q1",
+              "id": "ST5_EX_Q1",
+              "input": "single",
+              "question_text": "Sau khi tốt nghiệp, bạn có tiếp tục đóng góp và kết nối với cộng đồng chuyên môn mà mình từng tham gia hay không?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Chủ động tham gia meetup, hội thảo chuyên ngành và đóng góp kiến thức cho cộng đồng."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ tham dự các sự kiện lớn khi có thời gian rảnh, chưa có đóng góp chủ động."
+                },
+                {
+                  "value": "C",
+                  "text": "Không tham gia gì, cảm thấy đã đủ kiến thức và không cần học hỏi thêm từ cộng đồng."
+                },
+                {
+                  "value": "D",
+                  "text": "Hoàn toàn tách biệt khỏi cộng đồng chuyên môn vì bận rộn với công việc và cuộc sống cá nhân."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q2",
+              "id": "ST5_EX_Q2",
+              "input": "multiple",
+              "question_text": "Bạn có ý định quay lại hỗ trợ, mentoring cho các thế hệ sinh viên khóa sau tại trường không?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất sẵn sàng, đã đăng ký hoặc chủ động liên hệ Khoa để tham gia chương trình cố vấn sinh viên."
+                },
+                {
+                  "value": "B",
+                  "text": "Muốn hỗ trợ nhưng chưa biết bắt đầu từ đâu, đợi khi ổn định công việc hơn sẽ xem xét."
+                },
+                {
+                  "value": "C",
+                  "text": "Không có hứng thú, thấy đó là trách nhiệm của nhà trường chứ không phải của cựu sinh viên."
+                },
+                {
+                  "value": "D",
+                  "text": "Còn đang bế tắc trong sự nghiệp cá nhân, chưa thể làm gương hay định hướng cho người khác."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q3",
+              "id": "ST5_EX_Q3",
+              "input": "single",
+              "question_text": "Tần suất bạn tham gia các hoạt động học tập liên tục (Continuous Learning) như khóa học online, hội thảo chuyên ngành?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Đều đặn mỗi tháng hoàn thành ít nhất một module học tập mới phù hợp với lộ trình sự nghiệp."
+                },
+                {
+                  "value": "B",
+                  "text": "Học khi có nhu cầu công việc cụ thể yêu cầu, không có thói quen học chủ động thường xuyên."
+                },
+                {
+                  "value": "C",
+                  "text": "Gần như không học thêm gì kể từ khi ra trường, cảm thấy kiến thức hiện tại là đủ."
+                },
+                {
+                  "value": "D",
+                  "text": "Đã đăng ký nhiều khóa học nhưng không hoàn thành khóa nào do thiếu kỷ luật và thời gian."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q4",
+              "id": "ST5_EX_Q4",
+              "input": "multiple",
+              "question_text": "Mạng lưới chuyên nghiệp (Professional Network) của bạn sau khi ra trường phát triển như thế nào?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Mở rộng đáng kể thông qua các dự án thực tế, sự kiện ngành và kết nối có chủ đích với chuyên gia."
+                },
+                {
+                  "value": "B",
+                  "text": "Chỉ dừng ở mạng lưới đồng nghiệp tại công ty hiện tại, chưa có kết nối ra bên ngoài."
+                },
+                {
+                  "value": "C",
+                  "text": "Thu hẹp lại so với thời sinh viên vì không còn thời gian giao lưu như trước."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn không tin vào giá trị của networking, chỉ tin vào năng lực bản thân để tiến xa trong sự nghiệp."
+                }
+              ],
+              "allow_other": true
+            },
+            {
+              "slot": "Q5",
+              "id": "ST5_EX_Q5",
+              "input": "single",
+              "question_text": "Mức độ chủ động xây dựng và cập nhật thương hiệu cá nhân trên các nền tảng mạng xã hội chuyên nghiệp (như LinkedIn) của bạn sau khi ra trường?",
+              "options": [
+                {
+                  "value": "A",
+                  "text": "Rất tích cực cập nhật hồ sơ, chia sẻ trải nghiệm công việc để thu hút các nhà tuyển dụng và cơ hội lớn."
+                },
+                {
+                  "value": "B",
+                  "text": "Có tài khoản nhưng chỉ để chế độ ẩn danh theo dõi tin tuyển dụng, lười viết bài hay cập nhật thông tin mới."
+                },
+                {
+                  "value": "C",
+                  "text": "Hoàn toàn bỏ bê, không mặn mà với việc thể hiện bản thân hay kết nối trực tuyến trên các mạng xã hội việc làm."
+                },
+                {
+                  "value": "D",
+                  "text": "Bạn cho rằng việc xây dựng thương hiệu cá nhân trực tuyến là sống ảo, làm màu và không mang lại giá trị thực tế."
+                }
+              ],
+              "allow_other": true
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

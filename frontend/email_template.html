@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <title>Student Assessment Report</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+    * { box-sizing: border-box; }
+    .hero-title {
+      font-family: 'Sora', 'Helvetica Neue', Arial, sans-serif;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      color: #34D399;
+      text-shadow:
+        0 1px 0 #ffffff,
+        0 2px 0 #ffffff,
+        0 3px 0 #f0fdf4,
+        0 4px 0 #dcfce7,
+        0 5px 0 #bbf7d0,
+        0 6px 0 rgba(167,243,208,0.60),
+        0 8px 14px rgba(0,0,0,0.14),
+        0 14px 28px rgba(0,0,0,0.07);
+    }
+    .sora { font-family: 'Sora', 'Helvetica Neue', Arial, sans-serif; }
+    .inter { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; }
+  </style>
+</head>
+<body style="margin:0;padding:0;
+             background:linear-gradient(160deg,#ECFDF5 0%,#D1FAE5 50%,#A7F3D0 100%);
+             font-family:'Inter','Segoe UI',system-ui,Arial,sans-serif;
+             -webkit-font-smoothing:antialiased;">
+
+<!-- ╔══════════════════════════════════════════════════════════════╗
+     ║                     OUTER WRAPPER                           ║
+     ╚══════════════════════════════════════════════════════════════╝ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0"
+  style="background:linear-gradient(160deg,#ECFDF5 0%,#D1FAE5 55%,#A7F3D0 100%);
+         padding:40px 16px 56px;">
+  <tr><td align="center">
+
+  <!-- ╔══════════════════════════════════════════════════════════════╗
+       ║                      MAIN CARD                              ║
+       ╚══════════════════════════════════════════════════════════════╝ -->
+  <table width="600" cellpadding="0" cellspacing="0" border="0"
+    style="max-width:600px;width:100%;
+           background:rgba(255,255,255,0.92);
+           backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+           border-radius:28px;overflow:hidden;
+           box-shadow:0 8px 40px rgba(16,185,129,0.12),
+                      0 2px 8px rgba(16,185,129,0.06),
+                      0 0 0 1px rgba(209,250,229,0.8);">
+
+    <!-- ══════════════════════════════════════════════════════════════
+         HEADER BLOCK  ·  Green gradient + 3D title + decorations
+    ═══════════════════════════════════════════════════════════════════ -->
+    <tr>
+      <td style="padding:0;overflow:hidden;background:
+                 linear-gradient(135deg,#00C896 0%,#10B981 45%,#34D399 100%);">
+
+        <!-- Decorative layer — floating spheres + wave + particles -->
+        <div style="position:relative;overflow:hidden;">
+
+          <!-- Large translucent spheres -->
+          <div style="position:absolute;top:-70px;right:-50px;
+                      width:220px;height:220px;border-radius:50%;
+                      background:rgba(255,255,255,0.07);
+                      box-shadow:0 0 60px rgba(255,255,255,0.04) inset;"></div>
+          <div style="position:absolute;bottom:-90px;left:-60px;
+                      width:260px;height:260px;border-radius:50%;
+                      background:rgba(255,255,255,0.05);"></div>
+          <div style="position:absolute;top:20px;left:30px;
+                      width:100px;height:100px;border-radius:50%;
+                      background:rgba(255,255,255,0.04);"></div>
+
+          <!-- Small glowing particle dots -->
+          <div style="position:absolute;top:36px;left:130px;
+                      width:9px;height:9px;border-radius:50%;
+                      background:rgba(255,255,255,0.28);
+                      box-shadow:0 0 10px rgba(255,255,255,0.4);"></div>
+          <div style="position:absolute;top:72px;right:140px;
+                      width:6px;height:6px;border-radius:50%;
+                      background:rgba(255,255,255,0.22);
+                      box-shadow:0 0 8px rgba(255,255,255,0.35);"></div>
+          <div style="position:absolute;top:140px;left:60px;
+                      width:5px;height:5px;border-radius:50%;
+                      background:rgba(255,255,255,0.18);"></div>
+          <div style="position:absolute;top:50px;right:70px;
+                      width:7px;height:7px;border-radius:50%;
+                      background:rgba(255,255,255,0.20);
+                      box-shadow:0 0 9px rgba(255,255,255,0.3);"></div>
+          <div style="position:absolute;bottom:80px;right:180px;
+                      width:5px;height:5px;border-radius:50%;
+                      background:rgba(255,255,255,0.25);"></div>
+
+          <!-- Leaf-inspired abstract shape (top-right) -->
+          <div style="position:absolute;top:10px;right:110px;
+                      width:60px;height:60px;
+                      background:rgba(255,255,255,0.06);
+                      border-radius:0 60% 0 60%;
+                      transform:rotate(30deg);"></div>
+          <div style="position:absolute;top:30px;right:95px;
+                      width:40px;height:40px;
+                      background:rgba(255,255,255,0.04);
+                      border-radius:0 50% 0 50%;
+                      transform:rotate(30deg);"></div>
+
+          <!-- Wave pattern bottom -->
+          <svg style="position:absolute;bottom:0;left:0;display:block;"
+               width="600" height="36" viewBox="0 0 600 36"
+               xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+            <path d="M0,18 C100,0 200,36 300,18 C400,0 500,36 600,18 L600,36 L0,36 Z"
+                  fill="rgba(255,255,255,0.08)"/>
+            <path d="M0,26 C120,10 240,38 360,24 C480,10 540,30 600,22 L600,36 L0,36 Z"
+                  fill="rgba(255,255,255,0.05)"/>
+          </svg>
+
+          <!-- ─── HEADER CONTENT ─── -->
+          <div style="position:relative;z-index:2;padding:50px 44px 52px;
+                      text-align:center;">
+
+            <!-- Platform badge -->
+            <table cellpadding="0" cellspacing="0" align="center"
+              style="margin-bottom:22px;">
+              <tr>
+                <td style="background:rgba(255,255,255,0.18);
+                           border:1.5px solid rgba(255,255,255,0.40);
+                           border-radius:999px;padding:6px 22px;">
+                  <span style="font-size:10.5px;font-weight:700;
+                                color:rgba(255,255,255,0.95);
+                                letter-spacing:0.22em;text-transform:uppercase;">
+                    ✦ &nbsp; Stage 2 &nbsp;·&nbsp; Identity &amp; Exploration &nbsp; ✦
+                  </span>
+                </td>
+              </tr>
+            </table>
+
+            <!-- ★ HEADLINE  — Sora 800 + 3D Gradient ★ -->
+            <div style="margin:0 0 6px;">
+              <div class="sora" style="font-size:11px;font-weight:600;
+                           color:rgba(255,255,255,0.70);
+                           letter-spacing:0.36em;text-transform:uppercase;
+                           margin-bottom:10px;">
+                PERSONAL DEVELOPMENT REPORT
+              </div>
+
+              <!-- Main 3D title -->
+              <h1 class="hero-title" style="margin:0;line-height:1.0;font-size:52px;font-weight:700;">
+                STUDENT<br/>ASSESSMENT
+              </h1>
+            </div>
+
+            <!-- Decorative line under title -->
+            <div style="margin:18px auto 20px;width:80px;height:3px;
+                        background:linear-gradient(90deg,transparent,
+                          rgba(255,255,255,0.7),transparent);
+                        border-radius:999px;"></div>
+
+            <!-- Student meta row -->
+            <p style="margin:0 0 16px;color:rgba(255,255,255,0.90);
+                       font-size:15px;font-weight:400;line-height:1.6;">
+              Dành cho &nbsp;
+              <strong style="color:#ffffff;font-size:16px;">{{student_name}}</strong>
+              &nbsp;·&nbsp; Mã SV:
+              <strong style="color:#ffffff;">{{student_id}}</strong>
+            </p>
+
+            <!-- Date chip -->
+            <table cellpadding="0" cellspacing="0" align="center">
+              <tr>
+                <td style="background:rgba(255,255,255,0.20);
+                           border-radius:999px;padding:5px 18px;
+                           border:1px solid rgba(255,255,255,0.30);">
+                  <span style="font-size:12px;color:rgba(255,255,255,0.92);
+                                font-weight:500;">
+                    📅 &nbsp; {{assessment_date}}
+                  </span>
+                </td>
+              </tr>
+            </table>
+
+          </div>
+          <!-- end header content -->
+        </div>
+        <!-- end decorative wrapper -->
+
+      </td>
+    </tr>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         INTRO BANNER
+    ═══════════════════════════════════════════════════════════════════ -->
+    <tr>
+      <td style="background:linear-gradient(135deg,#F0FDF4,#ECFDF5);
+                 border-bottom:1px solid #D1FAE5;padding:16px 44px;">
+        <p style="margin:0;font-size:13px;color:#065F46;
+                   line-height:1.75;text-align:center;">
+          🎓 &nbsp; Hệ thống đã hoàn tất phân tích kết quả đánh giá.
+          Báo cáo dưới đây được <strong>cá nhân hoá</strong> dành riêng cho bạn
+          để hỗ trợ hành trình phát triển tại Giai đoạn 2.
+        </p>
+      </td>
+    </tr>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         RADAR SCORES — 5 DIMENSIONS
+    ═══════════════════════════════════════════════════════════════════ -->
+    <tr>
+      <td style="padding:32px 44px 24px;background:#ffffff;">
+
+        <h2 style="margin:0 0 22px;font-family:'Sora','Inter',sans-serif;font-size:10.5px;font-weight:600;color:#059669;letter-spacing:0.20em;text-transform:uppercase;">
+          ◈ &nbsp; ĐIỂM RADAR 5 CHIỀU
+        </h2>
+
+        <!-- ── WB ── -->
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="margin-bottom:16px;padding-bottom:16px;
+                 border-bottom:1px solid #F0FDF4;">
+          <tr>
+            <td style="width:42px;padding-right:12px;vertical-align:middle;">
+              <div style="width:38px;height:38px;border-radius:11px;
+                          background:linear-gradient(135deg,#34D399,#10B981);
+                          text-align:center;line-height:38px;
+                          box-shadow:0 3px 8px rgba(16,185,129,0.30);">
+                <span style="font-size:10px;font-weight:800;color:#fff;
+                              letter-spacing:0.04em;">WB</span>
+              </div>
+            </td>
+            <td style="vertical-align:middle;padding-right:14px;">
+              <div style="font-size:13px;font-weight:600;color:#1e293b;
+                           margin-bottom:6px;">
+                Wellbeing &amp; Integration
+              </div>
+              <!-- Progress bar -->
+              <div style="background:#ECFDF5;border-radius:999px;
+                          height:8px;overflow:hidden;">
+                <div style="width:{{wb_score}}%;
+                            background:linear-gradient(90deg,#34D399,#6EE7B7);
+                            height:100%;border-radius:999px;
+                            box-shadow:0 0 8px rgba(52,211,153,0.5);"></div>
+              </div>
+            </td>
+            <td style="width:48px;text-align:right;vertical-align:middle;">
+              <span style="font-size:18px;font-weight:800;color:#10B981;">
+                {{wb_score}}
+              </span>
+            </td>
+            <td style="width:72px;text-align:right;vertical-align:middle;
+                        padding-left:8px;">
+              {{wb_tag}}
+            </td>
+          </tr>
+        </table>
+
+        <!-- ── AC ── -->
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="margin-bottom:16px;padding-bottom:16px;
+                 border-bottom:1px solid #F0FDF4;">
+          <tr>
+            <td style="width:42px;padding-right:12px;vertical-align:middle;">
+              <div style="width:38px;height:38px;border-radius:11px;
+                          background:linear-gradient(135deg,#6EE7B7,#34D399);
+                          text-align:center;line-height:38px;
+                          box-shadow:0 3px 8px rgba(52,211,153,0.28);">
+                <span style="font-size:10px;font-weight:800;color:#065F46;">AC</span>
+              </div>
+            </td>
+            <td style="vertical-align:middle;padding-right:14px;">
+              <div style="font-size:13px;font-weight:600;color:#1e293b;
+                           margin-bottom:6px;">
+                Academic Progress
+              </div>
+              <div style="background:#ECFDF5;border-radius:999px;
+                          height:8px;overflow:hidden;">
+                <div style="width:{{ac_score}}%;
+                            background:linear-gradient(90deg,#00C896,#34D399);
+                            height:100%;border-radius:999px;
+                            box-shadow:0 0 8px rgba(0,200,150,0.45);"></div>
+              </div>
+            </td>
+            <td style="width:48px;text-align:right;vertical-align:middle;">
+              <span style="font-size:18px;font-weight:800;color:#059669;">
+                {{ac_score}}
+              </span>
+            </td>
+            <td style="width:72px;text-align:right;vertical-align:middle;
+                        padding-left:8px;">
+              {{ac_tag}}
+            </td>
+          </tr>
+        </table>
+
+        <!-- ── MO ── -->
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="margin-bottom:16px;padding-bottom:16px;
+                 border-bottom:1px solid #F0FDF4;">
+          <tr>
+            <td style="width:42px;padding-right:12px;vertical-align:middle;">
+              <div style="width:38px;height:38px;border-radius:11px;
+                          background:linear-gradient(135deg,#10B981,#00C896);
+                          text-align:center;line-height:38px;
+                          box-shadow:0 3px 8px rgba(16,185,129,0.32);">
+                <span style="font-size:10px;font-weight:800;color:#fff;">MO</span>
+              </div>
+            </td>
+            <td style="vertical-align:middle;padding-right:14px;">
+              <div style="font-size:13px;font-weight:600;color:#1e293b;
+                           margin-bottom:6px;">
+                Motivation &amp; Efficacy
+              </div>
+              <div style="background:#ECFDF5;border-radius:999px;
+                          height:8px;overflow:hidden;">
+                <div style="width:{{mo_score}}%;
+                            background:linear-gradient(90deg,#10B981,#6EE7B7);
+                            height:100%;border-radius:999px;
+                            box-shadow:0 0 8px rgba(16,185,129,0.5);"></div>
+              </div>
+            </td>
+            <td style="width:48px;text-align:right;vertical-align:middle;">
+              <span style="font-size:18px;font-weight:800;color:#10B981;">
+                {{mo_score}}
+              </span>
+            </td>
+            <td style="width:72px;text-align:right;vertical-align:middle;
+                        padding-left:8px;">
+              {{mo_tag}}
+            </td>
+          </tr>
+        </table>
+
+        <!-- ── CR ── -->
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="margin-bottom:16px;padding-bottom:16px;
+                 border-bottom:1px solid #F0FDF4;">
+          <tr>
+            <td style="width:42px;padding-right:12px;vertical-align:middle;">
+              <div style="width:38px;height:38px;border-radius:11px;
+                          background:linear-gradient(135deg,#A7F3D0,#34D399);
+                          text-align:center;line-height:38px;
+                          box-shadow:0 3px 8px rgba(167,243,208,0.40);">
+                <span style="font-size:10px;font-weight:800;color:#065F46;">CR</span>
+              </div>
+            </td>
+            <td style="vertical-align:middle;padding-right:14px;">
+              <div style="font-size:13px;font-weight:600;color:#1e293b;
+                           margin-bottom:6px;">
+                Career &amp; Direction
+              </div>
+              <div style="background:#ECFDF5;border-radius:999px;
+                          height:8px;overflow:hidden;">
+                <div style="width:{{cr_score}}%;
+                            background:linear-gradient(90deg,#34D399,#A7F3D0);
+                            height:100%;border-radius:999px;
+                            box-shadow:0 0 8px rgba(52,211,153,0.4);"></div>
+              </div>
+            </td>
+            <td style="width:48px;text-align:right;vertical-align:middle;">
+              <span style="font-size:18px;font-weight:800;color:#059669;">
+                {{cr_score}}
+              </span>
+            </td>
+            <td style="width:72px;text-align:right;vertical-align:middle;
+                        padding-left:8px;">
+              {{cr_tag}}
+            </td>
+          </tr>
+        </table>
+
+        <!-- ── EX ── -->
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+            <td style="width:42px;padding-right:12px;vertical-align:middle;">
+              <div style="width:38px;height:38px;border-radius:11px;
+                          background:linear-gradient(135deg,#6EE7B7,#00C896);
+                          text-align:center;line-height:38px;
+                          box-shadow:0 3px 8px rgba(110,231,183,0.38);">
+                <span style="font-size:10px;font-weight:800;color:#fff;">EX</span>
+              </div>
+            </td>
+            <td style="vertical-align:middle;padding-right:14px;">
+              <div style="font-size:13px;font-weight:600;color:#1e293b;
+                           margin-bottom:6px;">
+                Extracurricular Engagement
+              </div>
+              <div style="background:#ECFDF5;border-radius:999px;
+                          height:8px;overflow:hidden;">
+                <div style="width:{{ex_score}}%;
+                            background:linear-gradient(90deg,#6EE7B7,#34D399);
+                            height:100%;border-radius:999px;
+                            box-shadow:0 0 8px rgba(110,231,183,0.45);"></div>
+              </div>
+            </td>
+            <td style="width:48px;text-align:right;vertical-align:middle;">
+              <span style="font-size:18px;font-weight:800;color:#10B981;">
+                {{ex_score}}
+              </span>
+            </td>
+            <td style="width:72px;text-align:right;vertical-align:middle;
+                        padding-left:8px;">
+              {{ex_tag}}
+            </td>
+          </tr>
+        </table>
+
+        <!-- Legend -->
+        <table cellpadding="0" cellspacing="0" style="margin-top:20px;">
+          <tr>
+            <td style="padding-right:10px;">
+              <span style="font-size:10.5px;color:#059669;
+                            background:#ECFDF5;border:1px solid #A7F3D0;
+                            border-radius:999px;padding:3px 11px;
+                            font-weight:600;">↑ Growth</span>
+            </td>
+            <td style="padding-right:10px;">
+              <span style="font-size:10.5px;color:#dc2626;
+                            background:#fef2f2;border:1px solid #fecaca;
+                            border-radius:999px;padding:3px 11px;
+                            font-weight:600;">⚠ Risk</span>
+            </td>
+            <td>
+              <span style="font-size:10.5px;color:#065F46;
+                            background:#F0FDF4;border:1px solid #D1FAE5;
+                            border-radius:999px;padding:3px 11px;
+                            font-weight:600;">≈ On Track</span>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+
+    <!-- ── separator ── -->
+    <tr>
+      <td style="padding:0 44px;">
+        <div style="height:1px;background:linear-gradient(90deg,
+          transparent,#A7F3D0 30%,#6EE7B7 70%,transparent);"></div>
+      </td>
+    </tr>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         DETECTION SUMMARY  ·  Growth / Risk / Mismatch
+    ═══════════════════════════════════════════════════════════════════ -->
+    <tr>
+      <td style="padding:26px 44px;background:#ffffff;">
+
+        <h2 style="margin:0 0 18px;font-family:'Sora','Inter',sans-serif;font-size:10.5px;font-weight:600;color:#059669;letter-spacing:0.20em;text-transform:uppercase;">
+          ◈ &nbsp; TỔNG QUAN PHÁT HIỆN
+        </h2>
+
+        <table width="100%" cellpadding="0" cellspacing="0">
+          <tr>
+
+            <!-- Growth -->
+            <td style="width:33%;padding-right:7px;vertical-align:top;">
+              <div style="background:linear-gradient(160deg,#F0FDF4,#ECFDF5);
+                          border:1px solid #A7F3D0;border-radius:16px;
+                          padding:18px 14px;text-align:center;
+                          box-shadow:0 4px 12px rgba(16,185,129,0.08);">
+                <div style="font-size:24px;margin-bottom:8px;">✨</div>
+                <div style="font-size:10px;font-weight:700;color:#059669;
+                            text-transform:uppercase;letter-spacing:0.14em;
+                            margin-bottom:8px;">Growth</div>
+                <div style="font-size:12px;color:#065F46;font-weight:600;
+                            line-height:1.6;">{{growth_dims}}</div>
+              </div>
+            </td>
+
+            <!-- Risk -->
+            <td style="width:33%;padding:0 3.5px;vertical-align:top;">
+              <div style="background:linear-gradient(160deg,#fff7ed,#fff1f2);
+                          border:1px solid #fed7aa;border-radius:16px;
+                          padding:18px 14px;text-align:center;
+                          box-shadow:0 4px 12px rgba(234,88,12,0.07);">
+                <div style="font-size:24px;margin-bottom:8px;">⚠️</div>
+                <div style="font-size:10px;font-weight:700;color:#ea580c;
+                            text-transform:uppercase;letter-spacing:0.14em;
+                            margin-bottom:8px;">Risk</div>
+                <div style="font-size:12px;color:#c2410c;font-weight:600;
+                            line-height:1.6;">{{risk_dims}}</div>
+              </div>
+            </td>
+
+            <!-- Mismatch -->
+            <td style="width:33%;padding-left:7px;vertical-align:top;">
+              <div style="background:linear-gradient(160deg,#F0FDF4,#F8FFFB);
+                          border:1px solid #6EE7B7;border-radius:16px;
+                          padding:18px 14px;text-align:center;
+                          box-shadow:0 4px 12px rgba(52,211,153,0.08);">
+                <div style="font-size:24px;margin-bottom:8px;">⚡</div>
+                <div style="font-size:10px;font-weight:700;color:#10B981;
+                            text-transform:uppercase;letter-spacing:0.14em;
+                            margin-bottom:8px;">Mismatch</div>
+                <div style="font-size:12px;color:#065F46;font-weight:600;
+                            line-height:1.6;">{{mismatch_dims}}</div>
+              </div>
+            </td>
+
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <!-- ── separator ── -->
+    <tr>
+      <td style="padding:0 44px;">
+        <div style="height:1px;background:linear-gradient(90deg,
+          transparent,#A7F3D0 30%,#6EE7B7 70%,transparent);"></div>
+      </td>
+    </tr>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         PERSONALIZED CARE PLAN
+    ═══════════════════════════════════════════════════════════════════ -->
+    <tr>
+      <td style="padding:26px 44px;background:#ffffff;">
+
+        <h2 style="margin:0 0 18px;font-family:'Sora','Inter',sans-serif;font-size:10.5px;font-weight:600;color:#059669;letter-spacing:0.20em;text-transform:uppercase;">
+          ◈ &nbsp; KẾ HOẠCH HỖ TRỢ CÁ NHÂN
+        </h2>
+
+        <!-- Glass card -->
+        <div style="background:linear-gradient(145deg,#F8FFFB 0%,#ECFDF5 100%);
+                    border:1px solid #A7F3D0;border-radius:16px;
+                    padding:26px 28px;
+                    box-shadow:0 4px 16px rgba(16,185,129,0.08),
+                               0 1px 0 rgba(167,243,208,0.5) inset;">
+
+          <!-- Top accent bar -->
+          <div style="height:3px;background:linear-gradient(90deg,#00C896,#34D399,#6EE7B7);
+                      border-radius:999px;margin-bottom:20px;"></div>
+
+          <p style="margin:0;font-size:13.5px;color:#1e293b;
+                     line-height:1.9;white-space:pre-wrap;">{{care_plan_content}}</p>
+
+        </div>
+      </td>
+    </tr>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         NEXT-STAGE QUESTIONS
+    ═══════════════════════════════════════════════════════════════════ -->
+    <tr>
+      <td style="padding:0 44px 28px;background:#ffffff;">
+
+        <h2 style="margin:0 0 18px;font-family:'Sora','Inter',sans-serif;font-size:10.5px;font-weight:600;color:#059669;letter-spacing:0.20em;text-transform:uppercase;">
+          ◈ &nbsp; CÂU HỎI CHUẨN BỊ CHO STAGE 3
+        </h2>
+
+        <!-- Q1 -->
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="margin-bottom:13px;background:#F8FFFB;
+                 border:1px solid #D1FAE5;border-radius:12px;padding:0;
+                 overflow:hidden;">
+          <tr>
+            <td style="width:42px;vertical-align:top;padding:16px 0 16px 16px;">
+              <div style="width:28px;height:28px;border-radius:8px;
+                          background:linear-gradient(135deg,#10B981,#34D399);
+                          text-align:center;line-height:28px;
+                          box-shadow:0 2px 6px rgba(16,185,129,0.30);">
+                <span style="font-size:10px;font-weight:800;color:#fff;">01</span>
+              </div>
+            </td>
+            <td style="padding:16px 16px 16px 12px;vertical-align:middle;">
+              <p style="margin:0;font-size:13px;color:#1e293b;line-height:1.7;">
+                {{next_q1}}
+              </p>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Q2 -->
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="margin-bottom:13px;background:#F8FFFB;
+                 border:1px solid #D1FAE5;border-radius:12px;overflow:hidden;">
+          <tr>
+            <td style="width:42px;vertical-align:top;padding:16px 0 16px 16px;">
+              <div style="width:28px;height:28px;border-radius:8px;
+                          background:linear-gradient(135deg,#34D399,#6EE7B7);
+                          text-align:center;line-height:28px;
+                          box-shadow:0 2px 6px rgba(52,211,153,0.30);">
+                <span style="font-size:10px;font-weight:800;color:#065F46;">02</span>
+              </div>
+            </td>
+            <td style="padding:16px 16px 16px 12px;vertical-align:middle;">
+              <p style="margin:0;font-size:13px;color:#1e293b;line-height:1.7;">
+                {{next_q2}}
+              </p>
+            </td>
+          </tr>
+        </table>
+
+        <!-- Q3 -->
+        <table width="100%" cellpadding="0" cellspacing="0"
+          style="background:#F8FFFB;border:1px solid #D1FAE5;
+                 border-radius:12px;overflow:hidden;">
+          <tr>
+            <td style="width:42px;vertical-align:top;padding:16px 0 16px 16px;">
+              <div style="width:28px;height:28px;border-radius:8px;
+                          background:linear-gradient(135deg,#00C896,#10B981);
+                          text-align:center;line-height:28px;
+                          box-shadow:0 2px 6px rgba(0,200,150,0.30);">
+                <span style="font-size:10px;font-weight:800;color:#fff;">03</span>
+              </div>
+            </td>
+            <td style="padding:16px 16px 16px 12px;vertical-align:middle;">
+              <p style="margin:0;font-size:13px;color:#1e293b;line-height:1.7;">
+                {{next_q3}}
+              </p>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         CTA BUTTON
+    ═══════════════════════════════════════════════════════════════════ -->
+    <tr>
+      <td style="padding:4px 44px 40px;background:#ffffff;text-align:center;">
+
+        <div style="height:1px;background:linear-gradient(90deg,
+          transparent,#A7F3D0 30%,#6EE7B7 70%,transparent);
+          margin-bottom:30px;"></div>
+
+        <!-- Button -->
+        <a href="{{cta_url}}"
+          style="display:inline-block;
+                 background:linear-gradient(135deg,#10B981 0%,#00C896 50%,#34D399 100%);
+                 color:#ffffff;font-size:15px;font-weight:700;
+                 text-decoration:none;padding:15px 48px;
+                 border-radius:12px;letter-spacing:0.04em;
+                 box-shadow:0 6px 20px rgba(16,185,129,0.38),
+                            0 2px 6px rgba(0,200,150,0.25),
+                            0 1px 0 rgba(255,255,255,0.2) inset;">
+          Xem Báo cáo Đầy đủ &nbsp; →
+        </a>
+
+        <p style="margin:14px 0 0;font-size:11.5px;color:#6B7280;">
+          Hoặc truy cập &nbsp;
+          <a href="{{cta_url}}"
+            style="color:#059669;text-decoration:none;font-weight:600;">
+            portal.studentdev.edu.vn
+          </a>
+        </p>
+
+      </td>
+    </tr>
+
+    <!-- ══════════════════════════════════════════════════════════════
+         FOOTER
+    ═══════════════════════════════════════════════════════════════════ -->
+    <tr>
+      <td style="background:linear-gradient(135deg,#065F46 0%,#059669 100%);
+                 padding:24px 44px;text-align:center;position:relative;
+                 overflow:hidden;">
+
+        <!-- Subtle footer wave decoration -->
+        <svg style="position:absolute;top:0;left:0;opacity:0.15;"
+             width="600" height="60" viewBox="0 0 600 60"
+             xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M0,30 C150,0 300,60 450,30 C525,15 570,40 600,30 L600,0 L0,0 Z"
+                fill="rgba(255,255,255,0.3)"/>
+        </svg>
+
+        <div style="position:relative;z-index:1;">
+          <p style="margin:0 0 5px;color:rgba(255,255,255,0.60);
+                     font-size:10.5px;letter-spacing:0.18em;text-transform:uppercase;">
+            Student Support &amp; Development Platform
+          </p>
+          <p style="margin:0;color:rgba(255,255,255,0.35);font-size:11px;">
+            Email này được tạo tự động &nbsp;·&nbsp; Vui lòng không reply trực tiếp
+          </p>
+        </div>
+
+      </td>
+    </tr>
+
+  </table>
+  <!-- ═══ end MAIN CARD ═══ -->
+
+  </td></tr>
+</table>
+<!-- ═══ end OUTER WRAPPER ═══ -->
+
+</body>
+</html>

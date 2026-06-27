@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard · EduAssess</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',system-ui,-apple-system,Segoe UI,sans-serif;background:#F7FFFC;color:#0F172A;min-height:100vh}
+    .brand{font-weight:800;letter-spacing:-.02em}
+    .brand span{color:#00C58E}
+    .topbar{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:center;gap:14px;
+      padding:0 clamp(16px,4vw,48px);background:rgba(255,255,255,.9);backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(0,197,142,.12)}
+    .logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#00C58E,#009E72);
+      display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;box-shadow:0 4px 12px rgba(0,197,142,.35)}
+    .topbar .right{margin-left:auto;display:flex;align-items:center;gap:14px}
+    .upd{font-size:.8rem;color:#94A3B8}
+    .btn{border:0;cursor:pointer;font-weight:700;border-radius:10px;font-family:inherit;transition:.15s;
+      background:#fff;color:#0F172A;border:1px solid #E2E8F0;padding:9px 16px;font-size:.85rem}
+    .btn:hover{border-color:#00C58E;color:#059669}
+
+    .main{max-width:1100px;margin:0 auto;padding:clamp(20px,4vw,40px)}
+    .page-head h1{font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
+    .page-head p{color:#64748B;font-size:.9rem;margin-top:6px}
+
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:22px}
+    @media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+    .stat{background:#fff;border-radius:16px;border:1px solid rgba(0,197,142,.12);
+      box-shadow:0 8px 24px rgba(15,23,42,.05);padding:18px 20px}
+    .stat .lbl{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#94A3B8}
+    .stat .num{font-size:2rem;font-weight:800;color:#0F172A;margin-top:6px;letter-spacing:-.02em}
+    .stat .num span{font-size:.9rem;color:#00C58E;font-weight:700}
+
+    .grid{display:grid;grid-template-columns:1fr;gap:18px;margin-top:18px}
+    @media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+    .card{background:#fff;border-radius:18px;border:1px solid rgba(0,197,142,.12);
+      box-shadow:0 8px 24px rgba(15,23,42,.05);padding:20px 22px}
+    .card h2{font-size:1rem;font-weight:800;letter-spacing:-.01em}
+    .card p.sub{font-size:.8rem;color:#94A3B8;margin:3px 0 14px}
+    .card.wide{grid-column:1/-1}
+    .chart-wrap{position:relative;height:300px}
+
+    .msg{margin-top:24px;padding:16px 18px;border-radius:12px;font-size:.9rem;display:none}
+    .msg.show{display:block}
+    .msg.err{background:#FEF2F2;color:#B91C1C;border:1px solid #FECACA}
+    .msg.load{background:#F0FDF9;color:#059669;border:1px solid #BBF7D0}
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="logo-icon">E</div>
+    <div class="brand">Edu<span>Assess</span> · Dashboard</div>
+    <div class="right">
+      <span class="upd" id="updated"></span>
+      <button class="btn" id="reloadBtn" type="button">↻ Tải lại</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-head">
+      <h1>Thống kê khảo sát sinh viên</h1>
+      <p>Số liệu tổng hợp từ các lượt sinh viên hoàn thành (submit) bài khảo sát.</p>
+    </div>
+
+    <div class="msg load" id="loadingMsg">Đang tải dữ liệu…</div>
+    <div class="msg err" id="errMsg"></div>
+
+    <div class="stats" id="stats" style="display:none">
+      <div class="stat"><div class="lbl">Sinh viên đã nộp</div><div class="num" id="s_total">–</div></div>
+      <div class="stat"><div class="lbl">Tổng phản hồi (dòng)</div><div class="num" id="s_resp">–</div></div>
+      <div class="stat"><div class="lbl">Số giai đoạn</div><div class="num" id="s_stages">–</div></div>
+      <div class="stat"><div class="lbl">Số năm học</div><div class="num" id="s_years">–</div></div>
+    </div>
+
+    <div class="grid" id="charts" style="display:none">
+      <div class="card">
+        <h2>Sinh viên theo giai đoạn</h2>
+        <p class="sub">Số lượt nộp ở mỗi Stage</p>
+        <div class="chart-wrap"><canvas id="chStage"></canvas></div>
+      </div>
+      <div class="card">
+        <h2>Theo năm học</h2>
+        <p class="sub">Phân bố theo Year Level</p>
+        <div class="chart-wrap"><canvas id="chYear"></canvas></div>
+      </div>
+      <div class="card wide">
+        <h2>Lượt nộp theo ngày</h2>
+        <p class="sub">Xu hướng số sinh viên hoàn thành khảo sát</p>
+        <div class="chart-wrap"><canvas id="chDate"></canvas></div>
+      </div>
+      <div class="card wide">
+        <h2>Theo học kỳ</h2>
+        <p class="sub">Phân bố theo Semester</p>
+        <div class="chart-wrap"><canvas id="chSem"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const TEAL = "#00C58E", NAVY = "#1B365D";
+const PALETTE = ["#00C58E","#1B365D","#2A9D8F","#F4A261","#E76F51","#6366F1","#0EA5E9","#A855F7"];
+const $ = (id) => document.getElementById(id);
+let charts = {};
+
+Chart.defaults.font.family = "'Inter',system-ui,sans-serif";
+Chart.defaults.color = "#64748B";
+
+function makeBar(canvasId, labels, data, color){
+  if (charts[canvasId]) charts[canvasId].destroy();
+  charts[canvasId] = new Chart($(canvasId), {
+    type: "bar",
+    data: { labels, datasets: [{ data, backgroundColor: color, borderRadius: 8, maxBarThickness: 64 }] },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: "#EEF2F6" } },
+                x: { grid: { display: false } } }
+    }
+  });
+}
+
+function makeDoughnut(canvasId, labels, data){
+  if (charts[canvasId]) charts[canvasId].destroy();
+  charts[canvasId] = new Chart($(canvasId), {
+    type: "doughnut",
+    data: { labels, datasets: [{ data, backgroundColor: PALETTE, borderWidth: 2, borderColor: "#fff" }] },
+    options: { responsive: true, maintainAspectRatio: false, cutout: "62%",
+      plugins: { legend: { position: "bottom", labels: { padding: 14, usePointStyle: true } } } }
+  });
+}
+
+function makeLine(canvasId, labels, data){
+  if (charts[canvasId]) charts[canvasId].destroy();
+  charts[canvasId] = new Chart($(canvasId), {
+    type: "line",
+    data: { labels, datasets: [{ data, borderColor: TEAL, backgroundColor: "rgba(0,197,142,.12)",
+      fill: true, tension: .35, pointBackgroundColor: TEAL, pointRadius: 4 }] },
+    options: { responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: "#EEF2F6" } },
+                x: { grid: { display: false } } } }
+  });
+}
+
+async function load(){
+  $("errMsg").classList.remove("show");
+  $("loadingMsg").classList.add("show");
+  try {
+    const r = await fetch("/dashboard/stats", { cache: "no-store" });
+    const d = await r.json();
+    if (!r.ok || d.error) throw new Error(d.error || ("HTTP " + r.status));
+
+    $("s_total").textContent  = d.total;
+    $("s_resp").textContent   = d.responses;
+    $("s_stages").textContent = d.stages_count;
+    $("s_years").textContent  = d.years_count;
+
+    makeBar("chStage", d.by_stage.map(x=>x.label), d.by_stage.map(x=>x.count), TEAL);
+    makeDoughnut("chYear", d.by_year.map(x=>x.label), d.by_year.map(x=>x.count));
+    makeLine("chDate", d.by_date.map(x=>x.date), d.by_date.map(x=>x.count));
+    makeBar("chSem", d.by_semester.map(x=>x.label), d.by_semester.map(x=>x.count), NAVY);
+
+    $("stats").style.display = "grid";
+    $("charts").style.display = "grid";
+    $("loadingMsg").classList.remove("show");
+    $("updated").textContent = "Cập nhật: " + new Date().toLocaleTimeString("vi-VN");
+  } catch (e) {
+    $("loadingMsg").classList.remove("show");
+    $("errMsg").textContent = "Không tải được dữ liệu: " + e.message;
+    $("errMsg").classList.add("show");
+  }
+}
+
+$("reloadBtn").addEventListener("click", load);
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+[project]
+name = "student-assessment"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.138.0",
+    "fpdf2>=2.8.7",
+    "matplotlib>=3.11.0",
+    "numpy>=2.4.6",
+    "openai>=2.43.0",
+    "pandas>=3.0.3",
+    "pdf-renderer>=0.3",
+    "pydantic[email]>=2.13.4",
+    "python-dotenv>=1.2.2",
+    "typing-inspect>=0.9.0",
+    "uvicorn>=0.49.0",
+]

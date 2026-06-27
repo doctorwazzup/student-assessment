@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Student Assessment · EduAssess</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Pin Babel 7: bản v8 mặc định JSX automatic runtime (sinh ra import react/jsx-runtime),
+       gây lỗi khi chạy inline => trang trắng. Babel 7 mặc định classic runtime (React.createElement). -->
+  <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Preflight off so Tailwind utilities don't reset the existing custom design.
+    tailwind.config = { corePlugins: { preflight: false } };
+  </script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',system-ui,sans-serif;background:#F7FFFC;min-height:100vh;min-height:100dvh;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+
+    /* blobs */
+    .bg-layer{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+    .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.11;animation:blobF 10s ease-in-out infinite}
+    .b1{width:700px;height:700px;background:radial-gradient(circle,#00C58E,#009E72);top:-280px;right:-180px}
+    .b2{width:520px;height:520px;background:radial-gradient(circle,#6366F1,#8B5CF6);bottom:-120px;left:-180px;animation-delay:-5s}
+    .b3{width:380px;height:380px;background:radial-gradient(circle,#F59E0B,#FBBF24);top:35%;left:42%;animation-delay:-3s;opacity:.06}
+    @keyframes blobF{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(40px,-40px) scale(1.08)}66%{transform:translate(-30px,30px) scale(.95)}}
+
+    /* stars */
+    .star{position:fixed;border-radius:50%;background:#00C58E;pointer-events:none;animation:twinkle ease-in-out infinite}
+    @keyframes twinkle{0%,100%{opacity:.1;transform:scale(1)}50%{opacity:.4;transform:scale(1.6)}}
+
+    /* float */
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-18px) rotate(5deg)}}
+    @keyframes floatR{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(18px) rotate(-5deg)}}
+    @keyframes floatSpin{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-14px) rotate(12deg)}}
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.4}}
+    @keyframes modalIn{from{transform:scale(.82) translateY(36px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+    @keyframes slideUp{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+    /* nav */
+    .nav-bar{position:sticky;top:0;z-index:100;height:68px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);border-bottom:1px solid rgba(0,197,142,.1);display:flex;align-items:center;padding:0 clamp(16px,4vw,56px);gap:28px}
+    .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+    .nav-logo-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#00C58E,#009E72);display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,197,142,.35)}
+    .nav-logo-text{font-family:'Poppins',sans-serif;font-weight:800;font-size:1.05rem;color:#0F172A;letter-spacing:-.02em}
+    .nav-logo-text span{color:#00C58E}
+    .nav-steps{display:flex;align-items:center;flex:1;justify-content:center}
+    .step-item{display:flex;align-items:center;gap:7px}
+    .step-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:700;font-size:.72rem;transition:all .3s;flex-shrink:0}
+    .s-active{background:linear-gradient(135deg,#00C58E,#009E72);color:#fff;box-shadow:0 3px 10px rgba(0,197,142,.4)}
+    .s-done{background:#DCFCE7;color:#059669}
+    .s-pending{background:#F1F5F9;color:#94A3B8}
+    .step-lbl{font-size:.7rem;font-weight:600;font-family:'Poppins',sans-serif}
+    .sl-active{color:#059669}.sl-done{color:#10B981}.sl-pending{color:#CBD5E1}
+    .step-line{width:32px;height:2px;margin:0 4px;border-radius:1px;transition:background .3s}
+    .sl-done-line{background:#00C58E}.sl-pending-line{background:#E2E8F0}
+    .nav-actions{display:flex;align-items:center;gap:10px;flex-shrink:0}
+    .nav-icon-btn{width:36px;height:36px;border-radius:10px;border:1.5px solid #E2E8F0;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;color:#64748B}
+    .nav-icon-btn:hover{border-color:#00C58E;color:#00C58E;background:#F0FDF9}
+    .nav-avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#00C58E,#6366F1);display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Poppins',sans-serif;font-weight:700;font-size:.85rem;cursor:pointer;box-shadow:0 2px 8px rgba(0,197,142,.3)}
+
+    /* hero */
+    .hero-wrap{position:relative;padding:52px clamp(16px,5vw,80px) 36px;text-align:center;overflow:hidden}
+    .hero-stage-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(0,197,142,.08),rgba(0,158,114,.04));border:1px solid rgba(0,197,142,.25);border-radius:999px;padding:7px 18px;margin-bottom:18px}
+    .hero-badge-dot{width:7px;height:7px;border-radius:50%;background:#00C58E;animation:pulse 2s ease-in-out infinite}
+    .hero-badge-text{font-size:.75rem;font-weight:700;color:#059669;letter-spacing:.02em;font-family:'Be Vietnam Pro',sans-serif}
+    .hero-title{font-family:'Poppins',sans-serif;font-size:clamp(2.6rem,7vw,5.5rem);font-weight:900;line-height:.92;letter-spacing:-.04em;background:linear-gradient(135deg,#00C58E 0%,#00A878 35%,#008B6A 65%,#004D40 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 4px 20px rgba(0,197,142,.2));margin-bottom:12px}
+    .hero-sub{font-size:.9rem;color:#64748B;font-weight:500;letter-spacing:.18em;margin-bottom:24px;font-family:'Poppins',sans-serif;text-transform:uppercase}
+    .badge-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+    .badge-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border-radius:999px;padding:7px 16px;box-shadow:0 4px 14px rgba(0,0,0,.07),0 1px 3px rgba(0,0,0,.04);font-size:.76rem;font-weight:700;color:#374151;font-family:'Poppins',sans-serif;transition:all .2s;cursor:default}
+    .badge-chip:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+    .hero-float{position:absolute;pointer-events:none}
+    .prog-pill{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:999px;padding:7px 16px 7px 10px;box-shadow:0 4px 16px rgba(0,0,0,.07);font-size:.75rem;font-weight:600;color:#475569;font-family:'Poppins',sans-serif}
+
+    /* main layout */
+    .main-wrap{max-width:1180px;margin:0 auto;padding:0 clamp(14px,3.5vw,48px) 60px;display:grid;grid-template-columns:1fr 292px;gap:22px;align-items:start}
+    @media(max-width:880px){.main-wrap{grid-template-columns:1fr}.sidebar{order:1}}
+
+    /* cards */
+    .glass-card{background:rgba(255,255,255,.94);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.96);box-shadow:0 8px 32px rgba(0,197,142,.06),0 2px 8px rgba(0,0,0,.04);border-radius:24px;overflow:hidden;margin-bottom:22px;animation:slideUp .4s ease}
+    .card-hdr{background:linear-gradient(135deg,#0D4A33,#065F46,#047857);padding:17px 24px;display:flex;align-items:center;gap:14px}
+    .card-hdr-icon{width:38px;height:38px;border-radius:11px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .card-hdr-step{color:rgba(255,255,255,.4);font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-family:'Poppins',sans-serif}
+    .card-hdr-num{color:#6EE7B7;font-size:.76rem;font-weight:800;letter-spacing:.15em;font-family:'Poppins',sans-serif}
+    .card-hdr-title{color:#fff;font-weight:700;font-size:.92rem;letter-spacing:.06em;text-transform:uppercase;font-family:'Poppins',sans-serif;margin-top:2px}
+    .card-body{padding:26px 24px}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .info-span2{grid-column:span 2}
+    @media(max-width:580px){.info-grid{grid-template-columns:1fr}.info-span2{grid-column:span 1}}
+
+    /* fields */
+    .field-grp{margin-bottom:18px}
+    .field-lbl{font-size:.67rem;font-weight:700;color:#94A3B8;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px;display:block;font-family:'Be Vietnam Pro',sans-serif}
+    .field-wrap{position:relative}
+    .field-ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:#94A3B8;transition:color .2s;display:flex;align-items:center}
+    .field-inp{width:100%;padding:13px 14px 13px 44px;border:1.5px solid #E2E8F0;border-radius:14px;font-family:'Be Vietnam Pro',sans-serif;font-size:.88rem;color:#1E293B;background:#FAFFFE;outline:none;transition:all .25s;font-weight:500}
+    .field-inp::placeholder{color:#CBD5E1;font-weight:400}
+    .field-inp:focus{border-color:#00C58E;background:#fff;box-shadow:0 0 0 4px rgba(0,197,142,.08)}
+    .field-sel{width:100%;padding:13px 38px 13px 44px;border:1.5px solid #E2E8F0;border-radius:14px;font-family:'Be Vietnam Pro',sans-serif;font-size:.88rem;color:#1E293B;background:#FAFFFE;outline:none;appearance:none;-webkit-appearance:none;cursor:pointer;transition:all .25s;font-weight:500;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center}
+    .field-sel:focus{border-color:#00C58E;background-color:#fff;box-shadow:0 0 0 4px rgba(0,197,142,.08)}
+    .field-sel:disabled{opacity:.4;cursor:not-allowed}
+
+    /* options */
+    .opt-row{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;border-radius:14px;border:1.5px solid #E8EDF2;cursor:pointer;transition:all .2s;background:#fff;user-select:none;width:100%;text-align:left}
+    .opt-row:hover{border-color:#00C58E;background:#F0FDF9;transform:translateX(3px)}
+    .opt-row.sel{border-color:#00C58E;background:linear-gradient(135deg,#F0FDF9,#DCFCE7);box-shadow:0 3px 12px rgba(0,197,142,.14)}
+    .opt-row.sel:hover{transform:none}
+    .opt-bdg{flex-shrink:0;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:800;font-size:.68rem;background:#F1F5F9;color:#64748B;transition:all .2s}
+    .opt-row.sel .opt-bdg{background:linear-gradient(135deg,#00C58E,#009E72);color:#fff;box-shadow:0 3px 8px rgba(0,197,142,.4)}
+    .opt-txt{font-size:.855rem;color:#475569;line-height:1.6;padding-top:3px;transition:color .2s;font-weight:400}
+    .opt-row.sel .opt-txt{color:#065F46;font-weight:500}
+    /* option E: ô tự điền */
+    .opt-custom-inp{width:100%;margin-top:-2px;padding:12px 15px;border:1.5px solid #00C58E;border-radius:14px;font-family:'Be Vietnam Pro',sans-serif;font-size:.855rem;color:#1E293B;background:#fff;outline:none;resize:vertical;min-height:64px;line-height:1.6;transition:box-shadow .2s;box-shadow:0 3px 12px rgba(0,197,142,.1)}
+    .opt-custom-inp::placeholder{color:#94A3B8}
+    .opt-custom-inp:focus{box-shadow:0 0 0 4px rgba(0,197,142,.1)}
+    /* multiple-choice: ô vuông tick */
+    .opt-row .opt-check{flex-shrink:0;width:22px;height:22px;border-radius:7px;border:2px solid #CBD5E1;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all .2s;color:transparent}
+    .opt-row.sel .opt-check{background:linear-gradient(135deg,#00C58E,#009E72);border-color:#00C58E;color:#fff}
+    .opt-row.disabled{opacity:.5;cursor:not-allowed}
+    .opt-row.disabled:hover{border-color:#E8EDF2;background:#fff;transform:none}
+    /* tag loại câu hỏi + gợi ý chọn tối đa */
+    .q-type-tag{display:inline-flex;align-items:center;gap:5px;font-family:'Poppins',sans-serif;font-weight:700;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:#F0FDF9;color:#059669;border:1px solid #C7EDD8}
+    .q-hint{font-size:.72rem;color:#94A3B8;font-weight:500;font-family:'Be Vietnam Pro',sans-serif;margin-top:2px}
+    .core-q-card{border:1.5px solid #C7EDD8 !important;background:linear-gradient(180deg,#F6FFFC,#FAFFFE) !important}
+    /* dải phân cách phần câu hỏi định hướng nghề nghiệp trong cùng mục Career & Direction */
+    .career-sub-div{display:flex;align-items:center;gap:12px;margin:6px 0 18px;color:#059669;font-family:'Poppins',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase}
+    .career-sub-div::before,.career-sub-div::after{content:'';flex:1;height:1.5px;background:linear-gradient(to right,transparent,#C7EDD8,transparent)}
+
+    /* ── KIỂU THANG ĐIỂM (scale) — mỗi đáp án 1 dòng ── */
+    .scale-row{display:flex;flex-direction:column;gap:8px}
+    .scale-pill{width:100%;display:flex;flex-direction:row;align-items:flex-start;gap:12px;text-align:left;padding:13px 15px;border:1.5px solid #E8EDF2;border-radius:14px;background:#fff;cursor:pointer;transition:all .2s}
+    .scale-pill:hover{border-color:#00C58E;background:#F0FDF9}
+    .scale-pill.sel{border-color:#00C58E;background:linear-gradient(135deg,#F0FDF9,#DCFCE7);box-shadow:0 3px 12px rgba(0,197,142,.14)}
+    .scale-pill-lbl{flex-shrink:0;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:800;font-size:.68rem;background:#F1F5F9;color:#64748B}
+    .scale-pill.sel .scale-pill-lbl{background:linear-gradient(135deg,#00C58E,#009E72);color:#fff}
+    .scale-pill-txt{font-size:.855rem;color:#475569;line-height:1.6;padding-top:3px}
+    .scale-pill.sel .scale-pill-txt{color:#065F46;font-weight:500}
+    .scale-other{align-self:flex-start;margin-top:2px;padding:8px 14px;border-radius:10px;border:1.5px dashed #C7EDD8;background:#fff;color:#059669;font-family:'Be Vietnam Pro',sans-serif;font-weight:600;font-size:.8rem;cursor:pointer;transition:all .2s}
+    .scale-other:hover{border-color:#00C58E;background:#F0FDF9}
+    .scale-other.sel{border-style:solid;border-color:#00C58E;background:linear-gradient(135deg,#F0FDF9,#DCFCE7);color:#065F46}
+
+    /* q card */
+    .q-num{width:30px;height:30px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:800;font-size:.7rem;color:#fff}
+    .q-txt{color:#0F172A;font-weight:500;font-size:.92rem;line-height:1.65;padding-top:4px;font-family:'Inter',sans-serif}
+
+    /* cat card */
+    .cat-card{border-radius:24px;overflow:hidden;margin-bottom:20px;box-shadow:0 4px 24px rgba(0,0,0,.05);border:1px solid rgba(0,0,0,.03);background:#fff;animation:slideUp .4s ease}
+    .cat-hdr{padding:18px 24px;display:flex;align-items:center;gap:14px;background:linear-gradient(135deg,#0D4A33,#065F46,#047857)}
+    .cat-short{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Poppins',sans-serif;font-weight:900;font-size:.72rem;letter-spacing:.08em;color:#fff;flex-shrink:0}
+    .cat-stage-lbl{color:rgba(255,255,255,.4);font-size:.56rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-family:'Poppins',sans-serif}
+    .cat-title{color:#fff;font-weight:700;font-size:.92rem;font-family:'Poppins',sans-serif;margin-top:2px}
+    .cat-body{padding:24px}
+
+    /* cta */
+    .cta-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:32px}
+    .cta-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:17px 52px;border:none;border-radius:18px;background:linear-gradient(135deg,#00C58E,#009E72);color:#fff;font-family:'Poppins',sans-serif;font-weight:700;font-size:1rem;letter-spacing:.02em;cursor:pointer;transition:all .3s;box-shadow:0 8px 32px rgba(0,197,142,.35),0 2px 8px rgba(0,0,0,.08);min-width:240px}
+    .cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,197,142,.45)}
+    .cta-btn:active{transform:translateY(0)}
+    .cta-btn:disabled{background:#E2E8F0;color:#94A3B8;cursor:not-allowed;box-shadow:none;transform:none}
+
+    /* sidebar */
+    .sidebar-card{background:#fff;border-radius:20px;padding:18px 20px;box-shadow:0 4px 20px rgba(0,0,0,.05);border:1px solid rgba(0,197,142,.07);margin-bottom:14px;transition:transform .25s,box-shadow .25s}
+    .sidebar-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.08)}
+    .sidebar-title{font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:.82rem;color:#0F172A;margin-bottom:8px;display:flex;align-items:center;gap:7px}
+    .sidebar-txt{font-size:.8rem;color:#64748B;line-height:1.75;font-family:'Inter',sans-serif}
+
+    /* modal */
+    .modal-ov{position:fixed;inset:0;z-index:9999;background:rgba(6,95,70,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:24px}
+    .modal-card{background:#fff;border-radius:32px;padding:52px 44px;max-width:460px;width:100%;text-align:center;box-shadow:0 32px 80px rgba(0,197,142,.25),0 8px 24px rgba(0,0,0,.08);animation:modalIn .5s cubic-bezier(.34,1.56,.64,1)}
+
+    /* empty state */
+    .empty-state{background:#fff;border-radius:24px;padding:52px 32px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.04);border:1.5px dashed #C7EDD8;margin-bottom:22px}
+
+    /* note lines */
+    .note-line{height:1.5px;background:linear-gradient(to right,transparent,#E2E8F0 15%,#E2E8F0 85%,transparent);border-radius:1px;margin-bottom:10px}
+
+    /* scrollbar */
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:#f8fffe}
+    ::-webkit-scrollbar-thumb{background:linear-gradient(#00C58E,#009E72);border-radius:3px}
+
+    /* progress bar */
+    .prog-bar-bg{height:8px;background:#F1F5F9;border-radius:999px;overflow:hidden}
+    .prog-bar-fill{height:100%;background:linear-gradient(90deg,#00C58E,#009E72);border-radius:999px;transition:width .5s ease}
+
+    /* ── MOBILE OPTIMIZATIONS (≤640px) ── */
+    @media (max-width:640px){
+      /* keep inputs ≥16px so iOS Safari doesn't auto-zoom on focus */
+      .field-inp,.field-sel,.opt-custom-inp{font-size:16px}
+      .field-sel{padding-right:40px}
+      /* bigger, finger-friendly tap targets in the nav */
+      .nav-icon-btn{width:42px;height:42px}
+      .nav-avatar{width:42px;height:42px}
+      /* tighten hero text so it never overflows narrow screens */
+      .hero-sub{font-size:.72rem;letter-spacing:.08em}
+      .hero-stage-badge{max-width:100%}
+      .hero-badge-text{font-size:.68rem;line-height:1.4}
+      .badge-chip{font-size:.72rem;padding:6px 13px}
+      /* tighter column gap when stacked */
+      .main-wrap{gap:16px}
+      /* let the thank-you modal scroll on short viewports instead of clipping */
+      .modal-ov{overflow-y:auto;padding:16px;align-items:flex-start}
+      .modal-card{margin:auto}
+      /* options: comfortable tap area, drop the hover slide on touch */
+      .opt-row{padding:14px 14px}
+      .opt-row:hover{transform:none}
+    }
+    /* devices without hover (touch): neutralize hover-only motion */
+    @media (hover:none){
+      .opt-row:hover,.sidebar-card:hover,.badge-chip:hover,.cta-btn:hover{transform:none}
+    }
+    /* iPhone notch / Dynamic Island: keep content clear of side insets (esp. landscape),
+       while preserving the wide responsive padding on larger screens */
+    @supports (padding:max(0px)){
+      .nav-bar{padding-left:max(clamp(16px,4vw,56px),env(safe-area-inset-left));padding-right:max(clamp(16px,4vw,56px),env(safe-area-inset-right))}
+      .main-wrap{padding-left:max(clamp(14px,3.5vw,48px),env(safe-area-inset-left));padding-right:max(clamp(14px,3.5vw,48px),env(safe-area-inset-right))}
+    }
+
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useMemo, useEffect } = React;
+
+    /* ── PASTE YOUR GOOGLE APPS SCRIPT URL HERE ── */
+    const SCRIPT_URL = 'https://sheetdb.io/api/v1/hm91zo248umos';
+
+    /* ── OPTION "E" (TỰ ĐIỀN) HELPERS ──
+       Mỗi câu hỏi luôn có thêm 1 lựa chọn E để người dùng tự nhập câu trả lời.
+       Đáp án E được mã hoá trong cùng 1 chuỗi answer dạng "E:::<nội dung>" để
+       không phải đổi cấu trúc state hiện có. */
+    const E_PREFIX = 'E:::';
+    function answerLabel(v)      { return typeof v === 'string' && v.indexOf(E_PREFIX) === 0 ? 'E' : (typeof v === 'string' ? v : ''); }
+    function answerCustomText(v) { return typeof v === 'string' && v.indexOf(E_PREFIX) === 0 ? v.slice(E_PREFIX.length) : ''; }
+    function isAnswered(v) {
+      if (!v) return false;
+      if (typeof v === 'object') return (v.sel && v.sel.length > 0) || (v.other && v.other.trim() !== ''); // chọn nhiều
+      if (v.indexOf(E_PREFIX) === 0) return v.slice(E_PREFIX.length).trim() !== '';
+      return true;
+    }
+    // Giá trị dùng để export ra link: với E lấy nội dung tự điền, còn lại lấy nhãn (A/B/C/D)
+    function answerForExport(v) {
+      if (!v) return '';
+      if (typeof v === 'object') { // chọn nhiều
+        const parts = (v.sel || []).slice();
+        if (v.other && v.other.trim()) parts.push('Khác: ' + v.other.trim());
+        return parts.join(' | ');
+      }
+      if (v.indexOf(E_PREFIX) === 0) { const t = v.slice(E_PREFIX.length).trim(); return t ? 'E: ' + t : 'E'; }
+      return v;
+    }
+
+    /* ── KIỂU CÂU HỎI TRỘN LẪN TRONG TỪNG MỤC ──
+       Mỗi câu trong cùng một mục luân phiên 2 kiểu, đều hiện hết lựa chọn (mỗi đáp án 1 dòng):
+       scale = chọn 1   |   multi = chọn nhiều (checkbox)
+       Lưu nhãn A/B/C/D (hoặc E:::text); riêng multi lưu {sel,other}. */
+    function styleForQuestion(catIdx, qIdx) {
+      return (((catIdx || 0) + (qIdx || 0)) % 2 === 0) ? 'scale' : 'multi';  /* xen kẽ chọn-1 / chọn-nhiều */
+    }
+
+    /* ── HELPERS ── */
+    function parseSemester(s) {
+      const m = s && s.match(/\d+/); return m ? parseInt(m[0]) : null;
+    }
+    function parseProgramYears(p) {
+      const m = p && p.match(/\d+/); return m ? parseInt(m[0]) : null;
+    }
+    function getStageId(semester, years) {
+      if (years === 3) return ({1:1,2:2,3:3,4:3,5:4,6:5})[semester] ?? null;
+      if (years === 4) return ({1:1,2:2,3:2,4:2,5:3,6:3,7:4,8:5})[semester] ?? null;
+      return null;
+    }
+
+    /* ── ALL STAGES DATA ── */
+    const STAGES = [
+    {
+      stage: 1,
+      stage_name: "Nhập môn & Thích nghi (Integration Stage)",
+      categories: [
+        {
+          category_id: "ST1_WB",
+          category_title: "Wellbeing & Integration (Thích nghi và chuyển đổi)",
+          short: "WB",
+          questions: [
+            {
+              question_number: 1,
+              question_text: "Trải nghiệm kết nối bạn bè tại trường của bạn hiện nay thế nào?",
+              options: [
+                { label: "A", text: "Bạn đã có một nhóm bạn thân hợp cạ để cùng học và chơi." },
+                { label: "B", text: "Bạn có nói chuyện xã giao với vài bạn nhưng chưa thực sự thân." },
+                { label: "C", text: "Bạn hầu như đi học một mình và chưa kết nối được với ai." },
+                { label: "D", text: "Bạn chủ động chọn lối sống khép kín, không có nhu cầu kết nối bạn bè ở trường." }
+              ]
+            },
+            {
+              question_number: 2,
+              question_text: "Mức độ thích nghi của bạn với không gian và nhịp sống đại học?",
+              options: [
+                { label: "A", text: "Hoàn toàn thoải mái và nhanh chóng hòa nhập." },
+                { label: "B", text: "Gặp chút khó khăn lúc đầu nhưng hiện tại đã ổn định." },
+                { label: "C", text: "Cảm thấy lạc lõng, mệt mỏi với môi trường mới này." },
+                { label: "D", text: "Bạn cảm thấy môi trường này không phù hợp và đang có ý định chuyển trường hoặc nghỉ học." }
+              ]
+            },
+            {
+              question_number: 3,
+              question_text: "Khi gặp áp lực hoặc stress ở trường, bạn thường làm gì?",
+              options: [
+                { label: "A", text: "Chủ động chia sẻ với bạn bè, người thân hoặc Cố vấn học tập." },
+                { label: "B", text: "Tự tìm cách giải tỏa bằng sở thích cá nhân (nghe nhạc, xem phim)." },
+                { label: "C", text: "Chịu đựng một mình và cố gắng đợi nó tự qua đi." },
+                { label: "D", text: "Trốn tránh thực tế bằng cách cúp học, chơi game hoặc sa đà vào các thói quen không lành mạnh." }
+              ]
+            },
+            {
+              question_number: 4,
+              question_text: "Bạn tự đánh giá sự cân bằng thời gian cá nhân hiện tại như thế nào?",
+              options: [
+                { label: "A", text: "Rất tốt, bạn vẫn có thời gian nghỉ ngơi đầy đủ bên cạnh việc học." },
+                { label: "B", text: "Tạm ổn, đôi khi hơi thiếu ngủ vào những tuần chạy bài tập." },
+                { label: "C", text: "Đang bị đảo lộn hoàn toàn, lịch sinh hoạt cá nhân bị quá tải." },
+                { label: "D", text: "Bạn đang phải đi làm thêm quá nhiều nên hoàn toàn không có thời gian nghỉ ngơi hay tự học." }
+              ]
+            },
+            {
+              question_number: 5,
+              question_text: "Bạn có biết các kênh hỗ trợ tâm lý hoặc dịch vụ sinh viên của trường ở đâu không?",
+              options: [
+                { label: "A", text: "Biết rất rõ và sẵn sàng tìm đến nếu có nhu cầu." },
+                { label: "B", text: "Có nghe qua nhưng chưa tìm hiểu kỹ vị trí hay cách liên hệ." },
+                { label: "C", text: "Hoàn toàn không biết trường có các dịch vụ hỗ trợ này." },
+                { label: "D", text: "Bạn biết nhưng không tin tưởng vào hiệu quả của các phòng hỗ trợ tại trường." }
+              ]
+            }
+          ]
+        },
+        {
+          category_id: "ST1_AC",
+          category_title: "Academic Progress",
+          short: "AC",
+          questions: [
+            {
+              question_number: 1,
+              question_text: "Khả năng tiếp thu kiến thức các môn học trên lớp của bạn?",
+              options: [
+                { label: "A", text: "Hiểu bài tốt và bắt kịp hoàn toàn tốc độ của giảng viên." },
+                { label: "B", text: "Đôi chỗ nghe chưa kịp, cần về nhà đọc lại tài liệu mới hiểu." },
+                { label: "C", text: "Hoàn toàn bị ngợp và không theo kịp nhịp độ bài giảng." },
+                { label: "D", text: "Bạn cảm thấy kiến thức quá nặng và không có động lực để cố gắng hiểu bài." }
+              ]
+            },
+            {
+              question_number: 2,
+              question_text: "Tình trạng hoàn thành và nộp bài tập về nhà của bạn?",
+              options: [
+                { label: "A", text: "Luôn hoàn thành đầy đủ và nộp đúng hạn hoặc sớm hơn." },
+                { label: "B", text: "Đôi khi nộp sát giờ, có một vài bài làm chưa thực sự chỉn chu." },
+                { label: "C", text: "Thường xuyên trễ hạn hoặc bỏ qua không nộp một số bài tập." },
+                { label: "D", text: "Bạn không quan tâm đến bài tập và gần như bỏ trống toàn bộ." }
+              ]
+            },
+            {
+              question_number: 3,
+              question_text: "Phương pháp ghi chép và tập trung của bạn trong giờ học?",
+              options: [
+                { label: "A", text: "Tập trung cao độ, ghi chép đầy đủ các từ khóa quan trọng." },
+                { label: "B", text: "Chỉ ghi chép những phần giảng viên yêu cầu bắt buộc." },
+                { label: "C", text: "Dễ bị xao nhãng bởi điện thoại hoặc nói chuyện riêng trong lớp." },
+                { label: "D", text: "Bạn thường xuyên cúp học hoặc vào lớp chỉ để ngủ, không ghi chép gì." }
+              ]
+            },
+            {
+              question_number: 4,
+              question_text: "Bạn đánh giá mức độ hiểu rõ quy chế học tập (tín chỉ, cách tính GPA) của mình như thế nào?",
+              options: [
+                { label: "A", text: "Nắm rất rõ và tự tính toán được lộ trình học tập của mình." },
+                { label: "B", text: "Chỉ biết sơ bộ qua buổi phổ biến đầu năm, chưa đọc kỹ văn bản." },
+                { label: "C", text: "Khá mơ hồ, không rõ điều kiện để đạt hoặc bị cảnh cáo học vụ." },
+                { label: "D", text: "Bạn hoàn toàn không biết gì về hệ thống tín chỉ và quy chế đào tạo của trường." }
+              ]
+            },
+            {
+              question_number: 5,
+              question_text: "Khi gặp bài tập đại cương khó, giải pháp của bạn là gì?",
+              options: [
+                { label: "A", text: "Chủ động thảo luận với nhóm, hỏi bạn giỏi hoặc hỏi giảng viên." },
+                { label: "B", text: "Tự tra cứu trên mạng và cố gắng tự giải quyết một mình." },
+                { label: "C", text: "Để đó từ từ tính hoặc đợi chép bài của các bạn khác." },
+                { label: "D", text: "Bạn bỏ cuộc ngay lập tức và chấp nhận mất điểm phần bài tập đó." }
+              ]
+            }
+          ]
+        },
+        {
+          category_id: "ST1_MO",
+          category_title: "Motivation & Efficacy",
+          short: "MO",
+          questions: [
+            {
+              question_number: 1,
+              question_text: "Trạng thái tinh thần của bạn trước mỗi ngày đến trường?",
+              options: [
+                { label: "A", text: "Hào hứng, tràn đầy năng lượng và tò mò về kiến thức mới." },
+                { label: "B", text: "Bình thường, đi học như một thói quen và trách nhiệm." },
+                { label: "C", text: "Uể oải, chán nản và thường có tâm lý muốn cúp học." },
+                { label: "D", text: "Bạn hoàn toàn chán ghét việc đến trường và luôn tìm lý do để nghỉ học." }
+              ]
+            },
+            {
+              question_number: 2,
+              question_text: "Nếu nhận một điểm số kém ở bài kiểm tra đầu tiên, bạn sẽ phản ứng ra sao?",
+              options: [
+                { label: "A", text: "Chủ động xem lại lỗi sai và tìm giải pháp cải thiện điểm số." },
+                { label: "B", text: "Buồn nhưng tự nhủ sẽ cố gắng cày cuốc lại ở bài sau." },
+                { label: "C", text: "Suy sụp, nghi ngờ năng lực bản thân và có ý định buông xuôi." },
+                { label: "D", text: "Bạn không quan tâm đến điểm số và mặc kệ kết quả ra sao thì ra." }
+              ]
+            },
+            {
+              question_number: 3,
+              question_text: "Mức độ chủ động tự lên kế hoạch học tập mỗi tuần của bạn?",
+              options: [
+                { label: "A", text: "Có thời khóa biểu tự học rõ ràng và nghiêm túc tuân thủ." },
+                { label: "B", text: "Chỉ tự học khi sát ngày thi hoặc khi có bài tập bắt buộc." },
+                { label: "C", text: "Không có kế hoạch, học theo ngẫu hứng hoặc nước đến chân mới nhảy." },
+                { label: "D", text: "Bạn không bao giờ tự học và hoàn toàn phụ thuộc vào việc nghe giảng trên lớp." }
+              ]
+            },
+            {
+              question_number: 4,
+              question_text: "Thói quen tìm kiếm và đọc tài liệu mở rộng ngoài giáo trình chính thức?",
+              options: [
+                { label: "A", text: "Thường xuyên chủ động tìm đọc thêm sách, bài báo liên quan." },
+                { label: "B", text: "Thỉnh thoảng có đọc nếu giảng viên trực tiếp gợi ý trên lớp." },
+                { label: "C", text: "Chỉ đọc đúng những slide bài giảng được phát để đi thi." },
+                { label: "D", text: "Bạn không đọc bất kỳ tài liệu nào, kể cả slide bài giảng của môn học." }
+              ]
+            },
+            {
+              question_number: 5,
+              question_text: "Khi gặp một bài toán hoặc vấn đề tư duy trừu tượng khó, xu hướng của bạn là gì?",
+              options: [
+                { label: "A", text: "Cảm thấy kích thích, kiên trì tìm nhiều cách giải bằng được." },
+                { label: "B", text: "Thử giải một vài cách, nếu không ra sẽ đi tìm lời giải có sẵn." },
+                { label: "C", text: "Lập tức bỏ qua vì thấy nó quá rắc rối và mất thời gian." },
+                { label: "D", text: "Bạn không bao giờ động vào những bài tập khó và luôn đợi người khác làm hộ." }
+              ]
+            }
+          ]
+        },
+        {
+          category_id: "ST1_CR",
+          category_title: "Career & Direction",
+          short: "CR",
+          questions: [
+            {
+              question_number: 1,
+              question_text: "Mức độ hiểu biết và hứng thú của bạn với ngành học hiện tại?",
+              options: [
+                { label: "A", text: "Hiểu rất rõ và cảm thấy cực kỳ phù hợp với bản thân." },
+                { label: "B", text: "Thấy bình thường, học vì đây là ngành hot dễ xin việc." },
+                { label: "C", text: "Mông lung, thấy ngành này không giống như bạn tưởng tượng." }
+              ]
+            },
+            {
+              question_number: 2,
+              question_text: "Quyết định lựa chọn ngành học này xuất phát từ đâu?",
+              options: [
+                { label: "A", text: "Hoàn toàn do bạn tự tìm hiểu, đam mê và lựa chọn." },
+                { label: "B", text: "Do gia đình định hướng hoặc nộp nguyện vọng theo số đông bạn bè." },
+                { label: "C", text: "Chọn đại vì không biết bản thân thích gì hoặc do bị lọt sàn nguyện vọng khác." }
+              ]
+            },
+            {
+              question_number: 3,
+              question_text: "Bạn có thường xuyên theo dõi thị trường tuyển dụng của ngành mình học không?",
+              options: [
+                { label: "A", text: "Có, bạn hay đọc tin tuyển dụng để biết doanh nghiệp đang cần kỹ năng gì." },
+                { label: "B", text: "Thỉnh thoảng có nghe ngóng qua báo chí hoặc các anh chị khóa trước." },
+                { label: "C", text: "Chưa từng tìm hiểu, bạn nghĩ việc đó là của sinh viên năm cuối." }
+              ]
+            },
+            {
+              question_number: 4,
+              question_text: "Sự ủng hộ của gia đình đối với hành trình học tập hiện tại của bạn?",
+              options: [
+                { label: "A", text: "Gia đình hoàn toàn tin tưởng, ủng hộ và đồng hành." },
+                { label: "B", text: "Gia đình có chu cấp tài chính nhưng ít khi trao đổi về ngành học." },
+                { label: "C", text: "Gia đình thường xuyên tạo áp lực hoặc không hài lòng với ngành bạn chọn." }
+              ]
+            },
+            {
+              question_number: 5,
+              question_text: "Bạn đã có hình dung sơ bộ về vị trí công việc cụ thể sau khi ra trường chưa?",
+              options: [
+                { label: "A", text: "Đã nhắm sẵn 1–2 vị trí cụ thể và đang hướng theo đó." },
+                { label: "B", text: "Chỉ biết chung chung tên ngành chứ chưa rõ ra làm chức danh gì." },
+                { label: "C", text: "Hoàn toàn chưa có ý niệm gì về công việc tương lai." }
+              ]
+            }
+          ]
+        },
+        {
+          category_id: "ST1_EX",
+          category_title: "Extracurricular Engagement",
+          short: "EX",
+          questions: [
+            {
+              question_number: 1,
+              question_text: "Bạn có ý định hoặc đã gia nhập câu lạc bộ (CLB) nào ở trường chưa?",
+              options: [
+                { label: "A", text: "Đã ứng tuyển và trở thành thành viên chính thức của ít nhất một CLB." },
+                { label: "B", text: "Đang tìm hiểu và dự định sẽ đăng ký vào thời gian tới." },
+                { label: "C", text: "Không có ý định tham gia CLB, chỉ muốn tập trung học." }
+              ]
+            },
+            {
+              question_number: 2,
+              question_text: "Mức độ tham gia các hoạt động chào đón, tuần định hướng (Orientation Week) của bạn?",
+              options: [
+                { label: "A", text: "Tham gia đầy đủ, tích cực tương tác và kết nối." },
+                { label: "B", text: "Có đi tham gia cho biết nhưng chỉ ngồi nghe thụ động." },
+                { label: "C", text: "Cúp hoặc bỏ qua vì thấy không thiết thực." }
+              ]
+            },
+            {
+              question_number: 3,
+              question_text: "Tần suất bạn cập nhật thông tin sự kiện, thông báo trên các trang chính thức của trường?",
+              options: [
+                { label: "A", text: "Hàng ngày, bạn luôn nắm bắt thông tin rất nhanh chóng." },
+                { label: "B", text: "Vài ngày mới xem một lần hoặc khi có bạn bè gắn thẻ (tag)." },
+                { label: "C", text: "Hầu như không xem, chỉ khi nào có lịch thi mới vào tra cứu." }
+              ]
+            },
+            {
+              question_number: 4,
+              question_text: "Thái độ của bạn đối với các hoạt động phong trào Đoàn - Hội xã hội?",
+              options: [
+                { label: "A", text: "Thấy bổ ích, là cơ hội tốt để rèn luyện kỹ năng mềm." },
+                { label: "B", text: "Tham gia nếu được cộng điểm rèn luyện hoặc bắt buộc." },
+                { label: "C", text: "Thấy phiền phức, tốn thời gian và không mang lại giá trị." }
+              ]
+            },
+            {
+              question_number: 5,
+              question_text: "Bạn có sẵn sàng tham gia các giải đấu thể thao hoặc đêm nhạc giao lưu của trường không?",
+              options: [
+                { label: "A", text: "Sẵn sàng đăng ký tham gia hoặc đi cổ vũ nhiệt tình." },
+                { label: "B", text: "Có thể đi nếu có nhóm bạn rủ cùng đi." },
+                { label: "C", text: "Không quan tâm, thời gian đó bạn thích ở nhà hơn." }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+
+    /* STAGE 2 */
+    {
+      stage: 2,
+      stage_name: "Identity Stage (Khám phá & Định hình bản thân)",
+      categories: [
+        { category_id:"ST2_WB", category_title:"Wellbeing & Integration", short:"WB", questions:[
+          { question_number:1, question_text:"Mối quan hệ của bạn với các bạn học cùng lớp hiện tại ra sao?", options:[
+            {label:"A",text:"Gắn kết chặt chẽ, có nhóm cạ cứng cùng chạy deadline môn cơ sở ngành."},
+            {label:"B",text:"Hòa đồng với mọi người nhưng chỉ dừng ở mức xã giao trên lớp."},
+            {label:"C",text:"Thấy khó tìm tiếng nói chung, có xu hướng cô lập bản thân."},
+            {label:"D",text:"Bạn chủ động chọn lối sống khép kín, không có nhu cầu giao lưu hay kết bạn."}]},
+          { question_number:2, question_text:"Bạn đối diện với áp lực đồng lứa khi thấy các bạn xung quanh quá giỏi như thế nào?", options:[
+            {label:"A",text:"Coi đó là động lực tích cực để bản thân cố gắng đuổi kịp."},
+            {label:"B",text:"Hơi tự ti một chút nhưng cố gắng tập trung vào lộ trình cá nhân."},
+            {label:"C",text:"Cực kỳ stress, lo âu kéo dài và luôn cảm thấy bản thân kém cỏi."},
+            {label:"D",text:"Bạn thờ ơ, không quan tâm đến thành tích hay việc người khác làm gì."}]},
+          { question_number:3, question_text:"Tình trạng sức khỏe thể chất phục vụ cho việc học tập của bạn?", options:[
+            {label:"A",text:"Rất tốt, bạn duy trì ăn uống và tập luyện điều độ."},
+            {label:"B",text:"Bình thường, thỉnh thoảng mệt mỏi do thức đêm làm bài tập lớn."},
+            {label:"C",text:"Thường xuyên suy nhược, bỏ bữa hoặc mất ngủ kéo dài."},
+            {label:"D",text:"Sức khỏe chuyển biến xấu nghiêm trọng, đang phải điều trị y tế dài ngày."}]},
+          { question_number:4, question_text:"Khi gặp khó khăn lớn trong cuộc sống, ai là người bạn cởi mở chia sẻ đầu tiên?", options:[
+            {label:"A",text:"Bạn bè thân, gia đình hoặc chủ động hẹn gặp Cố vấn học tập."},
+            {label:"B",text:"Bạn tự tìm cách giải quyết và ít khi nói cho người khác biết."},
+            {label:"C",text:"Không có ai để chia sẻ, chọn cách im lặng và dồn nén cảm xúc."},
+            {label:"D",text:"Bạn tìm đến các cộng đồng hoặc người lạ trên mạng xã hội để giải tỏa ẩn danh."}]},
+          { question_number:5, question_text:"Mức độ ổn định của môi trường sống hiện tại (Ký túc xá/Nhà trọ/Gia đình) đối với bạn?", options:[
+            {label:"A",text:"Rất an toàn, yên tĩnh và hỗ trợ tốt cho việc tự học."},
+            {label:"B",text:"Thỉnh thoảng có bất tiện (ồn ào, xa trường) nhưng vẫn khắc phục được."},
+            {label:"C",text:"Thường xuyên xảy ra xung đột hoặc không gian quá tệ gây ảnh hưởng tâm lý."},
+            {label:"D",text:"Môi trường sống cực kỳ bất ổn, bạn đang phải liên tục chuyển chỗ ở hoặc tìm nơi mới."}]}
+        ]},
+        { category_id:"ST2_AC", category_title:"Academic Progress", short:"AC", questions:[
+          { question_number:1, question_text:"Kết quả điểm số (GPA) học kỳ gần nhất có đạt mục tiêu bạn đề ra?", options:[
+            {label:"A",text:"Đạt hoặc vượt mức mong đợi, duy trì phong độ tốt."},
+            {label:"B",text:"Đạt mức trung bình, vừa đủ điều kiện qua môn nhưng chưa bứt phá."},
+            {label:"C",text:"Bị tụt điểm nghiêm trọng, có môn phải học lại/thi lại."},
+            {label:"D",text:"Bạn không hề quan tâm đến GPA và cũng không đặt mục tiêu điểm số."}]},
+          { question_number:2, question_text:"Trải nghiệm và vai trò của bạn khi làm việc nhóm trong các bài tập lớn cơ sở ngành?", options:[
+            {label:"A",text:"Chủ động gánh vác trách nhiệm (Leader) hoặc hoàn thành xuất sắc phần việc."},
+            {label:"B",text:"Phối hợp tròn vai, hoàn thành đúng tiến độ nhóm giao."},
+            {label:"C",text:"Nhóm thường xuyên xảy ra xung đột, chia việc không đều hoặc bạn phải gánh team một mình."},
+            {label:"D",text:"Bạn hoàn toàn thụ động, biến mất và để mặc các thành viên khác làm hộ."}]},
+          { question_number:3, question_text:"Tần suất tương tác, phát biểu đóng góp xây dựng bài của bạn trong giờ học?", options:[
+            {label:"A",text:"Thường xuyên chủ động phát biểu hoặc đặt câu hỏi phản biện cho giảng viên."},
+            {label:"B",text:"Chỉ trả lời khi giảng viên chỉ định đích danh hoặc khi làm bài thuyết trình nhóm."},
+            {label:"C",text:"Ngồi nghe thụ động, hầu như không bao giờ phát biểu trên lớp."},
+            {label:"D",text:"Thường xuyên làm việc riêng hoặc làm bài môn khác, không chú ý bài giảng."}]},
+          { question_number:4, question_text:"Khả năng tự nghiên cứu, làm tiểu luận hoặc bài tập lớn cá nhân của bạn?", options:[
+            {label:"A",text:"Biết cách tìm kiếm tài liệu chuẩn, lập luận logic cấu trúc bài tốt."},
+            {label:"B",text:"Làm ở mức cơ bản, chủ yếu xào nấu dữ liệu từ mạng Internet."},
+            {label:"C",text:"Gặp khó khăn lớn, không biết cấu trúc bài viết và tìm nguồn tham khảo ở đâu."},
+            {label:"D",text:"Phụ thuộc hoàn toàn vào các công cụ AI hoặc sao chép bài của người khác để nộp."}]},
+          { question_number:5, question_text:"Mức độ hiểu và nắm vững kiến thức các môn nền tảng ngành vừa qua của bạn?", options:[
+            {label:"A",text:"Nắm rất chắc bản chất, có thể ứng dụng làm project thực tế nhỏ."},
+            {label:"B",text:"Học thuộc lòng để đi thi, thi xong không còn nhớ rõ bản chất."},
+            {label:"C",text:"Hoàn toàn lơ mơ, không hiểu mối liên hệ giữa các môn học."},
+            {label:"D",text:"Cảm thấy kiến thức quá nặng, mất gốc hoàn toàn và không thể tiếp thu."}]}
+        ]},
+        { category_id:"ST2_MO", category_title:"Motivation & Efficacy", short:"MO", questions:[
+          { question_number:1, question_text:"Bạn có mục tiêu học tập cụ thể cho từng môn học ở kỳ này không?", options:[
+            {label:"A",text:"Có mục tiêu điểm số và kế hoạch hành động chi tiết rõ ràng."},
+            {label:"B",text:"Chỉ có mục tiêu chung chung là cố gắng qua môn, không bị rớt."},
+            {label:"C",text:"Không có mục tiêu, học tới đâu hay tới đó."},
+            {label:"D",text:"Không có mục tiêu học tập vì bạn đang dự định bảo lưu hoặc đổi ngành."}]},
+          { question_number:2, question_text:"Khi gặp một bài tập khó bạn làm gì?", options:[
+            {label:"A",text:"Kiên trì mò lỗi, thử nhiều giải pháp cho đến khi tự giải quyết được mới thôi."},
+            {label:"B",text:"Thử sửa vài lần, nếu không được sẽ đi hỏi bạn hoặc chép lời giản."},
+            {label:"C",text:"Cảm thấy bất lực, chán nản và vứt xó bài tập đó luôn."},
+            {label:"D",text:"Sử dụng ChatGPT hoặc Copilot để sửa lỗi tự động mà không cần hiểu bản chất tại sao sai."}]},
+          { question_number:3, question_text:"Cách thức bạn quản lý thời gian để phân bổ cho các deadline?", options:[
+            {label:"A",text:"Chia nhỏ công việc, hoàn thành từng phần mỗi ngày, không để dồn."},
+            {label:"B",text:"Thỉnh thoảng bạn vẫn phải thức đêm chạy deadline vào tuần cuối kỳ."},
+            {label:"C",text:"Thường xuyên trễ hạn, nước đến chân mới nhảy và làm bài đối phó."},
+            {label:"D",text:"Hoàn toàn mất kiểm soát, bỏ lỡ nhiều deadline và chấp nhận bị điểm kém/điểm 0."}]},
+          { question_number:4, question_text:"Mức độ tự tin vào tư duy logic và năng lực giải quyết vấn đề của bản thân bạn?", options:[
+            {label:"A",text:"Rất tự tin, luôn sẵn sàng đối mặt với bài tập thách thức."},
+            {label:"B",text:"Ở mức trung bình, làm tốt bài quen thuộc nhưng sợ bài lạ."},
+            {label:"C",text:"Rất tự ti, luôn nghĩ bản thân không đủ thông minh để học ngành này."},
+            {label:"D",text:"Bạn nghi ngờ bản thân đã chọn sai ngành học và hoàn toàn bất lực trước các bài toán logic."}]},
+          { question_number:5, question_text:"Sự duy trì động lực học tập của bạn so với năm học đầu tiên?", options:[
+            {label:"A",text:"Động lực ngày càng tăng tiến khi được tiếp cận kiến thức sâu hơn."},
+            {label:"B",text:"Duy trì ở mức ổn định, không quá nhiệt huyết nhưng không bỏ bê."},
+            {label:"C",text:"Đang bị sa sút nghiêm trọng, cảm thấy mất phương hướng và uể oải."},
+            {label:"D",text:"Hoàn toàn biến mất động lực, đi học như một nghĩa vụ ép buộc từ gia đình."}]}
+        ]},
+        { category_id:"ST2_CR", category_title:"Career & Direction", short:"CR", questions:[
+          { question_number:1, question_text:"Sau khi học các môn cơ sở ngành, bạn đã xác định được phân nhánh chuyên sâu nào mình muốn theo đuổi chưa?", options:[
+            {label:"A",text:"Đã chọn được hướng đi cụ thể và đang tập trung đào sâu hướng đó."},
+            {label:"B",text:"Biết ngành có những hướng nào nhưng vẫn đang phân vân lựa chọn."},
+            {label:"C",text:"Hoàn toàn mông lung, thấy hướng nào cũng khó và không hợp."},
+            {label:"D",text:"Nhận ra bản thân không muốn làm việc trong ngành này sau khi ra trường."}]},
+          { question_number:2, question_text:"Trải nghiệm thực tế về ngành học có giúp bạn định hình rõ hơn về công việc tương lai?", options:[
+            {label:"A",text:"Rất rõ ràng, bạn hình dung được hàng ngày đi làm mình sẽ xử lý task gì."},
+            {label:"B",text:"Chỉ hiểu trên lý thuyết, chưa rõ quy trình làm việc thực tế tại công ty."},
+            {label:"C",text:"Càng học càng thấy trừu tượng và không biết ra trường làm được việc gì."},
+            {label:"D",text:"Thông tin quá nhiễu loạn khiến bạn hoang mang, sợ hãi về tương lai thất nghiệp."}]},
+          { question_number:3, question_text:"Bạn tìm hiểu thông tin chuyên sâu về nghề nghiệp từ những nguồn nào?", options:[
+            {label:"A",text:"Chủ động đọc tài liệu, blog, bài phân tích thị trường của chuyên gia."},
+            {label:"B",text:"Chủ yếu nghe thầy cô chia sẻ trên lớp hoặc anh chị khóa trước nói lại."},
+            {label:"C",text:"Không tìm hiểu từ bất kỳ nguồn nào."},
+            {label:"D",text:"Chỉ xem các video xu hướng mang tính giải trí về ngành trên TikTok/Facebook."}]},
+          { question_number:4, question_text:"Bạn đã có hình mẫu sự nghiệp (Role model) hoặc Mentor nào trong ngành để học hỏi chưa?", options:[
+            {label:"A",text:"Đã tìm được và thường xuyên theo dõi lộ trình phát triển của họ."},
+            {label:"B",text:"Có biết một vài người giỏi nhưng chưa chủ động kết nối hay học hỏi sâu."},
+            {label:"C",text:"Chưa có và không nghĩ việc này cần thiết lúc này."},
+            {label:"D",text:"Bạn không tin tưởng vào các hình mẫu truyền thông và muốn tự bơi hoàn toàn."}]},
+          { question_number:5, question_text:"Tần suất bạn đọc và phân tích các bản mô tả công việc (JD) của các doanh nghiệp?", options:[
+            {label:"A",text:"Thường xuyên đọc để đối chiếu xem bản thân còn thiếu kỹ năng gì nhằm tự bổ sung."},
+            {label:"B",text:"Thỉnh thoảng lướt qua trên các hội nhóm tuyển dụng cho biết."},
+            {label:"C",text:"Chưa bao giờ đọc JD tuyển dụng."},
+            {label:"D",text:"Có đọc thử một vài lần nhưng thấy yêu cầu quá cao nên sợ hãi đóng lại ngay."}]}
+        ]},
+        { category_id:"ST2_EX", category_title:"Extracurricular Engagement", short:"EX", questions:[
+          { question_number:1, question_text:"Vai trò hiện tại của bạn trong các Câu lạc bộ/Đội nhóm chuyên môn?", options:[
+            {label:"A",text:"Trở thành nhân sự nòng cốt, tích cực đóng góp xây dựng CLB."},
+            {label:"B",text:"Là thành viên bình thường, đi sinh hoạt đầy đủ nhưng ít lên tiếng."},
+            {label:"C",text:"Đã rút lui hoặc chỉ đăng ký tên chứ không tham gia hoạt động nào."},
+            {label:"D",text:"Bạn không tham gia bất kỳ câu lạc bộ nào từ trước đến nay."}]},
+          { question_number:2, question_text:"Bạn đã từng thử sức tham gia một cuộc thi kỹ năng hoặc học thuật nào chưa?", options:[
+            {label:"A",text:"Đã từng lập đội tham gia thử sức để cọ xát năng lực."},
+            {label:"B",text:"Chưa tham gia thi nhưng có đi xem cổ vũ và học hỏi kinh nghiệm."},
+            {label:"C",text:"Chưa từng quan tâm đến các cuộc thi học thuật của trường."},
+            {label:"D",text:"Muốn tham gia nhưng sợ thất bại, tự ti về năng lực nên không dám đăng ký."}]},
+          { question_number:3, question_text:"Hoạt động ngoại khóa có giúp bạn cải thiện các kỹ năng mềm không?", options:[
+            {label:"A",text:"Rất nhiều, bạn thấy bản thân tự tin và khéo léo hơn trong giao tiếp."},
+            {label:"B",text:"Có cải thiện một chút ở kỹ năng thuyết trình trước đám đông."},
+            {label:"C",text:"Không thấy có tác dụng gì hoặc làm bản thân tốn thêm thời gian."},
+            {label:"D",text:"Hoạt động ngoại khóa khiến bạn mệt mỏi, áp lực vì phải tương tác xã hội nhiều."}]},
+          { question_number:4, question_text:"Mức độ mở rộng vòng kết nối xã hội (Networking) của bạn thông qua các hoạt động trường?", options:[
+            {label:"A",text:"Rất tốt, bạn quen biết thêm nhiều anh chị khóa trên và bạn bè ngành khác."},
+            {label:"B",text:"Chỉ quen thêm một vài bạn làm chung sự kiện, sau đó ít tương tác."},
+            {label:"C",text:"Không quen thêm ai, vòng kết nối chỉ luẩn quẩn vài bạn cùng lớp."},
+            {label:"D",text:"Mối quan hệ bị thu hẹp lại do bạn chủ động cắt đứt các kết nối không cần thiết."}]},
+          { question_number:5, question_text:"Bạn có hứng thú tham gia các Workshop kỹ năng mềm do trường phối hợp với doanh nghiệp tổ chức không?", options:[
+            {label:"A",text:"Rất hào hứng, luôn canh lịch đăng ký sớm để giữ chỗ."},
+            {label:"B",text:"Có tham gia nếu lịch trống và nội dung đánh đúng chủ đề quan tâm."},
+            {label:"C",text:"Thấy tốn thời gian, thà ở nhà tự học hoặc đi ngủ."},
+            {label:"D",text:"Chỉ đăng ký tham gia mang tính đối phó để lấy điểm rèn luyện đủ chỉ tiêu bắt buộc."}]}
+        ]}
+      ]
+    },
+
+    /* STAGE 3 */
+    {
+      stage: 3,
+      stage_name: "Competency Development & Consolidation (Phát triển và củng cố năng lực)",
+      categories: [
+        { category_id:"ST3_WB", category_title:"Wellbeing & Integration", short:"WB", questions:[
+          { question_number:1, question_text:"Khả năng quản lý áp lực khi bước vào giai đoạn đồ án chuyên ngành dày đặc của bạn?", options:[
+            {label:"A",text:"Quản lý tốt, biết cách xả stress lành mạnh và giữ cái đầu lạnh."},
+            {label:"B",text:"Khá căng thẳng, đôi khi bị mất kiểm soát cảm xúc nhưng vẫn trụ được."},
+            {label:"C",text:"Bị kiệt sức (burnout) nghiêm trọng, tinh thần suy sụp và muốn bỏ ngang."},
+            {label:"D",text:"Bạn chọn cách né tránh, trì hoãn đồ án và buông xuôi kết quả."}]},
+          { question_number:2, question_text:"Hệ thống hỗ trợ tinh thần (Support system) của bạn tại trường vào năm 3?", options:[
+            {label:"A",text:"Có nhóm bạn cực kỳ khăng khít, sẵn sàng chia sẻ cả học tập lẫn cuộc sống."},
+            {label:"B",text:"Có bạn cùng tiến trong học thuật nhưng chuyện cá nhân ít khi tâm sự."},
+            {label:"C",text:"Cảm thấy đơn độc, phải tự gồng gánh mọi áp lực một mình."},
+            {label:"D",text:"Mối quan hệ bạn bè rạn nứt do những xung đột khi làm bài tập lớn chuyên ngành."}]},
+          { question_number:3, question_text:"Thời gian ngủ và nghỉ ngơi trung bình của bạn mỗi ngày?", options:[
+            {label:"A",text:"Đảm bảo từ 6-7 tiếng, ngủ đủ giấc để não bộ hoạt động tốt."},
+            {label:"B",text:"Thường xuyên ngủ muộn (sau 1-2h sáng) vì phải làm đồ án."},
+            {label:"C",text:"Ngủ không sâu giấc, thường xuyên thức trắng đêm chạy bài tập lớn."},
+            {label:"D",text:"Đang bị rối loạn giấc ngủ nặng, thường xuyên phải lạm dụng chất kích thích/cà phê để thức."}]},
+          { question_number:4, question_text:"Mức độ hài lòng chung với cuộc sống sinh viên hiện tại của bạn?", options:[
+            {label:"A",text:"Rất hài lòng, thấy bản thân trưởng thành và học được nhiều điều bổ ích."},
+            {label:"B",text:"Bình thường, cuộc sống trôi qua đều đều không có gì quá nổi bật."},
+            {label:"C",text:"Thấy chán nản, mệt mỏi và chỉ muốn mau chóng kết thúc thời sinh viên."},
+            {label:"D",text:"Hối hận sâu sắc vì đã chọn ngôi trường/ngành học này, cảm thấy lãng phí thời gian."}]},
+          { question_number:5, question_text:"Khả năng thiết lập ranh giới (biết từ chối các việc ngoài lề để tập trung cho học tập) của bạn?", options:[
+            {label:"A",text:"Rất quyết đoán, biết ưu tiên việc quan trọng nhất cho bản thân."},
+            {label:"B",text:"Đôi khi nể bạn bè nên vẫn nhận lời đi chơi/ôm đồm việc CLB dù đang bận."},
+            {label:"C",text:"Luôn bị phân tâm bởi các cuộc vui bên ngoài làm ảnh hưởng tiến độ học."},
+            {label:"D",text:"Bị cuốn hoàn toàn vào công việc làm thêm kiếm tiền phi kỹ thuật, bỏ bê việc học chuyên ngành."}]}
+        ]},
+        { category_id:"ST3_AC", category_title:"Academic Progress", short:"AC", questions:[
+       { question_number:1, question_text:"Mức độ làm chủ các công cụ, phần mềm hoặc phương pháp nghiên cứu chuyên ngành sâu của bạn?", options:[
+            {label:"A",text:"Thành thạo, có thể tự tay xây dựng hoặc xử lý được sản phẩm/đề án chạy ổn định."},
+            {label:"B",text:"Biết sử dụng ở mức cơ bản để làm bài tập, chưa tối ưu được hiệu quả công việc."},
+            {label:"C",text:"Rất yếu, thao tác lỗi liên tục và không hiểu cách vận hành của các công cụ chuyên ngành."},
+            {label:"D",text:"Hoàn toàn không theo kịp, phải sao chép hoặc nhờ người làm bài tập/đồ án hộ để qua môn."}]},
+          { question_number:2, question_text:"Tiến độ và chất lượng nghiệm thu các đồ án chuyên ngành của bạn?", options:[
+            {label:"A",text:"Luôn đạt kết quả tốt, sản phẩm có tính ứng dụng cao, nộp đúng hạn."},
+            {label:"B",text:"Đạt yêu cầu vừa đủ để qua môn, sản phẩm còn nhiều lỗi vặt."},
+            {label:"C",text:"Thường xuyên trễ tiến độ đồ án, sản phẩm không chạy được khi nghiệm thu."},
+            {label:"D",text:"Bị đánh trượt đồ án chuyên ngành, đang phải chờ đăng ký làm lại vào kỳ sau."}]},
+          { question_number:3, question_text:"Khả năng đọc hiểu tài liệu nghiên cứu và cập nhật kiến thức mới bằng Tiếng Anh chuyên ngành của bạn?", options:[
+            {label:"A",text:"Thành thạo, bạn có thể tự đọc hiểu tài liệu chuyên ngành bằng Tiếng Anh mà không cần dịch."},
+            {label:"B",text:"Đọc hiểu được khoảng 60-70%, những chỗ khó vẫn phải dùng công cụ dịch hỗ trợ."},
+            {label:"C",text:"Rất kém, lười đọc tài liệu Tiếng Anh, chỉ tìm kiếm các bài hướng dẫn bằng Tiếng Việt."},
+            {label:"D",text:"Rào cản ngôn ngữ khiến bạn hoàn toàn bế tắc khi các kiến thức mới không có tài liệu Tiếng Việt."}]},
+          { question_number:4, question_text:"Mức độ tích cực và hiệu quả của bạn khi tham gia thảo luận, làm việc nhóm trong các bài tập chuyên ngành?", options:[
+            {label:"A",text:"Thường xuyên đóng vai trò dẫn dắt (Leader) hoặc đóng góp chính, phối hợp rất tốt với các thành viên."},
+            {label:"B",text:"Hoàn thành đúng phần việc được giao, ít khi chủ động đưa ra ý tưởng đột phá cho nhóm."},
+            {label:"C",text:"Làm việc hời hợt, để đồng đội phải nhắc nhở liên tục về tiến độ và chất lượng phần việc của mình."},
+            {label:"D",text:"Gần như biến mất (free-rider), phó mặc hoàn toàn cho nhóm và chỉ chờ được ké tên vào danh sách nộp bài."}]},
+          { question_number:5, question_text:"Bạn tự đánh giá thế nào về điểm số trung bình tích lũy (GPA) các môn chuyên ngành của mình tính đến thời điểm hiện tại?", options:[
+            {label:"A",text:"Rất xuất sắc, thuộc top đầu của lớp và luôn giữ vững phong độ học tập ổn định."},
+            {label:"B",text:"Ở mức khá - trung bình, điểm số đủ an toàn nhưng chưa thực sự bứt phá như kỳ vọng."},
+            {label:"C",text:"Điểm số lẹt đẹt, suýt soát mức trung bình và có nguy cơ bị cảnh cáo học tập nếu không cải thiện."},
+            {label:"D",text:"Bị tụt dốc không phanh, nợ môn chồng chất và không còn động lực để kéo lại điểm số chuyên ngành."}]}
+        ]},
+        { category_id:"ST3_MO", category_title:"Motivation & Efficacy", short:"MO", questions:[
+          { question_number:1, question_text:"Tư duy của bạn khi đối mặt với các bài tập lớn/đồ án chuyên ngành có độ khó cao?", options:[
+            {label:"A",text:"Coi đó là cơ hội vàng để nâng cấp CV cá nhân chuyên nghiệp."},
+            {label:"B",text:"Thấy lo lắng nhưng vẫn cố gồng gánh hoàn thành cho xong nhiệm vụ học tập."},
+            {label:"C",text:"Thấy nản lòng, oán trách giảng viên cho đề quá nặng và làm đối phó."},
+            {label:"D",text:"Có ý định bỏ ngang môn học vì cảm thấy yêu cầu vượt quá tầm năng lực bản thân."}]},
+          { question_number:2, question_text:"Bạn giải quyết thế nào khi gặp một lỗi hệ thống phức tạp mà tra Google cả ngày không ra?", options:[
+            {label:"A",text:"Bình tĩnh phân tích log, thay đổi chiến thuật, chủ động tìm chuyên gia/thầy cô hỏi bài."},
+            {label:"B",text:"Tiếp tục mò mẫm một cách vô định, tốn rất nhiều thời gian và dễ stress."},
+            {label:"C",text:"Bỏ cuộc, chuyển sang làm phần khác hoặc nhờ bạn làm hộ."},
+            {label:"D",text:"Đập phá đồ đạc, nổi nóng mất kiểm soát tinh thần và bỏ bê project nhiều ngày liền."}]},
+          { question_number:3, question_text:"Thói quen thiết lập deadline cá nhân của bạn ra sao?", options:[
+            {label:"A",text:"Luôn tự đặt deadline cá nhân sớm hơn deadline của trường 3-5 ngày để dự phòng rủi ro."},
+            {label:"B",text:"Chạy song song với deadline của trường, thỉnh thoảng phải thức đêm hoàn thiện nốt."},
+            {label:"C",text:"Luôn xin gia hạn (extend) deadline vì không quản lý kịp tiến độ công việc."},
+            {label:"D",text:"Không màng tới deadline, nộp muộn bao lâu tùy thích và chấp nhận bị trừ điểm nặng."}]},
+          { question_number:4, question_text:"Bạn có chủ động học thêm các khóa chứng chỉ quốc tế (Coursera, LinkedIn Learning) bên ngoài không?", options:[
+            {label:"A",text:"Có, bạn tự bỏ thời gian cày cuốc để lấy chứng chỉ bổ trợ chuyên ngành."},
+            {label:"B",text:"Có lưu vài khóa học hay nhưng bận quá chưa có thời gian học nghiêm túc."},
+            {label:"C",text:"Hoàn toàn không học gì ngoài chương trình đào tạo của nhà trường."},
+            {label:"D",text:"Nghĩ chứng chỉ bên ngoài chỉ là lý thuyết suông, không có giá trị thực tế nên không học."}]},
+          { question_number:5, question_text:"Tính chủ động trong việc tự tạo ra các dự án cá nhân ngoài bài tập trường giao của bạn?", options:[
+            {label:"A",text:"Có ít nhất 1-2 dự án cá nhân tự làm từ A-Z dựa trên sở thích nghiên cứu."},
+            {label:"B",text:"Chưa có dự án riêng, chỉ có các sản phẩm làm chung khi làm bài tập nhóm."},
+            {label:"C",text:"Không làm gì thêm, chỉ làm đúng và đủ những gì bắt buộc để qua môn."},
+            {label:"D",text:"Bạn thấy quá mệt mỏi với bài tập trên trường, không còn chút năng lượng nào cho dự án riêng."}]}
+        ]},
+        { category_id:"ST3_CR", category_title:"Career & Direction", short:"CR", questions:[
+          { question_number:1, question_text:"Mức độ hoàn thiện của CV và Portfolio cá nhân của bạn tính đến thời điểm hiện tại?", options:[
+            {label:"A",text:"Đã đóng gói chỉn chu các project xịn, sẵn sàng gửi đi rải hồ sơ xin việc."},
+            {label:"B",text:"Mới có khung CV cơ bản, chưa có nhiều sản phẩm thực tế để đưa vào Portfolio."},
+            {label:"C",text:"Chưa viết CV và chưa có gì để show năng lực cho nhà tuyển dụng."},
+            {label:"D",text:"Cảm thấy Portfolio của mình quá tệ và xấu hổ, sợ hãi không dám gửi cho ai."}]},
+          { question_number:2, question_text:"Bạn đã định vị được vị trí công việc cụ thể (Job Title) mà mình sẽ ứng tuyển thực tập chưa?", options:[
+            {label:"A",text:"Xác định cực kỳ rõ ràng."},
+            {label:"B",text:"Biết hướng chung chung chứ chưa chốt được chức danh công việc chính xác."},
+            {label:"C",text:"Hoàn toàn mơ hồ, rải bừa công ty nào nhận thực tập thì vào làm vị trí đó."},
+            {label:"D",text:"Muốn làm một công việc trái ngành hoàn toàn, không liên quan đến chuyên ngành đang học."}]},
+          { question_number:3, question_text:"Bạn có thói quen tối ưu hóa trang cá nhân chuyên nghiệp (LinkedIn, Portfolio) để thu hút nhà tuyển dụng?", options:[
+            {label:"A",text:"Thường xuyên cập nhật project mới, viết bài chia sẻ chuyên môn chỉn chu."},
+            {label:"B",text:"Có tạo tài khoản cho biết chứ ít khi chăm chút nội dung hay tương tác."},
+            {label:"C",text:"Không dùng LinkedIn/GitHub hoặc để trang cá nhân trống trơn."},
+            {label:"D",text:"Chỉ dùng GitHub làm kho lưu trữ bài tập bắt buộc chứ không biết cách tối ưu thương hiệu."}]},
+          { question_number:4, question_text:"Tần suất tham gia các sự kiện kết nối doanh nghiệp (Career Day, Tech-talk, Workshop) của bạn?", options:[
+            {label:"A",text:"Tích cực tham gia, chủ động chuẩn bị câu hỏi để giao lưu với diễn giả/doanh nghiệp."},
+            {label:"B",text:"Có đi tham gia vài buổi lớn do khoa bắt buộc để lấy điểm rèn luyện."},
+            {label:"C",text:"Không bao giờ tham gia vì thấy không giúp ích được gì thực tế lúc này."},
+            {label:"D",text:"Né tránh vì mắc chứng sợ đám đông (social anxiety) và không biết cách giao tiếp với doanh nghiệp."}]},
+          { question_number:5, question_text:"Năng lực đáp ứng các tiêu chí tuyển dụng trong JD thực tế được bạn tự đánh giá khoảng bao nhiêu %?", options:[
+            {label:"A",text:"Đạt khoảng 70-80%, hoàn toàn tự tin nộp hồ sơ vào các công ty lớn."},
+            {label:"B",text:"Đạt tầm 40-50%, thấy bản thân còn hổng rất nhiều kỹ năng thực tế doanh nghiệp cần."},
+            {label:"C",text:"Dưới 30%, cảm thấy hoang mang lo sợ không có công ty nào chịu nhận mình."},
+            {label:"D",text:"Bạn cảm thấy bất lực trước thị trường đóng băng tuyển dụng và không muốn cố gắng."}]}
+        ]},
+        { category_id:"ST3_EX", category_title:"Extracurricular Engagement", short:"EX", questions:[
+          { question_number:1, question_text:"Vai trò quản lý/lãnh đạo của bạn trong các tổ chức, câu lạc bộ hoặc dự án?", options:[
+            {label:"A",text:"Đảm nhận vị trí Chủ nhiệm, Trưởng ban hoặc Leader điều phối dự án lớn."},
+            {label:"B",text:"Là cố vấn chuyên môn, hỗ trợ thế hệ khóa dưới chạy sự kiện học thuật."},
+            {label:"C",text:"Hoàn toàn rút lui khỏi hoạt động ngoại khóa để tập trung đi làm/đi học."},
+            {label:"D",text:"Bị ép nhận vị trí quản lý nhưng làm việc hời hợt, gây mất đoàn kết nội bộ."}]},
+          { question_number:2, question_text:"Bạn có tham gia vào các cuộc thi học thuật quy mô lớn cấp Thành phố/Quốc gia không?", options:[
+            {label:"A",text:"Đang hoặc đã từng tham gia chinh chiến tại các giải đấu lớn (Hackathon, Olympic...)."},
+            {label:"B",text:"Có ý định tham gia nhưng chưa tìm được đội nhóm hoặc mentor phù hợp."},
+            {label:"C",text:"Không tham gia, thấy các cuộc thi đó quá tầm và mất thời gian cày cuốc."},
+            {label:"D",text:"Từng tham gia nhưng thất bại thảm hại ở vòng loại khiến bạn mất sạch tự tin học thuật."}]},
+          { question_number:3, question_text:"Khả năng ứng dụng kiến thức chuyên môn vào giải quyết bài toán thực tế của cộng đồng/CLB của bạn?", options:[
+            {label:"A",text:"Đã trực tiếp xây dựng hệ thống/tool/giải pháp thực tế giúp tối ưu vận hành cho CLB hoặc Khoa."},
+            {label:"B",text:"Có hỗ trợ phần kỹ thuật nhỏ nhưng chưa tạo ra sản phẩm hoàn chỉnh nào."},
+            {label:"C",text:"Chưa từng ứng dụng kiến thức chuyên môn vào bất cứ hoạt động ngoại khóa nào."},
+            {label:"D",text:"Kiến thức của bạn quá yếu để có thể đóng góp phần kỹ thuật thực tế cho tổ chức."}]},
+          { question_number:4, question_text:"Mạng lưới mối quan hệ với cựu sinh viên (Alumni Networking) của bạn thế nào?", options:[
+            {label:"A",text:"Quen biết nhiều anh chị đi trước, thường xuyên xin lời khuyên về nghề nghiệp/referral việc làm."},
+            {label:"B",text:"Biết một vài anh chị khóa trên thông qua CLB, thỉnh thoảng có tương tác xã giao."},
+            {label:"C",text:"Không quen biết bất kỳ cựu sinh viên nào đang đi làm ngoài ngành."},
+            {label:"D",text:"Bạn không tin tưởng vào mạng lưới quan hệ và cho rằng năng lực tự thân mới là quyết định."}]},
+          { question_number:5, question_text:"Ý thức đóng góp xây dựng hình ảnh thương hiệu cho Khoa/Trường của bạn?", options:[
+            {label:"A",text:"Tích cực tham gia đội ngũ hỗ trợ tuyển sinh, truyền thông hoặc làm đại diện hình ảnh sinh viên xuất sắc."},
+            {label:"B",text:"Chỉ tham gia chia sẻ kinh nghiệm khi được các thầy cô trực tiếp mở lời nhờ hỗ trợ."},
+            {label:"C",text:"Thờ ơ, không quan tâm đến các hoạt động quảng bá hình ảnh của nhà trường."},
+            {label:"D",text:"Có những bài viết tiêu cực, bất mãn về quy chế của trường công khai trên mạng xã hội."}]}
+        ]}
+      ]
+    },
+
+    /* STAGE 4 */
+    {
+      stage: 4,
+      stage_name: "Professtional Aligment (Định hướng nghề nghiệp)",
+      categories: [
+        { category_id:"ST4_WB", category_title:"Wellbeing & Integration", short:"WB", questions:[
+          { question_number:1, question_text:"Mức độ thích nghi của bạn với môi trường công sở và văn hóa doanh nghiệp?", options:[
+            {label:"A",text:"Thích nghi cực nhanh, nắm bắt tốt văn hóa và quy trình làm việc của công ty."},
+            {label:"B",text:"Hơi bỡ ngỡ tuần đầu, hiện tại đã quen việc và giao tiếp ổn định với mọi người."},
+            {label:"C",text:"Cảm thấy lạc lõng, không hợp với văn hóa công ty và gặp khó khăn khi hòa nhập."},
+            {label:"D",text:"Sốc văn hóa nặng nề, hoàn toàn không chịu nổi áp lực công sở và muốn xin nghỉ việc."}]},
+          { question_number:2, question_text:"Mối quan hệ công việc giữa bạn với Mentor và đồng nghiệp tại công ty thực tập?", options:[
+            {label:"A",text:"Rất tốt, được mọi người quý mến, sẵn sàng chỉ bảo và hướng dẫn nhiệt tình."},
+            {label:"B",text:"Ở mức bình thường, trao đổi công việc đúng phận sự chứ ít khi trò chuyện ngoài lề."},
+            {label:"C",text:"Có xung đột ngầm hoặc bị đồng nghiệp ngó lơ, không mặn mà hỗ trợ."},
+            {label:"D",text:"Bị cô lập hoặc bị Mentor khiển trách nặng nề nhiều lần vì thái độ làm việc kém."}]},
+          { question_number:3, question_text:"Tình trạng stress khi bạn phải vừa đi làm thực tập vừa hoàn thành báo cáo/môn học ở trường?", options:[
+            {label:"A",text:"Kiểm soát tốt, biết cách phân bổ thời gian hợp lý cho cả hai bên."},
+            {label:"B",text:"Thường xuyên rơi vào trạng thái căng thẳng, phải vắt kiệt sức vào cuối tuần."},
+            {label:"C",text:"Khủng hoảng nặng nề, kiệt sức, muốn bỏ học hoặc xin nghỉ thực tập ngay lập tức."},
+            {label:"D",text:"Bạn chấp nhận nợ môn học ở trường để dồn toàn lực đi làm kiếm tiền tại công ty."}]},
+          { question_number:4, question_text:"Chế độ ăn uống, sinh hoạt cá nhân của bạn khi bắt đầu đi làm?", options:[
+            {label:"A",text:"Duy trì sinh hoạt điều độ, ăn uống đủ chất và không bỏ bữa."},
+            {label:"B",text:"Ở mức trung bình, hay mắc các bệnh văn phòng vặt (đau lưng, mỏi mắt, đau dạ dày)."},
+            {label:"C",text:"Sức khỏe suy giảm nghiêm trọng do thói quen thức đêm và áp lực công việc kéo dài."},
+            {label:"D",text:"Thường xuyên lạm dụng đồ ăn nhanh, trà sữa và bỏ bữa liên tục do quá tải task."}]},
+          {question_number: 5, question_text: "Khả năng cân bằng giữa công việc và cuộc sống cá nhân (Work-Life Balance) của bạn hiện tại như thế nào?",  options:[
+        
+            { label: "A", text: "Cân bằng hoàn hảo, có thời gian dành cho gia đình, bạn bè và sở thích cá nhân sau giờ làm." },
+            { label: "B", text: "Tạm ổn, thỉnh thoảng phải đem việc về nhà làm nốt vào buổi tối nhưng không thường xuyên." },
+            { label: "C", text: "Mất cân bằng, liên tục OT (làm thêm giờ) hoặc luôn trong trạng thái ám ảnh về deadline ngay cả khi đã tan làm." },
+            { label: "D", text: "Hoàn toàn bị cuốn vào guồng quay công việc, không còn thời gian tái tạo năng lượng và dần xa lánh các mối quan hệ xung quanh." }
+            ]
+          }
+        ]},
+        { category_id:"ST4_AC", category_title:"Academic Progress", short:"AC", questions:[
+          { question_number:1, question_text:"Khả năng vận dụng các kiến thức lý thuyết đã học ở trường vào xử lý các task công việc thực tế tại công ty?", options:[
+            {label:"A",text:"Áp dụng rất tốt, thấy kiến thức nền tảng trường dạy cực kỳ thực tế và hữu ích."},
+            {label:"B",text:"Vận dụng được khoảng 50%, còn lại phải tự học thêm kiến thức theo yêu cầu dự án."},
+            {label:"C",text:"Hoàn toàn không áp dụng được gì, thấy kiến thức thực tế khác xa hoàn toàn lý thuyết học đường."},
+            {label:"D",text:"Sản phẩm thực tế của bạn liên tục bị lỗi hệ thống lớn và Mentor phải sửa hộ hoàn toàn."}]},
+          { question_number:2, question_text:"Tiến độ xây dựng và hoàn thiện Báo cáo thực tập tốt nghiệp / Nhật ký thực tập của bạn?", options:[
+            {label:"A",text:"Bám sát tiến độ, ghi chép nhật ký đầy đủ và đã có sườn báo cáo chỉn chu."},
+            {label:"B",text:"Chưa viết được nhiều, đợi đến gần tuần cuối cùng mới tổng hợp viết một thể."},
+            {label:"C",text:"Hoàn toàn chưa viết gì, lơ mơ không biết quy chuẩn trình bày báo cáo của khoa ra sao."},
+            {label:"D",text:"Bạn có ý định copy-paste nội dung báo cáo cũ của các khóa trước để nộp cho nhanh."}]},
+          { question_number:3, question_text:"Mức độ chủ động tự học và cập nhật các kiến thức, phương pháp mới ngoài trường học để đáp ứng yêu cầu công việc?", options:[
+            {label:"A",text:"Cực kỳ chủ động, tự tìm tòi và nắm bắt rất nhanh để tối ưu hóa hiệu suất làm việc."},
+            {label:"B",text:"Có cố gắng tự học khi được giao việc mới, nhưng tốc độ tiếp thu còn chậm và cần được hướng dẫn thêm."},
+            {label:"C",text:"Khá thụ động, chỉ học những gì được giao và gặp nhiều khó khăn khi tiếp cận việc nằm ngoài sách vở."},
+            {label:"D",text:"Né tránh các phần việc đòi hỏi kiến thức mới, chỉ muốn làm những việc quen thuộc, an toàn."}]},
+          { question_number:4, question_text:"Sau một thời gian thực tập, bạn nhận ra bản thân còn thiếu sót lớn nhất ở nhóm kỹ năng nào để cần cải thiện?", options:[
+            {label:"A",text:"Nhận diện rõ ràng các lỗ hổng (chuyên môn hoặc kỹ năng mềm) và đã có kế hoạch tự trau dồi cụ thể."},
+            {label:"B",text:"Nhận ra mình còn yếu nhiều thứ nhưng chưa biết phải bắt đầu học lại từ đâu hoặc theo lộ trình nào."},
+            {label:"C",text:"Cảm thấy hoang mang vì thấy bản thân hổng kiến thức quá nặng, mất phương hướng về năng lực cá nhân."},
+            {label:"D",text:"Bạn cho rằng năng lực hiện tại đã quá đủ để đi làm và không cần thiết phải học hỏi thêm gì nữa."}]},
+          { question_number:5, question_text:"Mức độ tương tác và nhận sự hỗ trợ từ Giảng viên hướng dẫn (GVHD) của trường trong quá trình bạn đi thực tập?", options:[
+            {label:"A",text:"Rất tốt, GVHD luôn phản hồi nhanh chóng, định hướng đề tài và sửa bài nhiệt tình."},
+            {label:"B",text:"Ở mức vừa phải, chỉ chủ động liên hệ với GVHD khi đến hạn nộp bài hoặc cần ký giấy tờ."},
+            {label:"C",text:"Gặp khó khăn khi kết nối, GVHD bận rộn nên phản hồi rất chậm khiến tiến độ bài vở bị trì hoãn."},
+            {label:"D",text:"Hoàn toàn mất liên lạc với GVHD hoặc tự ý làm mọi thứ mà không thông qua sự kiểm duyệt của thầy cô."}]}
+        ]},
+        { category_id:"ST4_MO", category_title:"Motivation & Efficacy", short:"MO", questions:[
+          { question_number:1, question_text:"Thái độ của bạn khi được Mentor giao cho những công việc mới, có độ khó cao hoặc công nghệ lạ?", options:[
+            {label:"A",text:"Hào hứng đón nhận, coi đó là cơ hội tốt để chứng minh năng lực bứt phá."},
+            {label:"B",text:"Hơi lo lắng nhưng không từ chối, cố gắng tìm tài liệu mò mẫm làm theo."},
+            {label:"C",text:"Sợ sai, tìm lý do trốn tránh hoặc đẩy việc sang cho các bạn thực tập khác."},
+            {label:"D",text:"Từ chối thẳng thừng với Mentor vì lý do đây là phần việc của nhân viên chính thức chứ không phải của intern."}]},
+          { question_number:2, question_text:"Ý thức kỷ luật (đi làm đúng giờ, tuân thủ quy định bảo mật) của bạn tại doanh nghiệp?", options:[
+            {label:"A",text:"Nghiêm túc tuân thủ tuyệt đối, không đi muộn về sớm, tác phong chuyên nghiệp."},
+            {label:"B",text:"Đôi khi có đi muộn chút ít do tắc đường nhưng đều có xin phép đầy đủ."},
+            {label:"C",text:"Thường xuyên đi muộn, làm việc riêng trong giờ hoặc tự ý cúp làm không lý do."},
+            {label:"D",text:"Bạn từng vi phạm quy định bảo mật thông tin (NDA) hoặc quy trình hệ thống của công ty và bị nhắc nhở."}]},
+          { question_number:3, question_text:"Mức độ chủ động đóng góp ý kiến hoặc đề xuất giải pháp mới của bạn trong các buổi họp đội nhóm?", options:[
+            {label:"A",text:"Rất tích cực, sẵn sàng chia sẻ góc nhìn cá nhân và đề xuất cải tiến quy trình làm việc."},
+            {label:"B",text:"Chỉ phát biểu khi được hỏi hoặc được yêu cầu báo cáo tiến độ phần việc của mình."},
+            {label:"C",text:"Hoàn toàn im lặng trong mọi cuộc họp vì ngại đám đông hoặc sợ nói sai."},
+            {label:"D",text:"Bất mãn với các quyết định của nhóm nhưng chọn cách im lặng và làm việc một cách đối phó."}]},
+          { question_number:4, question_text:"Thái độ và cách xử lý của bạn khi gặp một đầu việc khó (task) bị bế tắc và không tìm ra hướng giải quyết?", options:[
+            {label:"A",text:"Tự nghiên cứu trước, sau đó chủ động tổng hợp vấn đề để xin ý kiến hướng dẫn từ Mentor/đồng nghiệp."},
+            {label:"B",text:"Cố gắng tự mày mò một mình rất lâu, chỉ khi sát hạn nộp bài (deadline) mới chịu đi hỏi."},
+            {label:"C",text:"Bỏ lửng công việc đó, chuyển sang làm việc khác dễ hơn và hy vọng không ai hỏi đến."},
+            {label:"D",text:"Chán nản, buông xuôi và đổ lỗi cho việc đề bài quá khó hoặc do không được hướng dẫn rõ ràng."}]},
+          { question_number:5, question_text:"Mức độ cam kết, mong muốn nỗ lực hết mình để có cơ hội trở thành nhân viên chính thức tại doanh nghiệp?", options:[
+            {label:"A",text:"Cực kỳ khát khao, luôn nỗ lực làm việc vượt kỳ vọng để có cơ hội ở lại công ty sau thực tập."},
+            {label:"B",text:"Làm tròn vai, nếu công ty có lộ trình lên chính thức rõ ràng thì sẽ cân nhắc xem xét."},
+            {label:"C",text:"Xác định đi làm chỉ để lấy con dấu và hoàn thành chứng chỉ thực tập ở trường chứ không muốn gắn bó."},
+            {label:"D",text:"Chán nản công việc hiện tại, đang rải CV tìm cơ hội ở công ty khác ngay trong quá trình thực tập."}]}
+          ]},
+        { category_id:"ST4_CR", category_title:"Career & Direction", short:"CR", questions:[
+          { question_number:1, question_text:"Mục tiêu lớn nhất của bạn trong kỳ thực tập này là gì?", options:[
+            {label:"A",text:"Cố gắng thể hiện xuất sắc để được giữ lại làm nhân viên chính thức (Full-time)."},
+            {label:"B",text:"Chỉ cần lấy được dấu mộc đỏ công ty để hoàn thành thủ tục tốt nghiệp ở trường."},
+            {label:"C",text:"Làm cho biết môi trường doanh nghiệp ra sao, chưa có định hướng lâu dài."},
+            {label:"D",text:"Lấy kinh nghiệm tạm thời để làm bàn đạp nộp hồ sơ sang một công ty đối thủ lớn hơn."}]},
+          { question_number:2, question_text:"Mức độ hiểu rõ quy trình vận hành và vòng đời phát triển sản phẩm thực tế của một dự án tại doanh nghiệp?", options:[
+            {label:"A",text:"Nắm rất rõ quy trình, biết cách phối hợp nhịp nhàng giữa các phòng ban (BA, Dev, QC)."},
+            {label:"B",text:"Chỉ biết phần việc task được giao, chưa có cái nhìn tổng quan toàn hệ thống dự án."},
+            {label:"C",text:"Hoàn toàn mù mờ, ai giao gì làm nấy chứ không hiểu mục đích tổng thể của dự án."},
+            {label:"D",text:"Bạn thấy quy trình doanh nghiệp quá rườm rà, thủ tục chính trị phiền phức và không muốn thích nghi."}]},
+            { question_number:3, question_text:"Định hướng hành động của bạn ngay sau khi kết thúc kỳ thực tập và nhận bằng tốt nghiệp là gì?", options:[
+            {label:"A",text:"Sẵn sàng đi làm ngay (Full-time) để tích lũy kinh nghiệm và thăng tiến nhanh nhất có thể."},
+            {label:"B",text:"Chưa muốn đi làm vội, dự định dành một khoảng thời gian nghỉ ngơi (Gap year) hoặc học tiếp lên cao học."},
+            {label:"C",text:"Muốn thử sức ở một vai trò, vị trí công việc hoặc môi trường hoàn toàn mới (Start-up, Freelance)."},
+            {label:"D",text:"Chưa có bất kỳ kế hoạch nào, đợi ra trường rồi tính tiếp hoặc chấp nhận làm các công việc lao động tự do."}]},
+          { question_number:4, question_text:"Trong công ty thực tập, bạn đã tìm thấy hình mẫu nhân sự (Mentor, đồng nghiệp hoặc Sếp) mà bạn muốn trở thành trong tương lai chưa?", options:[
+            {label:"A",text:"Đã tìm thấy, họ là động lực lớn để bạn học hỏi chuyên môn lẫn tác phong làm việc chuẩn mực."},
+            {label:"B",text:"Có một số người làm việc tốt nhưng chưa thực sự là hình mẫu lý tưởng để bạn học theo toàn diện."},
+            {label:"C",text:"Chưa tìm thấy ai, môi trường thực tập hiện tại chưa có cá nhân nào làm bạn thực sự nể phục."},
+            {label:"D",text:"Bạn chỉ thấy những mặt tiêu cực từ cấp trên (đấu đá, né việc...) và không muốn trở thành người như họ."}]},
+          { question_number:5, question_text:"Mức độ chủ động xây dựng mạng lưới mối quan hệ chuyên môn (Networking) của bạn tại doanh nghiệp?", options:[
+            {label:"A",text:"Rất chủ động kết nối với các anh chị đi trước để học hỏi kinh nghiệm và tìm kiếm cơ hội tương lai."},
+            {label:"B",text:"Chỉ giao tiếp xã giao trong phạm vi phòng ban của mình, chưa mở rộng ra các bộ phận khác."},
+            {label:"C",text:"Khá rụt rè, hầu như không nói chuyện hay kết nối với ai ngoài những lúc bắt buộc vì công việc."},
+            {label:"D",text:"Cô lập bản thân hoàn toàn, không có nhu cầu giữ liên lạc với bất kỳ ai sau khi kỳ thực tập kết thúc."}]}
+        
+          ]},
+        { category_id:"ST4_EX", category_title:"Extracurricular Engagement", short:"EX", questions:[
+          { question_number:1, question_text:"Bạn có tham gia các hoạt động gắn kết tập thể (Teambuilding, Company Trip, Happy Hour) tại công ty không?", options:[
+            {label:"A",text:"Tham gia đầy đủ, nhiệt tình và hòa nhập tốt với mọi người ở công ty."},
+            {label:"B",text:"Chỉ đi các buổi bắt buộc, còn lại các buổi ăn chơi tự phát thì xin phép vắng mặt."},
+            {label:"C",text:"Từ chối toàn bộ vì thấy phiền phức, muốn giữ khoảng cách tuyệt đối."},
+            {label:"D",text:"Nói xấu các hoạt động tập thể của công ty với các bạn thực tập sinh khác."}]},
+          { question_number:2, question_text:"Mức độ tương tác của bạn với mạng lưới Cựu sinh viên (Alumni Network) của khoa?", options:[
+            {label:"A",text:"Thường xuyên tham gia các buổi tọa đàm chuyên đề do cựu sinh viên tổ chức để cập nhật xu hướng ngành."},
+            {label:"B",text:"Có biết một vài anh chị cựu sinh viên nổi bật nhưng ít khi tương tác hay tham gia sinh hoạt mạng lưới."},
+            {label:"C",text:"Hoàn toàn không biết đến sự tồn tại của mạng lưới cựu sinh viên trường."},
+            {label:"D",text:"Mạng lưới cựu sinh viên chỉ hoạt động hình thức, không mang lại giá trị referral thực tế cho bạn."}]},
+          
+          { question_number:3, question_text:"Mức độ tham gia của bạn vào các cuộc thi học thuật, hội thảo hoặc dự án cộng đồng bên ngoài giờ làm?", options:[
+            {label:"A",text:"Chủ động tham gia tích cực để mở rộng tư duy thực tế và làm đẹp hồ sơ năng lực cá nhân."},
+            {label:"B",text:"Có quan tâm theo dõi nhưng chỉ dừng lại ở mức đi nghe chia sẻ chứ chưa trực tiếp tham gia."},
+            {label:"C",text:"Hoàn toàn không tham gia vì áp lực từ việc học ở trường và việc đi làm đã quá tải."},
+            {label:"D",text:"Bạn cho rằng các hoạt động, cuộc thi này mang tính phong trào và không thực chất."}]},
+          { question_number:4, question_text:"Mức độ duy trì sinh hoạt và hỗ trợ các Câu lạc bộ/Đội nhóm tại trường sau khi bạn đã đi thực tập?", options:[
+            {label:"A",text:"Vẫn sắp xếp thời gian quay lại hỗ trợ, truyền đạt kinh nghiệm thực tế cho các thành viên khóa dưới."},
+            {label:"B",text:"Chỉ giữ liên lạc xã giao, thỉnh thoảng tương tác qua mạng xã hội chứ không còn tham gia sinh hoạt trực tiếp."},
+            {label:"C",text:"Rút lui hoàn toàn khỏi các câu lạc bộ ở trường vì không còn thời gian và điểm chung với khóa dưới."},
+            {label:"D",text:"Cắt đứt liên lạc và có ấn tượng không tốt về cách vận hành của các câu lạc bộ sinh viên."}]},
+          { question_number:5, question_text:"Mức độ chủ động tham gia và tương tác trong các cộng đồng, diễn đàn chuyên môn trực tuyến theo ngành nghề của bạn?", options:[
+            {label:"A",text:"Thường xuyên theo dõi, thảo luận và cập nhật kiến thức thực tế từ các chuyên gia trong cộng đồng."},
+            {label:"B",text:"Có tham gia các group chuyên môn nhưng chỉ ở chế độ ẩn danh đọc tin tức chứ ít khi tương tác, bình luận."},
+            {label:"C",text:"Hoàn toàn không tham gia cộng đồng mạng xã hội nào, chỉ lướt web giải trí thông thường."},
+            {label:"D",text:"Bạn thấy thông tin trên các cộng đồng mạng đa số là chia sẻ sáo rỗng và không đáng tin cậy."}]}
+        ]}
+      ]
+    },
+
+    /* STAGE 5 */
+    {
+      stage: 5,
+      stage_name: "Professional Launch (Tốt nghiệp & Khởi nghiệp)",
+      categories: [
+        { category_id:"ST5_WB", category_title:"Wellbeing & Integration", short:"WB", questions:[
+          { question_number:1, question_text:"Trạng thái tâm lý của bạn khi đứng trước ngưỡng cửa chuyển giao từ sinh viên thành người đi làm thực thụ?", options:[
+            {label:"A",text:"Tự tin, hứng khởi và tràn đầy kỳ vọng vào hành trình sự nghiệp mới."},
+            {label:"B",text:"Hơi lo lắng, bất an nhẹ về áp lực cơm áo gạo tiền nhưng vẫn giữ lạc quan."},
+            {label:"C",text:"Khủng hoảng tâm lý nghiêm trọng, sợ hãi thế giới người lớn và muốn trì hoãn việc ra trường."},
+            {label:"D",text:"Bị trầm cảm, stress nặng nề do thất bại trong đợt phỏng vấn tốt nghiệp vừa qua."}]},
+          { question_number:2, question_text:"Mức độ ảnh hưởng của áp lực đồng trang lứa (Peer Pressure) khi thấy bạn bè xung quanh có việc làm xịn hoặc lương cao?", options:[
+            {label:"A",text:"Không bị ảnh hưởng, tập trung hoàn toàn vào lộ trình và tốc độ phát triển của riêng mình."},
+            {label:"B",text:"Có chút chạnh lòng nhưng lấy đó làm động lực để cố gắng hoàn thiện bản thân hơn."},
+            {label:"C",text:"Áp lực nặng nề, thường xuyên tự ti và rơi vào trạng thái nghi ngờ năng lực cá nhân."},
+            {label:"D",text:"Ghen tị sâu sắc, dẫn đến việc tự cô lập và cắt đứt liên lạc với nhóm bạn thân thiết."}]},
+          { question_number:3, question_text:"Tình trạng sức khỏe thể chất và năng lượng sống của bạn trong giai đoạn vừa hoàn thành thủ tục ra trường vừa tìm việc?", options:[
+            {label:"A",text:"Duy trì sức khỏe tốt, ăn ngủ điều độ và luôn tràn đầy năng lượng tích cực."},
+            {label:"B",text:"Hơi mệt mỏi do lịch sinh hoạt đảo lộn, thỉnh thoảng sụt cân hoặc mất ngủ vì lo nghĩ."},
+            {label:"C",text:"Sức khỏe suy kiệt, liên tục kiệt sức (burnout) và phải phụ thuộc vào các chất kích thích như cà phê, thuốc lá."},
+            {label:"D",text:"Đã phải nhập viện hoặc điều trị y tế do bỏ bê bản thân và chịu áp lực quá tải kéo dài."}]},
+          { question_number:4, question_text:"Khả năng quản lý tài chính cá nhân và mức độ tự chủ kinh tế của bạn ngay khi vừa tốt nghiệp?", options:[
+            {label:"A",text:"Đã tự chủ tài chính hoàn toàn nhờ công việc bán thời gian hoặc thực tập có lương, biết chi tiêu khoa học."},
+            {label:"B",text:"Vẫn cần gia đình hỗ trợ một phần chi phí sinh hoạt nhưng đã biết tiết kiệm và hạn chế mua sắm vô tội vạ."},
+            {label:"C",text:"Rơi vào khủng hoảng tài chính, nợ nần thẻ tín dụng hoặc các ứng dụng vay tiền do thói quen chi tiêu quá tay."},
+            {label:"D",text:"Hoàn toàn phụ thuộc vào chu cấp của cha mẹ, lười tìm việc và không có ý niệm gì về giá trị đồng tiền."}]},
+          { question_number:5, question_text:"Mức độ thích nghi của bạn với việc thay đổi môi trường sống và các mối quan hệ xã hội sau khi rời ghế nhà trường?", options:[
+            {label:"A",text:"Thích nghi tốt, nhanh chóng xây dựng được lối sống trưởng thành và mở rộng các mối quan hệ chất lượng."},
+            {label:"B",text:"Hơi hụt hẫng vì không còn được tụ tập bạn bè đại học thường xuyên, nhưng đang dần quen với nhịp sống mới."},
+            {label:"C",text:"Cảm thấy cô đơn, lạc lõng khi mối quan hệ bạn bè cũ thu hẹp lại mà chưa tìm được chỗ đứng trong môi trường mới."},
+            {label:"D",text:"Hoàn toàn khủng hoảng, mất kết nối với xã hội và chọn cách đóng cửa ở nhà trốn tránh thực tại."}]}
+          ]},
+        { category_id:"ST5_AC", category_title:"Academic Progress", short:"AC", questions:[
+          { question_number:1, question_text:"Kết quả bảo vệ Đồ án tốt nghiệp / Khóa luận tốt nghiệp của bạn vừa qua?", options:[
+            {label:"A",text:"Hoàn thành xuất sắc, hội đồng đánh giá cao, đủ điều kiện ra trường đúng hạn với tấm bằng đẹp."},
+            {label:"B",text:"Đạt yêu cầu vừa đủ để tốt nghiệp, điểm số đồ án ở mức trung bình khá."},
+            {label:"C",text:"Bị hoãn tốt nghiệp hoặc không đủ điều kiện bảo vệ đồ án do nợ môn/chưa đạt chuẩn đầu ra."},
+            {label:"D",text:"Quyết định bỏ ngang khóa luận/đồ án sát ngày bảo vệ vì quá tải, chấp nhận nhận bằng muộn 1 năm."}]},
+       { question_number:2, question_text:"Bạn tự đánh giá nền tảng tư duy học thuật tại trường giúp ích gì cho khả năng tự học kiến thức, kỹ năng mới sau này?", options:[
+            {label:"A",text:"Giúp ích rất nhiều, nền tảng tư duy logic vững chắc giúp bạn tự nghiên cứu vấn đề mới rất nhanh."},
+            {label:"B",text:"Chỉ giúp ích phần nhỏ, thực tế đi làm bạn phải tự bơi và học theo kinh nghiệm thực chiến là chính."},
+            {label:"C",text:"Không giúp được gì, kiến thức trường học đã lỗi thời so với tốc độ phát triển bên ngoài doanh nghiệp."},
+            {label:"D",text:"Lối tư duy hàn lâm cũ kỹ của trường khiến bạn bị chậm nhịp và khó tiếp thu quy chuẩn thực chiến công ty."}]},
+          { question_number:3, question_text:"Tình trạng đáp ứng các chứng chỉ chuẩn đầu ra bắt buộc (Ngoại ngữ, Tin học, Quốc phòng) của bạn?", options:[
+            {label:"A",text:"Đã hoàn thành và nộp đủ chứng chỉ từ sớm, hồ sơ xét tốt nghiệp hoàn toàn sạch đẹp."},
+            {label:"B",text:"Vừa kịp hoàn thành sát nút kỳ hạn xét tốt nghiệp, suýt soát bị trễ."},
+            {label:"C",text:"Đang bị kẹt lại chưa thể ra trường vì nợ chứng chỉ chuẩn đầu ra ngoại ngữ/tin học."},
+            {label:"D",text:"Bị hủy kết quả xét tốt nghiệp đợt này do chứng chỉ ngoại ngữ nộp lên không hợp lệ/hết hạn."}]},
+          { question_number:4, question_text:"Kế hoạch tiếp tục nâng cao trình độ học vấn hoặc tích lũy tri thức của bạn sau khi nhận bằng Cử nhân/Kỹ sư?", options:[
+            {label:"A",text:"Đã có kế hoạch rõ ràng để học lên cao học, săn học bổng du học hoặc thi các chứng chỉ quốc tế cấp cao."},
+            {label:"B",text:"Dự định đi làm vài năm lấy trải nghiệm thực tế rồi mới quay lại học tiếp các khóa chuyên sâu."},
+            {label:"C",text:"Chỉ muốn dừng lại ở việc đi làm kiếm tiền, không có ý định đầu tư thêm cho việc học hành chuyên sâu."},
+            {label:"D",text:"Cảm thấy quá chán nản việc học, thề sẽ không bao giờ đụng vào sách vở hay thi cử thêm một lần nào nữa."}]},
+          { question_number:5, question_text:"Khi nhìn lại toàn bộ hành trình học tập tại trường, mức độ hài lòng của bạn đối với giá trị tấm bằng tốt nghiệp nhận được là như thế nào?", options:[
+            {label:"A",text:"Rất tự hào và biết ơn, chương trình học xứng đáng với chi phí và là bệ phóng vững chắc cho tương lai."},
+            {label:"B",text:"Hài lòng ở mức trung bình, tấm bằng có giá trị về mặt thủ tục còn năng lực cốt lõi chủ yếu do bạn tự cày cuốc."},
+            {label:"C",text:"Thấy tiếc nuối thời gian và tiền bạc, chương trình đào tạo chưa chất lượng như kỳ vọng ban đầu."},
+            {label:"D",text:"Cực kỳ thất vọng, coi việc học đại học/cao đẳng vừa qua là một sai lầm lớn và làm mất đi phương hướng sự nghiệp."}]}
+        ]},
+        { category_id:"ST5_MO", category_title:"Motivation & Efficacy", short:"MO", questions:[
+          { question_number:1, question_text:"Động lực cống hiến và thái độ làm việc của bạn trong những tháng đầu tiên đi làm full-time?", options:[
+            {label:"A",text:"Tràn đầy nhiệt huyết, chủ động nhận thêm việc và không ngại tăng ca học hỏi."},
+            {label:"B",text:"Chấp nhận gồng gánh làm việc để đạt KPI ở mức vừa đủ an toàn, không muốn quá nổi bật để tránh áp lực."},
+            {label:"C",text:"Run sợ, áp lực tột độ và có xu hướng muốn nhảy việc sang những công ty an nhàn, không áp KPI."},
+            {label:"D",text:"Mất định hướng hoàn toàn (quiet quitting), làm việc đối phó tối thiểu chỉ để nhận lương qua ngày."}]},
+         { question_number:2, question_text:"Mức độ sẵn sàng chủ động bước ra khỏi vùng an toàn để đón nhận thử thách mới trong công việc của bạn?", options:[
+            {label:"A",text:"Luôn sẵn sàng, sẵn sàng nhận các dự án khó hoặc thử sức ở lĩnh vực chuyên môn hoàn toàn mới nếu công ty cần."},
+            {label:"B",text:"Thích sự ổn định, chỉ muốn làm tốt công việc quen thuộc hàng ngày của mình."},
+            {label:"C",text:"Sợ hãi sự thay đổi, luôn trốn tránh mọi nhiệm vụ mới nằm ngoài mô tả công việc ban đầu."},
+            {label:"D",text:"Bạn chủ động từ chối mọi thử thách vì không muốn gánh vác trách nhiệm nếu công việc thất bại."}]},
+          { question_number:3, question_text:"Mức độ tự tin vào năng lực cá nhân khi bạn phải độc lập xử lý một công việc lớn mà không có Mentor hay thầy cô kề cận chỉ tay day việc?", options:[
+            {label:"A",text:"Rất tự tin vào tư duy giải quyết vấn đề cá nhân, tin mình có thể tự bơi và hoàn thành tốt nhiệm vụ."},
+            {label:"B",text:"Có thể tự làm được nhưng luôn trong trạng thái bất an, cần phải hỏi lại cấp trên nhiều lần để chắc chắn."},
+            {label:"C",text:"Hoang mang, không biết phải bắt đầu từ đâu nếu không có người hướng dẫn chi tiết từng bước."},
+            {label:"D",text:"Phó mặc hoặc làm bừa cho xong chuyện, không quan tâm đến chất lượng kết quả đầu ra của công việc."}]},
+          { question_number:4, question_text:"Cách bạn tự đối thoại và phục hồi năng lượng (Self-efficacy) khi gặp những thất bại, va vấp đầu đời tại công sở (bị Sếp mắng, đền bù hợp đồng, mất khách hàng...)?", options:[
+            {label:"A",text:"Biết cách tự tạo động lực, nghiêm túc rút kinh nghiệm từ lỗi sai và coi đó là bài học đắt giá để lớn lên."},
+            {label:"B",text:"Suy sụp và dằn vặt bản thân mất vài ngày, sau đó mới gượng dậy để tiếp tục làm việc."},
+            {label:"C",text:"Ám ảnh tâm lý nặng nề, mất hoàn toàn niềm tin vào năng lực của bản thân và muốn từ bỏ công việc hiện tại."},
+            {label:"D",text:"Đổ lỗi hoàn toàn cho hoàn cảnh khách quan hoặc đồng nghiệp chơi xấu chứ không nhìn nhận lại sai lầm cá nhân."}]},
+          { question_number:5, question_text:"Quan điểm của bạn về việc đầu tư thời gian, công sức ngoài giờ làm việc để cống hiến cho công ty nhằm đổi lấy sự thăng tiến nhanh chóng?", options:[
+            {label:"A",text:"Hoàn toàn ủng hộ, sẵn sàng hy sinh một phần thời gian cá nhân ở giai đoạn này để xây dựng bệ phóng sự nghiệp vững chắc."},
+            {label:"B",text:"Chỉ cống hiến hết mình trong giờ hành chính, hạn chế tối đa việc mang việc về nhà để bảo vệ không gian riêng."},
+            {label:"C",text:"Làm việc có xu hướng đối phó, chỉ làm đúng và đủ theo lương, không có nhu cầu thăng tiến hay chịu thêm trách nhiệm."},
+            {label:"D",text:"Có tư duy bài xích công ty, thường xuyên lan truyền năng lượng tiêu cực hoặc lôi kéo đồng nghiệp làm việc trì trệ."}]}
+        ]},
+        { category_id:"ST5_CR", category_title:"Career & Direction", short:"CR", questions:[
+          { question_number:1, question_text:"Tình trạng nhận Lời mời làm việc (Job Offer) chính thức của bạn hiện tại thế nào?", options:[
+            {label:"A",text:"Đã ký hợp đồng chính thức full-time tại một công ty xịn với mức đãi ngộ mong muốn."},
+            {label:"B",text:"Đang có 1-2 lời mời làm việc ở công ty nhỏ, đang cân nhắc đàm phán thêm lương thưởng."},
+            {label:"C",text:"Vẫn đang miệt mài rải hồ sơ khắp nơi nhưng chưa có kết quả tích cực."},
+            {label:"D",text:"Bị công ty thực tập cũ từ chối giữ lại làm chính thức và hiện đang thất nghiệp."}]},
+          { question_number:2, question_text:"Bạn đã thiết lập mục tiêu sự nghiệp ngắn hạn (2 năm) và dài hạn (5 năm) cho bản thân chưa?", options:[
+            {label:"A",text:"Đã lên lộ trình chi tiết các chứng chỉ cần đạt, vị trí cần thăng tiến cụ thể từng năm."},
+            {label:"B",text:"Có mục tiêu chung chung là thăng tiến lên cấp cao hơn chứ chưa có kế hoạch hành động cụ thể."},
+            {label:"C",text:"Hoàn toàn không có mục tiêu nghề nghiệp, chỉ sống qua ngày và thấy tương lai mịt mù."},
+            {label:"D",text:"Mục tiêu duy nhất là kiếm đủ tiền để gap year hoặc du học, không muốn gắn bó với ngành trong nước."}]},
+          { question_number:3, question_text:"Kỹ năng đàm phán lương và phúc lợi (Salary Negotiation) của bạn khi nhận được Job Offer?", options:[
+            {label:"A",text:"Tự tin thương lượng dựa trên research thị trường, đạt được mức lương mong muốn."},
+            {label:"B",text:"Chấp nhận mức lương công ty đề xuất, ngại thương lượng vì sợ bị rút lại lời mời."},
+            {label:"C",text:"Không biết mức lương thị trường chuẩn, chấp nhận bất kỳ con số nào miễn được nhận vào làm."},
+            {label:"D",text:"Đòi mức lương quá cao so với thực lực dẫn đến bị từ chối và mất cơ hội việc làm tốt."}]},
+          { question_number:4, question_text:"Mức độ chủ động xây dựng thương hiệu cá nhân (Personal Branding) trên nền tảng chuyên nghiệp sau khi ra trường?", options:[
+            {label:"A",text:"Tích cực viết bài chia sẻ chuyên môn, đóng góp open source và phát triển profile LinkedIn một cách bài bản."},
+            {label:"B",text:"Cập nhật kinh nghiệm làm việc mới lên LinkedIn khi nhớ ra, chưa có chiến lược bài bản."},
+            {label:"C",text:"Không quan tâm đến personal branding, nghĩ rằng chỉ cần làm tốt công việc là đủ."},
+            {label:"D",text:"Sợ bị soi xét hoặc bị chê bai nên không dám công khai chia sẻ gì trên mạng chuyên nghiệp."}]},
+          { question_number:5, question_text:"Khả năng vượt qua các vòng phỏng vấn chuyên môn và hành vi (Behavioral Interview) của bạn?", options:[
+            {label:"A",text:"Tự tin, đã luyện tập bài bản qua mock interview."},
+            {label:"B",text:"Vượt qua được vòng hành vi nhưng thường rớt ở vòng kỹ thuật do kiến thức nền chưa chắc."},
+            {label:"C",text:"Rất yếu, run sợ trước nhà tuyển dụng và không thể trình bày mạch lạc dù biết cách giải."},
+            {label:"D",text:"Đã thi trượt hơn 10 lần liên tiếp, hoàn toàn mất tự tin và đang cân nhắc từ bỏ định hướng nghề nghiệp hiện tại."}]}
+        ]},
+        { category_id:"ST5_EX", category_title:"Extracurricular Engagement", short:"EX", questions:[
+          { question_number:1, question_text:"Sau khi tốt nghiệp, bạn có tiếp tục đóng góp và kết nối với cộng đồng chuyên môn mà mình từng tham gia hay không?", options:[
+            {label:"A",text:"Chủ động tham gia meetup, hội thảo chuyên ngành và đóng góp kiến thức cho cộng đồng."},
+            {label:"B",text:"Chỉ tham dự các sự kiện lớn khi có thời gian rảnh, chưa có đóng góp chủ động."},
+            {label:"C",text:"Không tham gia gì, cảm thấy đã đủ kiến thức và không cần học hỏi thêm từ cộng đồng."},
+            {label:"D",text:"Hoàn toàn tách biệt khỏi cộng đồng chuyên môn vì bận rộn với công việc và cuộc sống cá nhân."}]},
+          { question_number:2, question_text:"Bạn có ý định quay lại hỗ trợ, mentoring cho các thế hệ sinh viên khóa sau tại trường không?", options:[
+            {label:"A",text:"Rất sẵn sàng, đã đăng ký hoặc chủ động liên hệ Khoa để tham gia chương trình cố vấn sinh viên."},
+            {label:"B",text:"Muốn hỗ trợ nhưng chưa biết bắt đầu từ đâu, đợi khi ổn định công việc hơn sẽ xem xét."},
+            {label:"C",text:"Không có hứng thú, thấy đó là trách nhiệm của nhà trường chứ không phải của cựu sinh viên."},
+            {label:"D",text:"Còn đang bế tắc trong sự nghiệp cá nhân, chưa thể làm gương hay định hướng cho người khác."}]},
+          { question_number:3, question_text:"Tần suất bạn tham gia các hoạt động học tập liên tục (Continuous Learning) như khóa học online, hội thảo chuyên ngành?", options:[
+            {label:"A",text:"Đều đặn mỗi tháng hoàn thành ít nhất một module học tập mới phù hợp với lộ trình sự nghiệp."},
+            {label:"B",text:"Học khi có nhu cầu công việc cụ thể yêu cầu, không có thói quen học chủ động thường xuyên."},
+            {label:"C",text:"Gần như không học thêm gì kể từ khi ra trường, cảm thấy kiến thức hiện tại là đủ."},
+            {label:"D",text:"Đã đăng ký nhiều khóa học nhưng không hoàn thành khóa nào do thiếu kỷ luật và thời gian."}]},
+          { question_number:4, question_text:"Mạng lưới chuyên nghiệp (Professional Network) của bạn sau khi ra trường phát triển như thế nào?", options:[
+            {label:"A",text:"Mở rộng đáng kể thông qua các dự án thực tế, sự kiện ngành và kết nối có chủ đích với chuyên gia."},
+            {label:"B",text:"Chỉ dừng ở mạng lưới đồng nghiệp tại công ty hiện tại, chưa có kết nối ra bên ngoài."},
+            {label:"C",text:"Thu hẹp lại so với thời sinh viên vì không còn thời gian giao lưu như trước."},
+            {label:"D",text:"Bạn không tin vào giá trị của networking, chỉ tin vào năng lực bản thân để tiến xa trong sự nghiệp."}]},
+          { question_number:5, question_text:"Mức độ chủ động xây dựng và cập nhật thương hiệu cá nhân trên các nền tảng mạng xã hội chuyên nghiệp (như LinkedIn) của bạn sau khi ra trường?", options:[
+            {label:"A",text:"Rất tích cực cập nhật hồ sơ, chia sẻ trải nghiệm công việc để thu hút các nhà tuyển dụng và cơ hội lớn."},
+            {label:"B",text:"Có tài khoản nhưng chỉ để chế độ ẩn danh theo dõi tin tuyển dụng, lười viết bài hay cập nhật thông tin mới."},
+            {label:"C",text:"Hoàn toàn bỏ bê, không mặn mà với việc thể hiện bản thân hay kết nối trực tuyến trên các mạng xã hội việc làm."},
+            {label:"D",text:"Bạn cho rằng việc xây dựng thương hiệu cá nhân trực tuyến là sống ảo, làm màu và không mang lại giá trị thực tế."}]}
+        ]}
+      ]
+    }
+    ]; /* end STAGES */
+
+    /* ──────────────────────────────────────────────────────
+       PHẦN 3 — ĐỊNH HƯỚNG & NGHỀ NGHIỆP (từ gemini.json)
+       Mỗi stage gồm 1 core_question + nhiều supporting_questions.
+       Loại câu hỏi:  SC = chọn 1,  MC = chọn nhiều (max_select),  OE = tự luận.
+    ────────────────────────────────────────────────────── */
+    const CAREER_DATA = {
+      section: "Phần 3: Định hướng & Nghề nghiệp (Career & Direction)",
+      stages: [
+        {
+          stage_id: 1,
+          stage_name: "STAGE 1 — ADAPTATION & TRANSITION",
+          core_concern: "Hiểu sinh viên đang nhìn nhận ngành học như thế nào.",
+          core_question: { id:"S1_CQ", type:"SC", question_text:"Nếu có cơ hội quay lại thời điểm chọn ngành, bạn sẽ:", allow_other:true, options:[
+            {value:"A",text:"Vẫn chọn ngành hiện tại và thấy phù hợp"},
+            {value:"B",text:"Vẫn chọn ngành nhưng có thể cân nhắc thêm"},
+            {value:"C",text:"Có thể chọn ngành khác"},
+            {value:"D",text:"Không chắc ngành này phù hợp với mình"} ] },
+          supporting_questions: [
+            { id:"S1_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Khi tìm hiểu về ngành học hiện tại, bạn thường quan tâm đến những yếu tố nào? (Chọn tối đa 2)", options:["Công việc tương lai","Kiến thức chuyên môn","Môi trường học tập","Cơ hội phát triển bản thân","Thu nhập trong tương lai","Chưa xác định rõ"] },
+            { id:"S1_SQ2", type:"MC", max_select:2, allow_other:true, question_text:"Điều nào khiến bạn hứng thú nhất khi học ngành này? (Chọn tối đa 2)", options:["Nghề nghiệp tương lai","Nội dung các môn học","Cơ hội phát triển bản thân","Môi trường và bạn bè","Cơ hội thực hành thực tế","Chưa thấy điều gì thật sự hấp dẫn"] },
+            { id:"S1_SQ3", type:"SC", allow_other:true, question_text:"Khi ai đó hỏi: 'Ngành này sau này làm gì?', bạn thường:", options:[
+              {value:"A",text:"Trả lời khá rõ"},{value:"B",text:"Biết một vài hướng"},{value:"C",text:"Trả lời còn khá mơ hồ"},{value:"D",text:"Không biết trả lời thế nào"} ] },
+            { id:"S1_SQ4", type:"OE", question_text:"Reflection Question: Điều gì khiến bạn cảm thấy chưa chắc chắn nhất về ngành học hiện tại?" }
+          ]
+        },
+        {
+          stage_id: 2,
+          stage_name: "STAGE 2 — EXPLORATION & IDENTITY BUILDING",
+          core_concern: "Khám phá sở thích nghề nghiệp.",
+          core_question: { id:"S2_CQ", type:"SC", allow_other:true, question_text:"Nếu phải chọn một hướng mà bạn cảm thấy phù hợp nhất với bản thân hiện tại, bạn sẽ chọn:", options:[
+            {value:"A",text:"Làm việc với dữ liệu / logic"},{value:"B",text:"Làm việc với con người / xã hội"},{value:"C",text:"Làm việc sáng tạo / thiết kế"},{value:"D",text:"Làm việc về kinh doanh / thị trường"},{value:"E",text:"Chưa thấy hướng nào thật sự phù hợp"} ] },
+          supporting_questions: [
+            { id:"S2_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Bạn muốn thử trải nghiệm nào nhất? (Chọn tối đa 2)", options:["Thực tập ngắn hạn","Workshop nghề nghiệp","Dự án thực tế","Cuộc thi học thuật","Hoạt động cộng đồng","Chưa muốn tham gia"] },
+            { id:"S2_SQ2", type:"MC", max_select:null, allow_other:true, question_text:"Khi làm việc, bạn thấy mình thường thấy thoải mái nhất trong môi trường nào?", options:["Có dữ liệu / logic rõ ràng","Có tương tác với con người","Có sự sáng tạo tự do","Có mục tiêu kinh doanh rõ ràng","Chưa có môi trường nào cảm thấy phù hợp"] },
+            { id:"S2_SQ3", type:"MC", max_select:2, allow_other:true, question_text:"Bạn thường bị thu hút nhất khi xem nội dung nào vì bạn cảm thấy nó gần với bản thân? (Chọn tối đa 2)", options:["Công nghệ","Kinh doanh","Sáng tạo","Kỹ năng sống","Giáo dục","Khởi nghiệp"] },
+            { id:"S2_SQ4", type:"MC", max_select:2, allow_other:true, question_text:"Nếu phải bắt đầu phát triển một năng lực trong thời gian tới, bạn thấy dễ bắt đầu nhất với: (Chọn tối đa 2)", options:["Data / AI","Business","Design","Communication","Leadership","Ngoại ngữ"] },
+            { id:"S2_SQ5", type:"OE", question_text:"Hiện tại bạn tò mò hoặc muốn tìm hiểu sâu hơn về lĩnh vực nào?" }
+          ]
+        },
+        {
+          stage_id: 3,
+          stage_name: "STAGE 3 — COMPETENCY DEVELOPMENT",
+          core_concern: "Xác định hướng phát triển năng lực.",
+          core_question: { id:"S3_CQ", type:"SC", allow_other:true, question_text:"Nếu tham gia một dự án thực tế ngay hôm nay, bạn sẽ:", options:[
+            {value:"A",text:"Có thể đảm nhận tốt vai trò chính"},{value:"B",text:"Tham gia được nhưng cần hỗ trợ"},{value:"C",text:"Chỉ làm được nhiệm vụ đơn giản"},{value:"D",text:"Chưa đủ năng lực tham gia"} ] },
+          supporting_questions: [
+            { id:"S3_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Khi làm nhóm, bạn thường đảm nhận: (Chọn tối đa 2)", options:["Phân tích thông tin","Lập kế hoạch","Điều phối nhóm","Thực hiện chuyên môn","Trình bày kết quả","Làm theo phân công"] },
+            { id:"S3_SQ2", type:"MC", max_select:2, allow_other:true, question_text:"Bạn thường học kỹ năng mới bằng: (Chọn tối đa 2)", options:["Tự học","Khóa học online","Dự án thực tế","Học từ người khác","Học qua tài liệu"] },
+            { id:"S3_SQ3", type:"SC", allow_other:true, question_text:"Improvement Behavior — Khi có kĩ năng quan trọng còn yếu, bạn sẽ:", options:[
+              {value:"A",text:"Chủ động cải thiện ngay"},{value:"B",text:"Cải thiện khi cần"},{value:"C",text:"Để sau"},{value:"D",text:"Thường bỏ qua"} ] },
+            { id:"S3_SQ4", type:"MC", max_select:2, allow_other:true, question_text:"Bạn muốn được đánh giá cao ở năng lực: (Chọn tối đa 2)", options:["Chuyên môn","Giải quyết vấn đề","Giao tiếp","Làm việc nhóm","Sáng tạo","Lãnh đạo"] },
+            { id:"S3_SQ5", type:"OE", question_text:"Kỹ năng nào khiến bạn thiếu tự tin nhất? Vì sao?" }
+          ]
+        },
+        {
+          stage_id: 4,
+          stage_name: "STAGE 4 — CAREER PREPARATION",
+          core_concern: "Đánh giá mức độ chuẩn bị nghề nghiệp.",
+          core_question: { id:"S4_CQ", type:"SC", allow_other:true, question_text:"Nếu ngày mai được gọi phỏng vấn đúng ngành mình quan tâm, bạn sẽ:", options:[
+            {value:"A",text:"Sẵn sàng tham gia"},{value:"B",text:"Muốn tham gia nhưng còn lo lắng"},{value:"C",text:"Không chắc mình đủ năng lực"},{value:"D",text:"Chưa sẵn sàng"} ] },
+          supporting_questions: [
+            { id:"S4_SQ1", type:"MC", max_select:null, allow_other:true, question_text:"Bạn đã từng làm điều nào sau đây? (Chọn tất cả phù hợp)", options:["Viết CV","Làm portfolio","Tìm hiểu JD","LinkedIn","Phỏng vấn thử","Chưa làm gì"] },
+            { id:"S4_SQ2", type:"MC", max_select:2, allow_other:true, question_text:"Bạn thường cập nhật thông tin nghề nghiệp bằng cách nào? (Chọn tối đa 2)", options:["LinkedIn","Website tuyển dụng","Giảng viên","Bạn bè","Cựu sinh viên","Không tìm hiểu"] },
+            { id:"S4_SQ3", type:"SC", allow_other:true, question_text:"Khi giới thiệu bản thân với nhà tuyển dụng, bạn:", options:[
+              {value:"A",text:"Tự tin rõ ràng"},{value:"B",text:"Tương đối ổn"},{value:"C",text:"Lúng túng"},{value:"D",text:"Không biết bắt đầu"} ] },
+            { id:"S4_SQ4", type:"MC", max_select:2, allow_other:true, question_text:"Điều khiến bạn lo lắng nhất khi nghĩ tới việc đi làm là: (Chọn tối đa 2)", options:["Thiếu kinh nghiệm","Thiếu kỹ năng","Thiếu định hướng","Thiếu kết nối","Phỏng vấn","Cạnh tranh"] },
+            { id:"S4_SQ5", type:"OE", question_text:"Điều gì khiến bạn chưa sẵn sàng đi làm?" }
+          ]
+        },
+        {
+          stage_id: 5,
+          stage_name: "STAGE 5 — FUTURE TRANSITION",
+          core_concern: "Sẵn sàng cho bước chuyển tiếp tương lai.",
+          core_question: { id:"S5_CQ", type:"SC", allow_other:true, question_text:"Nếu phải chọn mô tả chính xác nhất về tình trạng định hướng tương lai của bạn:", options:[
+            {value:"A",text:"Tôi đã xác định rõ nghề nghiệp và đang chuẩn bị theo lộ trình đó"},{value:"B",text:"Tôi có một vài hướng cụ thể và đang thử nghiệm để xác định"},{value:"C",text:"Tôi chưa chắc về hướng đi và đang tìm kiếm thêm"},{value:"D",text:"Tôi chưa có bất kỳ định hướng rõ ràng nào"} ] },
+          supporting_questions: [
+            { id:"S5_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Trong 3 năm tới bạn ưu tiên: (Chọn tối đa 2)", options:["Công việc đúng ngành","Thu nhập ổn định","Phát triển kỹ năng","Khám phá bản thân","Môi trường quốc tế","Chưa xác định"] },
+            { id:"S5_SQ2", type:"SC", allow_other:true, question_text:"Khi vào môi trường mới, bạn là người:", options:[
+              {value:"A",text:"Thích nghi nhanh"},{value:"B",text:"Quan sát rồi thích nghi"},{value:"C",text:"Cần hỗ trợ để thích nghi"},{value:"D",text:"Khó thích nghi"} ] },
+            { id:"S5_SQ3", type:"MC", max_select:2, allow_other:true, question_text:"Khi nghĩ về tương lai, cảm xúc gần nhất của bạn là: (Chọn tối đa 2)", options:["Hào hứng","Tò mò","Lo lắng","Mơ hồ","Tự tin","Áp lực"] },
+            { id:"S5_SQ4", type:"MC", max_select:2, allow_other:false, question_text:"Điều bạn muốn đạt được nhất trong giai đoạn tiếp theo là: (Chọn tối đa 2)", options:["Ổn định","Phát triển năng lực","Khám phá hướng đi","Quan hệ xã hội","Cân bằng cuộc sống"] },
+            { id:"S5_SQ5", type:"OE", question_text:"Bạn hình dung cuộc sống sau 3 năm như thế nào?" }
+          ]
+        }
+      ]
+    };
+
+    /* ──────────────────────────────────────────────────────
+       PHẦN 4 — ĐỘNG LỰC & TỰ TIN (từ gemini-code.json) → map vào mục Motivation & Efficacy
+       Dùng 5 câu phụ (SQ1–SQ5) cho mỗi stage; câu hỏi chính (core) bỏ qua.
+    ────────────────────────────────────────────────────── */
+    const MOTIVATION_DATA = {
+      section: "Phần 4: Động lực & Tự tin (Motivation & Efficacy)",
+      stages: [
+        {
+          stage_id: 1,
+          supporting_questions: [
+            { id:"M1_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Khi bắt đầu một nhiệm vụ học tập mới, bạn thường: (Chọn tối đa 2)", options:["Chủ động tìm hiểu trước khi làm","Làm theo hướng dẫn từng bước","Học khi có deadline hoặc yêu cầu","Học theo nhóm hoặc khi có người cùng học","Thường trì hoãn bắt đầu"] },
+            { id:"M1_SQ2", type:"MC", max_select:2, allow_other:true, question_text:"Khi không hiểu bài trên lớp, bạn thường: (Chọn tối đa 2)", options:["Tự tìm tài liệu để hiểu thêm","Hỏi bạn bè hoặc giảng viên","Ghi lại để xem lại sau","Chờ đến khi ôn tập mới học","Thường bỏ qua phần không hiểu"] },
+            { id:"M1_SQ3", type:"MC", max_select:2, allow_other:true, question_text:"Trong quá trình học, bạn duy trì việc học như thế nào: (Chọn tối đa 2)", options:["Học đều theo kế hoạch","Học theo deadline","Học theo cảm hứng","Học khi có nhóm bạn","Không duy trì ổn định"] },
+            { id:"M1_SQ4", type:"MC", max_select:2, allow_other:true, question_text:"Khi gặp khó khăn kéo dài, bạn thường: (Chọn tối đa 2)", options:["Điều chỉnh cách học","Cố gắng giữ cách học hiện tại","Giảm dần nỗ lực","Tìm người hỗ trợ","Thường bỏ luôn"] },
+            { id:"M1_SQ5", type:"OE", question_text:"Điều gì khiến bạn dễ mất động lực khi học một môn khó?" }
+          ]
+        },
+        {
+          stage_id: 2,
+          supporting_questions: [
+            { id:"M2_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Khi có thời gian rảnh, bạn thường: (Chọn tối đa 2)", options:["Tự học điều mình quan tâm","Học khi có bài tập hoặc deadline","Học theo nhóm hoặc bạn bè","Lên kế hoạch học nhưng không duy trì đều","Chủ yếu giải trí"] },
+            { id:"M2_SQ2", type:"MC", max_select:2, allow_other:true, question_text:"Khi bắt đầu học một chủ đề mới, bạn thường: (Chọn tối đa 2)", options:["Tìm hiểu sâu ngay từ đầu","Tìm hiểu sơ bộ rồi dừng","Chỉ học khi cần thiết","Học theo yêu cầu môn học","Ít khi chủ động tìm hiểu"] },
+            { id:"M2_SQ3", type:"MC", max_select:2, allow_other:true, question_text:"Điều khiến bạn có động lực học nhất là: (Chọn tối đa 2)", options:["Thấy mình tiến bộ","Hoàn thành mục tiêu","Được công nhận","Có deadline rõ ràng","Không rõ yếu tố nào tạo động lực"] },
+            { id:"M2_SQ4", type:"MC", max_select:2, allow_other:true, question_text:"Khi học một môn học, bạn thường duy trì như thế nào: (Chọn tối đa 2)", options:["Học đều theo kế hoạch","Học theo deadline","Học theo cảm hứng","Học khi có nhóm bạn","Không duy trì ổn định"] },
+            { id:"M2_SQ5", type:"OE", question_text:"Điều gì khiến bạn muốn tiếp tục hoặc dừng việc học một môn?" }
+          ]
+        },
+        {
+          stage_id: 3,
+          supporting_questions: [
+            { id:"M3_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Khi thất bại trong một nhiệm vụ, bạn thường: (Chọn tối đa 2)", options:["Phân tích lỗi và thử lại","Nghỉ một thời gian rồi thử lại","Chờ người khác hướng dẫn","Chỉ sửa khi bị yêu cầu","Thường bỏ qua"] },
+            { id:"M3_SQ2", type:"MC", max_select:2, allow_other:true, question_text:"Khi học kỹ năng mới, bạn thường: (Chọn tối đa 2)", options:["Tự học chủ động","Học qua khóa học online","Học qua dự án thực tế","Học khi có người hướng dẫn","Chỉ học khi cần thiết"] },
+            { id:"M3_SQ3", type:"MC", max_select:2, allow_other:true, question_text:"Khi làm project dài hạn, bạn thường: (Chọn tối đa 2)", options:["Duy trì đến cuối","Có lúc giảm nhưng vẫn hoàn thành","Làm theo từng deadline nhỏ","Dễ mất tập trung","Khó theo đến cuối"] },
+            { id:"M3_SQ4", type:"MC", max_select:2, allow_other:true, question_text:"Khi thấy người khác giỏi hơn mình, bạn thường: (Chọn tối đa 2)", options:["Xem đó là động lực","Vừa động lực vừa áp lực","Dễ nản","Tránh so sánh","Không quan tâm"] },
+            { id:"M3_SQ5", type:"OE", question_text:"Điều gì giúp bạn kiên trì theo đuổi một kỹ năng lâu dài?" }
+          ]
+        },
+        {
+          stage_id: 4,
+          supporting_questions: [
+            { id:"M4_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Khi phải tự học một kỹ năng mới, bạn thường: (Chọn tối đa 2)", options:["Tự tìm tài liệu và bắt đầu thử ngay","Tìm roadmap hoặc hướng dẫn trước khi học","Học theo khóa học có cấu trúc sẵn","Chỉ học khi có người hướng dẫn trực tiếp","Thường trì hoãn vì không biết bắt đầu từ đâu"] },
+            { id:"M4_SQ2", type:"MC", max_select:2, allow_other:true, question_text:"Khi gặp nhiệm vụ khó trong học hoặc dự án, bạn thường: (Chọn tối đa 2)", options:["Tự chia nhỏ và giải quyết từng bước","Tìm tài liệu hoặc ví dụ tương tự","Hỏi người khác để được hướng dẫn","Chờ đến khi có yêu cầu rõ ràng hơn mới làm","Thường bỏ qua nếu thấy quá khó"] },
+            { id:"M4_SQ3", type:"MC", max_select:2, allow_other:true, question_text:"Khi nhận phản hồi về kỹ năng của mình, bạn thường: (Chọn tối đa 2)", options:["Dùng phản hồi để cải thiện ngay","Suy nghĩ rồi cải thiện dần","Cần thời gian mới tiếp nhận được","Dễ mất tự tin","Thường tránh nhận phản hồi"] },
+            { id:"M4_SQ4", type:"SC", allow_other:true, question_text:"Điều mô tả bạn đúng nhất:", options:[
+              {value:"A",text:"Tôi có thể tự học nếu cần"},{value:"B",text:"Tôi học tốt hơn khi có hướng dẫn rõ ràng"},{value:"C",text:"Tôi thường khó bắt đầu nếu không có chỉ dẫn"},{value:"D",text:"Tôi dễ bỏ khi gặp khó"} ] },
+            { id:"M4_SQ5", type:"OE", question_text:"Điều gì khiến bạn chưa tự tin khi học kỹ năng mới?" }
+          ]
+        },
+        {
+          stage_id: 5,
+          supporting_questions: [
+            { id:"M5_SQ1", type:"MC", max_select:2, allow_other:true, question_text:"Khi gặp khó trong công việc đầu tiên, bạn thường: (Chọn tối đa 2)", options:["Chủ động tìm cách giải quyết","Tìm người hỗ trợ rồi xử lý","Làm theo hướng dẫn cấp trên","Cần thời gian để thích nghi rồi mới làm tốt","Dễ mất động lực"] },
+            { id:"M5_SQ2", type:"MC", max_select:1, allow_other:true, question_text:"Khi bước vào môi trường mới, bạn thường: (Chọn tối đa 1)", options:["Thích nghi nhanh","Thích nghi dần theo thời gian","Cần nhiều thời gian để quen","Khó thích nghi"] },
+            { id:"M5_SQ3", type:"MC", max_select:2, allow_other:true, question_text:"Khi nghĩ về tương lai nghề nghiệp, bạn mô tả mình đúng nhất là: (Chọn tối đa 2)", options:["Tôi đã có hướng nghề nghiệp khá rõ và đang chuẩn bị theo hướng đó","Tôi có một vài hướng nhưng vẫn đang thử nghiệm thêm","Tôi chưa chắc về hướng đi và đang tìm kiếm thêm","Tôi cảm thấy chưa rõ mình phù hợp với hướng nào","Tôi đang cảm thấy khá áp lực vì chưa có định hướng rõ ràng"] },
+            { id:"M5_SQ4", type:"MC", max_select:2, allow_other:true, question_text:"Điều bạn ưu tiên nhất trong 1–3 năm tới: (Chọn tối đa 2)", options:["Ổn định công việc","Phát triển kỹ năng","Khám phá hướng đi phù hợp","Mở rộng quan hệ nghề nghiệp","Cân bằng cuộc sống"] },
+            { id:"M5_SQ5", type:"OE", question_text:"Bạn nghĩ mình cần gì để tự tin hơn khi đi làm?" }
+          ]
+        }
+      ]
+    };
+
+    function getCareerStage(stageId) { return CAREER_DATA.stages.find(s => s.stage_id === stageId) || null; }
+    function getMotivStage(stageId)  { return MOTIVATION_DATA.stages.find(s => s.stage_id === stageId) || null; }
+    /* Mục nào là "section đặc biệt" (dùng bộ câu hỏi SC/MC/OE riêng) và lấy dữ liệu stage tương ứng.
+       CR = Career & Direction (gemini.json) | MO = Motivation & Efficacy (gemini-code.json) */
+    function sectionStageFor(dim, stageId) {
+      if (dim === 'CR') return getCareerStage(stageId);
+      if (dim === 'MO') return getMotivStage(stageId);
+      return null;
+    }
+
+    /* Thành phần hiển thị của một mục section: 5 câu phụ; thiếu thì bù câu cũ cho đủ 5.
+       sectionStage null => mục thường (chỉ câu cũ). */
+    function sectionParts(sectionStage, category) {
+      const support = sectionStage ? sectionStage.supporting_questions : [];
+      const fillCount = sectionStage ? Math.max(0, 5 - support.length) : 0;
+      const oldQs = sectionStage
+        ? (category ? category.questions.slice(0, fillCount) : [])
+        : (category ? category.questions : []);
+      return { support, oldQs };
+    }
+
+    /* ── SECTION ANSWER HELPERS (dùng chung cho mọi section) ──
+       SC  → string ("A".."E", hoặc E_PREFIX+text cho "Khác")
+       MC  → { sel: [text,...], other: '' }
+       OE  → string */
+    function isSectionAnswered(q, v) {
+      if (!q) return false;
+      if (q.type === 'MC') return !!v && ((v.sel && v.sel.length > 0) || (v.other && v.other.trim() !== ''));
+      if (q.type === 'OE') return !!v && v.trim() !== '';
+      /* SC */
+      if (!v) return false;
+      if (v.indexOf(E_PREFIX) === 0) return v.slice(E_PREFIX.length).trim() !== '';
+      return true;
+    }
+    function sectionExport(q, v) {
+      if (!isSectionAnswered(q, v)) return '';
+      if (q.type === 'MC') {
+        const parts = (v.sel || []).slice();
+        if (v.other && v.other.trim()) parts.push('Khác: ' + v.other.trim());
+        return parts.join(' | ');
+      }
+      if (q.type === 'OE') return v.trim();
+      /* SC */
+      if (v.indexOf(E_PREFIX) === 0) return 'Khác: ' + v.slice(E_PREFIX.length).trim();
+      const opt = (q.options || []).find(o => o.value === v);
+      return opt ? v + ': ' + opt.text : v;
+    }
+
+    /* ──────────────────────────────────────────────────────
+       PREMIUM UI COMPONENTS
+    ────────────────────────────────────────────────────── */
+
+    /* Icon system */
+    const Svg = ({ size=20, style={}, strokeWidth=2, children }) => (
+      <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size}
+        viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" style={style}>
+        {children}
+      </svg>
+    );
+    const Icon = {
+      User:        p => <Svg {...p}><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></Svg>,
+      Mail:        p => <Svg {...p}><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></Svg>,
+      GradCap:     p => <Svg {...p}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></Svg>,
+      Calendar:    p => <Svg {...p}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></Svg>,
+      BookOpen:    p => <Svg {...p}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></Svg>,
+      Bell:        p => <Svg {...p}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></Svg>,
+      Globe:       p => <Svg {...p}><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></Svg>,
+      ArrowRight:  p => <Svg {...p}><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></Svg>,
+      Check:       p => <Svg {...p}><polyline points="20 6 9 17 4 12"/></Svg>,
+      Send:        p => <Svg {...p}><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></Svg>,
+      RotateCcw:   p => <Svg {...p}><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.14"/></Svg>,
+    };
+
+    /* ── BACKGROUND ── */
+    function Background() {
+      const stars = React.useMemo(() =>
+        Array.from({length:18},(_,i)=>({
+          size: 3 + Math.abs(Math.sin(i*1.7)) * 3,
+          x: (i*13+7) % 97,
+          y: (i*19+11) % 93,
+          dur: 2 + Math.abs(Math.cos(i*2.1)) * 1.5,
+          del: i * 0.35,
+        })), []);
+      return (
+        <div className="bg-layer">
+          <div className="blob b1"/>
+          <div className="blob b2"/>
+          <div className="blob b3"/>
+          {stars.map((s,i) => (
+            <div key={i} className="star" style={{
+              width:s.size, height:s.size,
+              left:s.x+'%', top:s.y+'%',
+              animationDuration: s.dur+'s',
+              animationDelay: s.del+'s',
+            }}/>
+          ))}
+        </div>
+      );
+    }
+
+    /* ── NAV BAR ── */
+    const NAV_STEPS = ['Thông tin','Chương trình','Câu hỏi','Kết quả'];
+    function NavBar({ step, fullName }) {
+      const initials = (fullName||'').trim().split(' ').filter(Boolean)
+        .map(w=>w[0].toUpperCase()).slice(-2).join('') || 'SV';
+      return (
+        <nav className="nav-bar max-sm:!gap-3 max-sm:!px-4">
+          <a className="nav-logo" href="#" style={{textDecoration:'none'}}>
+            <div className="nav-logo-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            <span className="nav-logo-text">Edu<span>Assess</span></span>
+          </a>
+          <div className="nav-steps">
+            {NAV_STEPS.map((name,i) => {
+              const st = i < step ? 'done' : i === step ? 'active' : 'pending';
+              return (
+                <React.Fragment key={i}>
+                  <div className="step-item">
+                    <div className={`step-num s-${st}`}>{st==='done' ? '✓' : i+1}</div>
+                    <span className={`step-lbl sl-${st} max-sm:hidden`}>{name}</span>
+                  </div>
+                  {i < NAV_STEPS.length-1 && (
+                    <div className={`step-line ${i<step?'sl-done-line':'sl-pending-line'} max-sm:!w-3`}/>
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+          <div className="nav-actions">
+            <button className="nav-icon-btn" title="Notifications"><Icon.Bell size={16}/></button>
+            <button className="nav-icon-btn" title="Language"><Icon.Globe size={16}/></button>
+            <div className="nav-avatar">{initials}</div>
+          </div>
+        </nav>
+      );
+    }
+
+    /* ── PROGRESS RING ── */
+    function ProgressRing({ pct, answered, total }) {
+      const r = 52, c = 2 * Math.PI * r;
+      const dash = c - (c * pct / 100);
+      return (
+        <div style={{display:'flex',flexDirection:'column',alignItems:'center',gap:16}}>
+          <div style={{position:'relative',width:140,height:140}}>
+            <svg width="140" height="140" viewBox="0 0 140 140">
+              <defs>
+                <linearGradient id="progGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#00C58E"/>
+                  <stop offset="100%" stopColor="#4ADE80"/>
+                </linearGradient>
+              </defs>
+              <circle cx="70" cy="70" r={r} fill="none" stroke="#E8F5F0" strokeWidth="10"/>
+              <circle cx="70" cy="70" r={r} fill="none" stroke="url(#progGrad)"
+                strokeWidth="10" strokeLinecap="round"
+                strokeDasharray={c} strokeDashoffset={dash}
+                style={{transform:'rotate(-90deg)',transformOrigin:'70px 70px',transition:'stroke-dashoffset .6s ease'}}/>
+            </svg>
+            <div style={{position:'absolute',inset:0,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+              <span style={{fontFamily:'Poppins,sans-serif',fontWeight:800,fontSize:'1.8rem',color:'#0F172A',lineHeight:1}}>{Math.round(pct)}%</span>
+              <span style={{fontSize:'.62rem',fontWeight:600,color:'#94A3B8',fontFamily:'Poppins,sans-serif',marginTop:2}}>hoàn thành</span>
+            </div>
+          </div>
+          <div className="prog-pill">
+            <div style={{width:8,height:8,borderRadius:'50%',background:'#00C58E',animation:'pulse 2s ease-in-out infinite'}}/>
+            {answered} / {total} câu đã trả lời
+          </div>
+        </div>
+      );
+    }
+
+    /* ── FIELD INPUT ── */
+    function FieldInput({ label, icon, placeholder, value, onChange, type='text' }) {
+      return (
+        <div className="field-grp">
+          <label className="field-lbl">{label}</label>
+          <div className="field-wrap">
+            <div className="field-ico">{icon}</div>
+            <input className="field-inp" type={type} placeholder={placeholder}
+              value={value} onChange={e=>onChange(e.target.value)}/>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── FIELD SELECT ── */
+    function FieldSelect({ label, icon, value, onChange, options, placeholder, disabled }) {
+      return (
+        <div className="field-grp">
+          <label className="field-lbl">{label}</label>
+          <div className="field-wrap">
+            <div className="field-ico">{icon}</div>
+            <select className="field-sel" value={value} onChange={e=>onChange(e.target.value)} disabled={disabled}>
+              <option value="">{placeholder||'Chọn...'}</option>
+              {options.map(o => <option key={o.value||o} value={o.value||o}>{o.label||o}</option>)}
+            </select>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── OPTION ROW ── */
+    function OptionRow({ letter, text, selected, onSelect, multi, disabled }) {
+      return (
+        <button className={'opt-row'+(selected?' sel':'')+(disabled?' disabled':'')}
+          onClick={disabled ? undefined : onSelect} disabled={disabled} type="button">
+          {multi
+            ? <span className="opt-check"><Icon.Check size={13} strokeWidth={3}/></span>
+            : <span className="opt-bdg">{letter}</span>}
+          <span className="opt-txt">{text}</span>
+        </button>
+      );
+    }
+
+    /* ── QUESTION CARD (nhiều kiểu nhập tuỳ mục) ── */
+    function QuestionCard({ q, idx, answer, onAnswer, akey, style='single' }) {
+      const cols = ['#00C58E','#4ADE80','#059669','#34D399','#10B981'];
+      const col = cols[idx % cols.length];
+      const aKey = akey != null ? akey : String(idx+1); /* khoá lưu đáp án (tách khỏi số thứ tự hiển thị) */
+      const opts = q.options.map(o => ({ label: o.label || o.key, text: o.text || o.option_text }));
+      const set = v => onAnswer(aKey, v);
+
+      /* ô "Khác" dùng chung cho các kiểu chọn-1 */
+      const otherBlock = () => (answerLabel(answer) === 'E') && (
+        <textarea className="opt-custom-inp" autoFocus placeholder="Nhập câu trả lời của bạn…"
+          value={answerCustomText(answer)} onChange={e=>set(E_PREFIX + e.target.value)}/>
+      );
+
+      /* ── 1) CHỌN 1 — danh sách dọc (mặc định) ── */
+      const renderSingle = () => (
+        <>
+          {opts.map(o => (
+            <OptionRow key={o.label} letter={o.label} text={o.text}
+              selected={answerLabel(answer)===o.label} onSelect={()=>set(o.label)}/>
+          ))}
+          <OptionRow key="E" letter="E" text="Khác (ý kiến của riêng bạn)…"
+            selected={answerLabel(answer)==='E'} onSelect={()=>set(E_PREFIX + answerCustomText(answer))}/>
+          {otherBlock()}
+        </>
+      );
+
+      /* ── 2) THANG ĐIỂM — các lựa chọn xếp ngang ── */
+      const renderScale = () => (
+        <>
+          <div className="scale-row">
+            {opts.map(o => (
+              <button key={o.label} type="button"
+                className={'scale-pill'+(answerLabel(answer)===o.label?' sel':'')}
+                onClick={()=>set(o.label)}>
+                <span className="scale-pill-lbl">{o.label}</span>
+                <span className="scale-pill-txt">{o.text}</span>
+              </button>
+            ))}
+          </div>
+          <button type="button" className={'scale-other'+(answerLabel(answer)==='E'?' sel':'')}
+            onClick={()=>set(E_PREFIX + answerCustomText(answer))}>✎ Ý kiến khác</button>
+          {otherBlock()}
+        </>
+      );
+
+      /* ── 3) CHỌN NHIỀU — checkbox (lưu object {sel,other,otherOn}) ── */
+      const renderMulti = () => {
+        const v = (answer && typeof answer === 'object') ? answer : { sel: [], other: '', otherOn: false };
+        const toggle = lbl => {
+          const has = v.sel.includes(lbl);
+          set({ ...v, sel: has ? v.sel.filter(x=>x!==lbl) : [...v.sel, lbl] });
+        };
+        return (
+          <>
+            <div className="q-hint">Có thể chọn nhiều đáp án</div>
+            {opts.map(o => (
+              <OptionRow key={o.label} multi text={o.label + '. ' + o.text}
+                selected={v.sel.includes(o.label)} onSelect={()=>toggle(o.label)}/>
+            ))}
+            <OptionRow multi text="Khác …" selected={!!v.otherOn}
+              onSelect={()=>set({ ...v, otherOn: !v.otherOn, other: v.otherOn ? '' : v.other })}/>
+            {v.otherOn && (
+              <textarea className="opt-custom-inp" autoFocus placeholder="Nhập lựa chọn của bạn…"
+                value={v.other || ''} onChange={e=>set({ ...v, other: e.target.value })}/>
+            )}
+          </>
+        );
+      };
+
+      const body = { scale:renderScale, multi:renderMulti }[style] || renderSingle;
+
+      return (
+        <div style={{marginBottom:22,background:'#FAFFFE',borderRadius:18,border:'1px solid #F0FAF5',overflow:'hidden'}}>
+          <div style={{padding:'14px 18px',display:'flex',alignItems:'flex-start',gap:12}}>
+            <div className="q-num" style={{background:col}}>{String(idx+1).padStart(2,'0')}</div>
+            <p className="q-txt">{q.question_text}</p>
+          </div>
+          <div style={{padding:'0 18px 18px',display:'flex',flexDirection:'column',gap:8}}>
+            {body()}
+          </div>
+        </div>
+      );
+    }
+
+    /* ── CATEGORY CARD ── */
+    function CategoryCard({ cat, catIdx, answers, onAnswer, sectionStage, sectionAns, onSectionChange }) {
+      const dim = cat.category_id.split('_').pop();
+      const dimCols = {WB:'#00C58E',AC:'#4ADE80',MO:'#34D399',CR:'#059669',EX:'#10B981'};
+      const col = dimCols[dim] || '#00C58E';
+
+      /* Mục section (CR/MO): dùng 5 câu hỏi phụ; nếu thiếu thì bù câu cũ cho đủ 5 */
+      const { support, oldQs } = sectionParts(sectionStage, cat);
+
+      const answered = support.filter(q => isSectionAnswered(q, (sectionAns||{})[q.id])).length
+        + oldQs.filter((_,i)=>isAnswered(answers[String(i+1)])).length;
+      const total = support.length + oldQs.length;
+      return (
+        <div className="cat-card">
+          <div className="cat-hdr max-sm:!px-4">
+            <div className="cat-short" style={{background:'rgba(255,255,255,.12)',border:'1.5px solid rgba(255,255,255,.2)'}}>
+              <span style={{color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:900,fontSize:'.7rem'}}>{dim}</span>
+            </div>
+            <div style={{flex:1}}>
+              <div className="cat-title">{cat.category_title}</div>
+            </div>
+            <div style={{textAlign:'right',flexShrink:0}}>
+              <div style={{fontSize:'.62rem',color:'rgba(255,255,255,.4)',fontFamily:'Poppins,sans-serif',fontWeight:600,textTransform:'uppercase',letterSpacing:'.1em'}}>Tiến độ</div>
+              <div style={{fontSize:'1.15rem',color:'#fff',fontFamily:'Poppins,sans-serif',fontWeight:800,lineHeight:1}}>
+                {answered}<span style={{fontSize:'.7rem',opacity:.45}}>/{total}</span>
+              </div>
+            </div>
+          </div>
+          <div className="cat-body max-sm:!px-4 max-sm:!py-5">
+            {/* Câu hỏi phụ của section (SC / MC / OE) */}
+            {support.map((q,i) => (
+              <SectionQuestionCard key={q.id} q={q} idx={i+1}
+                value={(sectionAns||{})[q.id]}
+                onChange={val => onSectionChange(q.id, val)}/>
+            ))}
+            {/* Câu cũ — trộn nhiều kiểu nhập theo từng câu; phần bù trong mục section để ngang (scale) */}
+            {oldQs.map((q,i) => (
+              <QuestionCard key={'old'+i} q={q} idx={support.length+i} akey={String(i+1)}
+                style={sectionStage ? 'scale' : styleForQuestion(catIdx, i, oldQs.length)}
+                answer={answers[String(i+1)]}
+                onAnswer={(qKey,val)=>onAnswer(qKey,val)}/>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    /* ── CAREER QUESTION CARD (SC / MC / OE) ── */
+    function SectionQuestionCard({ q, idx, isCore, value, onChange }) {
+      const col = isCore ? '#065F46' : ['#00C58E','#4ADE80','#059669','#34D399','#10B981'][idx % 5];
+      const numLabel  = isCore ? '★' : String(idx).padStart(2,'0');
+
+      /* ── SINGLE CHOICE — xếp NGANG ── */
+      const renderSC = () => {
+        const isOther = value && value.indexOf(E_PREFIX) === 0;
+        return (
+          <>
+            <div className="scale-row">
+              {q.options.map(opt => (
+                <button key={opt.value} type="button"
+                  className={'scale-pill'+(value===opt.value?' sel':'')}
+                  onClick={() => onChange(opt.value)}>
+                  <span className="scale-pill-lbl">{opt.value}</span>
+                  <span className="scale-pill-txt">{opt.text}</span>
+                </button>
+              ))}
+            </div>
+            {q.allow_other && (
+              <>
+                <button type="button" className={'scale-other'+(isOther?' sel':'')}
+                  onClick={() => onChange(E_PREFIX + (isOther ? value.slice(E_PREFIX.length) : ''))}>✎ Ý kiến khác</button>
+                {isOther && (
+                  <textarea className="opt-custom-inp" autoFocus placeholder="Nhập câu trả lời của bạn…"
+                    value={value.slice(E_PREFIX.length)}
+                    onChange={e => onChange(E_PREFIX + e.target.value)}/>
+                )}
+              </>
+            )}
+          </>
+        );
+      };
+
+      /* ── MULTIPLE CHOICE ── */
+      const renderMC = () => {
+        const v = value && value.sel ? value : { sel: [], other: '' };
+        const limit = q.max_select || null;
+        const used  = v.sel.length + (v.otherOn ? 1 : 0);
+        const full  = limit && used >= limit;
+        const toggle = (txt) => {
+          const has = v.sel.includes(txt);
+          if (!has && full) return;
+          const sel = has ? v.sel.filter(s => s !== txt) : [...v.sel, txt];
+          onChange({ ...v, sel });
+        };
+        return (
+          <>
+            {q.options.map(opt => {
+              const sel = v.sel.includes(opt);
+              return (
+                <OptionRow key={opt} multi text={opt} selected={sel}
+                  disabled={!sel && full} onSelect={() => toggle(opt)}/>
+              );
+            })}
+            {q.allow_other && (
+              <>
+                <OptionRow multi text="Khác…" selected={!!v.otherOn}
+                  disabled={!v.otherOn && full}
+                  onSelect={() => onChange({ ...v, otherOn: !v.otherOn, other: v.otherOn ? '' : v.other })}/>
+                {v.otherOn && (
+                  <textarea className="opt-custom-inp" autoFocus placeholder="Nhập lựa chọn của bạn…"
+                    value={v.other || ''}
+                    onChange={e => onChange({ ...v, other: e.target.value })}/>
+                )}
+              </>
+            )}
+          </>
+        );
+      };
+
+      /* ── OPEN ENDED ── */
+      const renderOE = () => (
+        <textarea className="opt-custom-inp" style={{minHeight:90}}
+          placeholder="Chia sẻ suy nghĩ của bạn…"
+          value={value || ''} onChange={e => onChange(e.target.value)}/>
+      );
+
+      return (
+        <div className={'career-q'+(isCore?' core-q-card':'')}
+          style={{marginBottom:22,background:'#FAFFFE',borderRadius:18,border:'1px solid #F0FAF5',overflow:'hidden'}}>
+          <div style={{padding:'14px 18px',display:'flex',alignItems:'flex-start',gap:12}}>
+            <div className="q-num" style={{background:col}}>{numLabel}</div>
+            <div style={{flex:1}}>
+              <p className="q-txt">{q.question_text}</p>
+              {q.type==='MC' && q.max_select && <div className="q-hint">Chọn tối đa {q.max_select} đáp án</div>}
+            </div>
+          </div>
+          <div style={{padding:'0 18px 18px',display:'flex',flexDirection:'column',gap:8}}>
+            {q.type === 'SC' && renderSC()}
+            {q.type === 'MC' && renderMC()}
+            {q.type === 'OE' && renderOE()}
+          </div>
+        </div>
+      );
+    }
+
+    /* ── EMPTY STATE ── */
+    function EmptyState({ type='program' }) {
+      const isInfo = type === 'info';
+      return (
+        <div className="empty-state">
+          <svg width="110" height="110" viewBox="0 0 110 110" fill="none" style={{marginBottom:18,filter:'drop-shadow(0 8px 24px rgba(0,197,142,.13))'}}>
+            <circle cx="55" cy="55" r="50" fill="#F0FDF9" stroke="#C7EDD8" strokeWidth="1.5"/>
+            {isInfo ? (
+              <>
+                <circle cx="55" cy="42" r="13" stroke="#00C58E" strokeWidth="2" fill="#DCFCE7"/>
+                <path d="M30 78c0-13.8 11.2-25 25-25s25 11.2 25 25" stroke="#00C58E" strokeWidth="2" strokeLinecap="round" fill="none"/>
+                <path d="M49 42l3 3 7-7" stroke="#00C58E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </>
+            ) : (
+              <>
+                <rect x="28" y="52" width="54" height="9" rx="4" fill="#00C58E" opacity=".25"/>
+                <rect x="32" y="41" width="46" height="13" rx="4" fill="#00C58E" opacity=".45"/>
+                <rect x="36" y="28" width="38" height="15" rx="5" fill="#00C58E" opacity=".8"/>
+                <rect x="41" y="31" width="2.5" height="9" rx="1.2" fill="white" opacity=".55"/>
+                <rect x="47" y="31" width="18" height="2" rx="1" fill="white" opacity=".35"/>
+                <rect x="47" y="35" width="12" height="2" rx="1" fill="white" opacity=".25"/>
+                <path d="M55 61 L42 68 L55 75 L68 68 Z" fill="#065F46" opacity=".6"/>
+                <line x1="42" y1="68" x2="42" y2="77" stroke="#065F46" strokeWidth="1.8" strokeLinecap="round" opacity=".5"/>
+                <circle cx="42" cy="79" r="2.5" fill="#00C58E" opacity=".55"/>
+              </>
+            )}
+            <circle cx="24" cy="36" r="3" fill="#4ADE80" opacity=".55"/>
+            <circle cx="86" cy="46" r="2.5" fill="#00C58E" opacity=".45"/>
+            <circle cx="80" cy="30" r="2" fill="#34D399" opacity=".35"/>
+          </svg>
+          <h3 style={{fontFamily:"'Be Vietnam Pro',sans-serif",fontWeight:700,fontSize:'1.1rem',color:'#0F172A',marginBottom:8}}>
+            {isInfo ? 'Điền thông tin cá nhân trước' : 'Chọn Chương trình & Học kỳ'}
+          </h3>
+          <p style={{fontSize:'.86rem',color:'#94A3B8',lineHeight:1.75,maxWidth:340,margin:'0 auto'}}>
+            {isInfo
+              ? 'Hãy hoàn thành đầy đủ thông tin cá nhân ở bước trên để tải bài đánh giá phù hợp.'
+              : 'Chọn chương trình học và học kỳ hiện tại để tải bài đánh giá phù hợp với giai đoạn của bạn.'}
+          </p>
+        </div>
+      );
+    }
+
+    /* ── SIDEBAR ── */
+    function Sidebar({ stageData, pct, info }) {
+      const tips = [
+        { icon:'💡', title:'Trả lời trung thực', body:'Không có đáp án đúng hay sai — hãy chọn câu phản ánh đúng nhất trải nghiệm của bạn.' },
+        { icon:'⏱️', title:'Khoảng 10 phút', body:'Hoàn thành từng phần một. Kết quả sẽ giúp cố vấn hỗ trợ bạn tốt hơn.' },
+        { icon:'📊', title:'Kết quả cá nhân hóa', body:'Dữ liệu chỉ được dùng nội bộ để hỗ trợ học tập, không chia sẻ bên ngoài.' },
+      ];
+      const hasInfo = info.fullName || info.email;
+      return (
+        <aside className="sidebar" style={{position:'sticky',top:88}}>
+          {stageData && (
+            <div className="sidebar-card">
+              <div className="sidebar-title"><span>📍</span> Giai đoạn hiện tại</div>
+              <div style={{background:'linear-gradient(135deg,#F0FDF9,#DCFCE7)',borderRadius:12,padding:'11px 14px',marginBottom:10}}>
+                <div style={{fontSize:'.63rem',fontWeight:700,color:'#059669',letterSpacing:'.12em',textTransform:'uppercase',fontFamily:'Poppins,sans-serif'}}>Stage {stageData.stage}</div>
+                <div style={{fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:'.86rem',color:'#065F46',marginTop:2}}>{stageData.stage_name}</div>
+              </div>
+              <p className="sidebar-txt">{stageData.stage_description}</p>
+            </div>
+          )}
+
+          {hasInfo && (
+            <div className="sidebar-card">
+              <div className="sidebar-title"><span>👤</span> Sinh viên</div>
+              <div>
+                {[['Họ tên',info.fullName],['Email',info.email],['Năm học',info.yearLevel],['Chương trình',info.programDuration],['Học kỳ',info.semester]]
+                  .filter(([,v])=>v)
+                  .map(([k,v]) => (
+                    <div key={k} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'5px 0',borderBottom:'1px solid #F1F5F9'}}>
+                      <span style={{fontSize:'.7rem',fontWeight:600,color:'#94A3B8',fontFamily:'Poppins,sans-serif',flexShrink:0}}>{k}</span>
+                      <span style={{fontSize:'.73rem',fontWeight:600,color:'#374151',fontFamily:'Inter,sans-serif',textAlign:'right',maxWidth:'58%',overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',marginLeft:8}}>{v}</span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          )}
+
+          {tips.map((t,i) => (
+            <div key={i} className="sidebar-card">
+              <div className="sidebar-title"><span style={{fontSize:'.95rem'}}>{t.icon}</span> {t.title}</div>
+              <p className="sidebar-txt">{t.body}</p>
+            </div>
+          ))}
+        </aside>
+      );
+    }
+
+    /* ── THANK YOU MODAL ── */
+    function ThankYouModal({ info, stageData, onReset }) {
+      return (
+        <div className="modal-ov">
+          <div className="modal-card max-sm:!p-7 max-sm:!rounded-3xl">
+            <div style={{width:72,height:72,borderRadius:'50%',background:'linear-gradient(135deg,#00C58E,#4ADE80)',
+              margin:'0 auto 18px',display:'flex',alignItems:'center',justifyContent:'center',
+              boxShadow:'0 12px 36px rgba(0,197,142,.35)',animation:'float 3s ease-in-out infinite'}}>
+              <Icon.Check size={32} style={{color:'white',strokeWidth:3}}/>
+            </div>
+            <div style={{display:'inline-flex',alignItems:'center',gap:6,background:'#F0FDF9',border:'1px solid #C7EDD8',
+              borderRadius:999,padding:'5px 14px',marginBottom:14}}>
+              <div style={{width:6,height:6,borderRadius:'50%',background:'#00C58E'}}/>
+              <span style={{fontSize:'.78rem',fontWeight:700,color:'#059669',letterSpacing:'.02em',fontFamily:"'Be Vietnam Pro',sans-serif"}}>Đã gửi thành công</span>
+            </div>
+            <h2 style={{fontFamily:"'Be Vietnam Pro',sans-serif",fontWeight:800,fontSize:'1.5rem',color:'#0F172A',marginBottom:8,lineHeight:1.25}}>
+              Cảm ơn, {(info.fullName||'bạn').split(' ').pop()}! 🎉
+            </h2>
+            <p style={{fontSize:'.87rem',color:'#64748B',lineHeight:1.75,marginBottom:22}}>
+              Bài đánh giá <strong style={{color:'#065F46'}}>Stage {stageData && stageData.stage}</strong> — <em>{stageData && stageData.stage_name}</em> đã được ghi nhận.
+            </p>
+            <div style={{background:'linear-gradient(135deg,#F0FDF9,#DCFCE7)',borderRadius:14,padding:'14px 18px',marginBottom:22,textAlign:'left'}}>
+              {[['👤 Học sinh',info.fullName],['📧 Email',info.email],
+                ['🎓 Giai đoạn',stageData ? ('Stage '+stageData.stage+' – '+stageData.stage_name) : '—']]
+                .map(([k,v]) => (
+                  <div key={k} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'5px 0',borderBottom:'1px solid rgba(0,197,142,.1)',fontSize:'.79rem'}}>
+                    <span style={{color:'#64748B',fontWeight:500}}>{k}</span>
+                    <span style={{color:'#065F46',fontWeight:600,fontFamily:'Poppins,sans-serif',maxWidth:'58%',textAlign:'right'}}>{v}</span>
+                  </div>
+                ))}
+            </div>
+            <button className="cta-btn" style={{width:'100%'}} onClick={onReset}>
+              <Icon.RotateCcw size={15}/> Làm lại từ đầu
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    /* ── HERO ── */
+    function Hero({ pct, answered, total, stageData }) {
+      const badge = stageData ? `STAGE 0${stageData.stage}` : 'STAGE —';
+      const sub   = stageData ? stageData.stage_name : 'Chọn chương trình & học kỳ';
+      return (
+        <div className="hero-wrap max-sm:!pt-8 max-sm:!pb-5">
+          {/* Floating decorations */}
+          <div className="hero-float max-md:hidden" style={{left:'3%',top:'12%',animation:'float 6s ease-in-out infinite'}}>
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+              <rect width="50" height="50" rx="14" fill="#F0FDF9" stroke="#C7EDD8" strokeWidth="1.2"/>
+              <path d="M10 36h30M18 18h14M22 12h6M14 27h22M18 36V27M25 36V12M32 36V27" stroke="#00C58E" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </div>
+          <div className="hero-float max-md:hidden" style={{right:'4%',top:'8%',animation:'floatR 7s ease-in-out infinite'}}>
+            <svg width="46" height="46" viewBox="0 0 46 46" fill="none">
+              <circle cx="23" cy="23" r="23" fill="#FEF9E7"/>
+              <path d="M23 10l2.5 7H33l-5.9 4.3 2.3 7L23 24l-6.4 4.3 2.3-7L13 17h7.5z" fill="#F59E0B" opacity=".75"/>
+            </svg>
+          </div>
+          <div className="hero-float max-md:hidden" style={{left:'8%',bottom:'8%',animation:'floatSpin 9s ease-in-out infinite'}}>
+            <svg width="38" height="38" viewBox="0 0 38 38" fill="none">
+              <rect width="38" height="38" rx="11" fill="#EEF2FF" stroke="#C7D2FE" strokeWidth="1"/>
+              <path d="M19 8v22M8 19h22" stroke="#6366F1" strokeWidth="2.5" strokeLinecap="round"/>
+            </svg>
+          </div>
+          <div className="hero-float max-md:hidden" style={{right:'7%',bottom:'12%',animation:'float 5s ease-in-out infinite',animationDelay:'-2s'}}>
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <rect width="40" height="40" rx="11" fill="#FFF0F3" stroke="#FECDD3" strokeWidth="1"/>
+              <circle cx="20" cy="18" r="7" stroke="#F43F5E" strokeWidth="1.8" fill="none"/>
+              <path d="M20 25v6M16 31h8" stroke="#F43F5E" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+          </div>
+
+          <div className="hero-stage-badge">
+            <div className="hero-badge-dot"/>
+            <span className="hero-badge-text">{badge} &nbsp;·&nbsp; {sub}</span>
+          </div>
+
+          <h1 className="hero-title">Student<br/>Assessment</h1>
+          <p className="hero-sub">Đánh giá sinh viên · EduAssess Platform</p>
+
+          <div className="badge-row">
+            {[['🪞','Reflect','#EEF2FF','#6366F1'],['📊','Evaluate','#FFF7ED','#F97316'],['🚀','Improve','#F0FDF9','#059669']].map(([ico,lbl,bg,col])=>(
+              <span key={lbl} className="badge-chip" style={{background:bg,color:col}}>
+                {ico} {lbl}
+              </span>
+            ))}
+          </div>
+
+          {total > 0 && <ProgressRing pct={pct} answered={answered} total={total}/>}
+        </div>
+      );
+    }
+
+    /* ── APP ── */
+    function App() {
+      const [info, setInfo] = React.useState({ fullName:'', email:'', yearLevel:'', programDuration:'', semester:'' });
+      const [answers, setAnswers] = React.useState({});
+      const [section, setSection] = React.useState({});   /* đáp án các mục section (CR, MO), khoá theo id câu hỏi */
+      const [submitted, setSubmitted] = React.useState(false);
+      const [submitting, setSubmitting] = React.useState(false);
+      const [submitError, setSubmitError] = React.useState('');
+
+      const setField = k => v => setInfo(p => ({...p, [k]: v}));
+
+      const semester     = parseSemester(info.semester);
+      const programYears = parseProgramYears(info.programDuration);
+      const stageId      = getStageId(semester, programYears);
+      const currentStageData = React.useMemo(() => STAGES.find(s => s.stage === stageId) || null, [stageId]);
+
+      /* mục nào dùng bộ câu hỏi section riêng (CR/MO) */
+      const sectionOf = cat => sectionStageFor(cat.category_id.split('_').pop(), stageId);
+
+      const totalCount = React.useMemo(() => {
+        if (!currentStageData) return 0;
+        return currentStageData.categories.reduce((s,cat) => {
+          const { support, oldQs } = sectionParts(sectionOf(cat), cat);
+          return s + support.length + oldQs.length;
+        }, 0);
+      }, [currentStageData, stageId]);
+
+      const answeredCount = React.useMemo(() => {
+        if (!currentStageData) return 0;
+        return currentStageData.categories.reduce((sum,cat,ci) => {
+          const { support, oldQs } = sectionParts(sectionOf(cat), cat);
+          const supDone = support.filter(q => isSectionAnswered(q, section[q.id])).length;
+          const oldDone = oldQs.filter((_,qi) => isAnswered(answers[`${ci}_${qi+1}`])).length;
+          return sum + supDone + oldDone;
+        }, 0);
+      }, [answers, section, currentStageData, stageId]);
+
+      const pct = totalCount > 0 ? Math.round((answeredCount / totalCount) * 100) : 0;
+
+      const handleAnswer = (catIdx, qKey, val) => {
+        setAnswers(prev => ({...prev, [`${catIdx}_${qKey}`]: val}));
+      };
+      const handleSectionChange = (id, val) => {
+        setSection(prev => ({...prev, [id]: val}));
+      };
+
+      const handleSubmit = async () => {
+        if (pct < 100 || !currentStageData || submitting) return;
+        // Email sinh viên là bắt buộc + phải đúng định dạng (dùng để gửi báo cáo).
+        if (!info.fullName || !info.email || !info.yearLevel || !info.programDuration || !info.semester) {
+          setSubmitError('Vui lòng điền đầy đủ thông tin cá nhân, bắt buộc có Email.');
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(info.email.trim())) {
+          setSubmitError('Email không hợp lệ, vui lòng kiểm tra lại.');
+          return;
+        }
+        setSubmitting(true);
+        setSubmitError('');
+        const _now = new Date();
+        const timestamp = `${_now.getDate().toString().padStart(2,'0')}/${(_now.getMonth()+1).toString().padStart(2,'0')}/${_now.getFullYear()} ${_now.getHours().toString().padStart(2,'0')}:${_now.getMinutes().toString().padStart(2,'0')}:${_now.getSeconds().toString().padStart(2,'0')}`;
+        const rows = currentStageData.categories.map((cat, ci) => {
+          /* 5 đáp án theo đúng thứ tự hiển thị: câu phụ section trước, rồi câu cũ bù vào */
+          const { support, oldQs } = sectionParts(sectionOf(cat), cat);
+          const vals = [
+            ...support.map(q => sectionExport(q, section[q.id])),
+            ...oldQs.map((_,qi) => answerForExport(answers[`${ci}_${qi+1}`])),
+          ];
+          return {
+            Timestamp: timestamp,
+            'Full Name': info.fullName,
+            Email: info.email,
+            'Year Level': info.yearLevel,
+            'Program Duration': info.programDuration,
+            Semester: info.semester,
+            Stage: currentStageData.stage,
+            'Stage Name': currentStageData.stage_name,
+            'Category ID': cat.category_id,
+            'Category Title': cat.category_title,
+            Q1: vals[0]||'', Q2: vals[1]||'', Q3: vals[2]||'',
+            Q4: vals[3]||'', Q5: vals[4]||'',
+          };
+        });
+        // Sinh viên đã hoàn thành khảo sát -> hiển thị lời cảm ơn NGAY,
+        // sau đó mới xử lý phía backend (lưu Google Sheet + sinh báo cáo & gửi email).
+        setSubmitted(true);
+        setSubmitting(false);
+
+        (async () => {
+          try {
+            // 1) Ghi câu trả lời vào Google Sheet.
+            const res = await fetch(SCRIPT_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({ data: rows }),
+            });
+            if (!res.ok) { const t = await res.text(); throw new Error(`${res.status}: ${t}`); }
+
+            // 2) Gọi backend (qua proxy same-origin) để sinh báo cáo PDF và gửi email cho sinh viên.
+            const mailRes = await fetch('/api/send-report', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: info.email.trim() }),
+            });
+            const mailData = await mailRes.json().catch(() => ({}));
+            if (!mailRes.ok || mailData.error) {
+              throw new Error('Đã lưu khảo sát nhưng gửi báo cáo lỗi: ' + (mailData.error || ('HTTP ' + mailRes.status)));
+            }
+          } catch (err) {
+            // Lỗi backend chỉ ghi log, không chặn lời cảm ơn đã hiển thị cho sinh viên.
+            console.error('Submit error:', err);
+          }
+        })();
+      };
+
+      const handleReset = () => {
+        setInfo({ fullName:'', email:'', yearLevel:'', programDuration:'', semester:'' });
+        setAnswers({});
+        setSection({});
+        setSubmitted(false);
+        setSubmitError('');
+      };
+
+      const infoComplete = info.fullName && info.email && info.yearLevel && info.programDuration && info.semester;
+      const navStep = submitted ? 3 : currentStageData && infoComplete ? 2 : infoComplete ? 1 : 0;
+
+      const YEAR_OPTS = ['Sinh viên năm 1','Sinh viên năm 2','Sinh viên năm 3','Sinh viên năm 4'];
+      const PROG_OPTS = ['3 năm','4 năm'];
+      const semCount  = info.programDuration === '3 năm' ? 6 : 8;
+      const SEM_OPTS  = Array.from({length: semCount}, (_,i) => `Học kỳ ${i+1}`);
+
+      return (
+        <div style={{minHeight:'100dvh',position:'relative',zIndex:1}}>
+          <Background/>
+          <NavBar step={navStep} fullName={info.fullName}/>
+
+          {submitted && <ThankYouModal info={info} stageData={currentStageData} onReset={handleReset}/>}
+
+          <Hero pct={pct} answered={answeredCount} total={totalCount} stageData={currentStageData}/>
+
+          <div className="main-wrap">
+            {/* Left column */}
+            <div>
+              {/* ── Student Info Card ── */}
+              <div className="glass-card">
+                <div className="card-hdr max-sm:!px-4">
+                  <div className="card-hdr-icon">
+                    <Icon.User size={18} style={{color:'white'}}/>
+                  </div>
+                  <div>
+                    <div className="card-hdr-step">BƯỚC 01</div>
+                    <div className="card-hdr-title">Thông tin cá nhân</div>
+                  </div>
+                </div>
+                <div className="card-body max-sm:!px-4 max-sm:!py-5">
+                  <div className="info-grid">
+                    <div className="info-span2">
+                      <FieldInput label="Họ và tên" icon={<Icon.User size={15}/>}
+                        placeholder="Nhập họ và tên đầy đủ"
+                        value={info.fullName} onChange={setField('fullName')}/>
+                    </div>
+                    <div className="info-span2">
+                      <FieldInput label="Địa chỉ Email" icon={<Icon.Mail size={15}/>}
+                        placeholder="example@university.edu.vn" type="email"
+                        value={info.email} onChange={setField('email')}/>
+                    </div>
+                    <FieldSelect label="Năm học" icon={<Icon.GradCap size={15}/>}
+                      placeholder="Chọn năm học" options={YEAR_OPTS}
+                      value={info.yearLevel} onChange={setField('yearLevel')}/>
+                    <FieldSelect label="Thời hạn chương trình" icon={<Icon.Calendar size={15}/>}
+                      placeholder="Chọn thời hạn" options={PROG_OPTS}
+                      value={info.programDuration} onChange={setField('programDuration')}/>
+                    <div className="info-span2">
+                      <FieldSelect label="Học kỳ hiện tại" icon={<Icon.BookOpen size={15}/>}
+                        placeholder="Chọn học kỳ" options={SEM_OPTS}
+                        value={info.semester} onChange={setField('semester')}
+                        disabled={!info.programDuration}/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ── Questions / Empty state ── */}
+              <div className="glass-card">
+                <div className="card-hdr max-sm:!px-4">
+                  <div className="card-hdr-icon">
+                    <Icon.BookOpen size={18} style={{color:'white'}}/>
+                  </div>
+                  <div>
+                    <div className="card-hdr-step">
+                      BƯỚC 02{currentStageData ? ` · STAGE ${currentStageData.stage}` : ''}
+                    </div>
+                    <div className="card-hdr-title">
+                      {currentStageData ? currentStageData.stage_name : 'Bài đánh giá'}
+                    </div>
+                  </div>
+                </div>
+                <div className="card-body max-sm:!px-4 max-sm:!py-5">
+                  {!infoComplete && <EmptyState type="info"/>}
+
+                  {infoComplete && !currentStageData && <EmptyState type="program"/>}
+
+                  {currentStageData && (
+                    <div>
+                      {/* Progress bar */}
+                      <div style={{marginBottom:28}}>
+                        <div style={{display:'flex',justifyContent:'space-between',marginBottom:8,alignItems:'center'}}>
+                          <span style={{fontSize:'.68rem',fontWeight:700,color:'#94A3B8',fontFamily:'Poppins,sans-serif',letterSpacing:'.12em',textTransform:'uppercase'}}>Tiến độ trả lời</span>
+                          <span style={{fontFamily:'Poppins,sans-serif',fontWeight:700,fontSize:'.8rem',color:'#00C58E'}}>{answeredCount} / {totalCount} câu</span>
+                        </div>
+                        <div className="prog-bar-bg">
+                          <div className="prog-bar-fill" style={{width:pct+'%'}}/>
+                        </div>
+                      </div>
+
+                      {currentStageData.categories.map((cat,ci) => (
+                        <CategoryCard key={cat.category_id} cat={cat} catIdx={ci}
+                          answers={Object.fromEntries(
+                            cat.questions.map((_,qi) => [String(qi+1), answers[`${ci}_${qi+1}`] || ''])
+                          )}
+                          onAnswer={(qKey,val) => handleAnswer(ci, qKey, val)}
+                          sectionStage={sectionOf(cat)}
+                          sectionAns={section}
+                          onSectionChange={handleSectionChange}
+                        />
+                      ))}
+
+                      <div className="cta-wrap">
+                        <button className="cta-btn max-sm:!w-full max-sm:!min-w-0 max-sm:!px-6" onClick={handleSubmit}
+                          disabled={pct < 100 || submitting || !infoComplete}>
+                          {submitting ? (
+                            <>
+                              <div style={{width:15,height:15,border:'2.5px solid rgba(255,255,255,.3)',borderTopColor:'#fff',borderRadius:'50%',animation:'spin .7s linear infinite',flexShrink:0}}/>
+                              Đang tạo báo cáo & gửi email...
+                            </>
+                          ) : !infoComplete ? (
+                            <><Icon.User size={15}/> Điền đủ thông tin cá nhân (bắt buộc có Email)</>
+                          ) : pct < 100 ? (
+                            <><Icon.BookOpen size={15}/> Hoàn thành tất cả câu hỏi ({totalCount - answeredCount} còn lại)</>
+                          ) : (
+                            <><Icon.Send size={15}/> Nộp bài đánh giá <Icon.ArrowRight size={15}/></>
+                          )}
+                        </button>
+                        {submitError && (
+                          <div style={{background:'#FFF1F2',border:'1px solid #FECDD3',borderRadius:12,padding:'11px 16px',fontSize:'.82rem',color:'#BE123C',fontFamily:'Poppins,sans-serif',textAlign:'center',maxWidth:400}}>
+                            {submitError}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar */}
+            <Sidebar stageData={currentStageData} pct={pct} info={info}/>
+          </div>
+
+          <footer style={{textAlign:'center',padding:'20px 16px 36px',paddingBottom:'max(36px, env(safe-area-inset-bottom))',borderTop:'1px solid rgba(0,197,142,.07)',position:'relative',zIndex:1}}>
+            <p style={{fontSize:'.74rem',color:'#CBD5E1',fontFamily:'Poppins,sans-serif',fontWeight:500}}>
+              EduAssess Platform · © 2025 · Đánh giá sinh viên chuyên nghiệp
+            </p>
+          </footer>
+
+          <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>

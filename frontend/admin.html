@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin · EduAssess</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;background:#F7FFFC;color:#0F172A;min-height:100vh}
+    a{color:inherit}
+    .brand{font-weight:800;letter-spacing:-.02em}
+    .brand span{color:#00C58E}
+
+    /* ---- top bar ---- */
+    .topbar{position:sticky;top:0;z-index:20;height:64px;display:flex;align-items:center;gap:14px;
+      padding:0 clamp(16px,4vw,48px);background:rgba(255,255,255,.9);backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(0,197,142,.12)}
+    .logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#00C58E,#009E72);
+      display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;box-shadow:0 4px 12px rgba(0,197,142,.35)}
+    .topbar .who{margin-left:auto;font-size:.85rem;color:#64748B}
+    .btn{border:0;cursor:pointer;font-weight:700;border-radius:10px;font-family:inherit;transition:.15s}
+    .btn-primary{background:linear-gradient(135deg,#00C58E,#009E72);color:#fff;padding:11px 22px;box-shadow:0 6px 16px rgba(0,197,142,.32)}
+    .btn-primary:hover{filter:brightness(1.05)}
+    .btn-primary:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+    .btn-ghost{background:#fff;color:#0F172A;border:1px solid #E2E8F0;padding:9px 16px;font-size:.85rem}
+    .btn-ghost:hover{border-color:#00C58E;color:#059669}
+
+    /* ---- login ---- */
+    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .login-card{width:100%;max-width:380px;background:#fff;border-radius:20px;padding:36px 32px;
+      box-shadow:0 20px 50px rgba(15,23,42,.1);border:1px solid rgba(0,197,142,.1)}
+    .login-card h1{font-size:1.4rem;font-weight:800;letter-spacing:-.02em}
+    .login-card p{color:#64748B;font-size:.88rem;margin:6px 0 24px}
+    .field{margin-bottom:16px}
+    .field label{display:block;font-size:.8rem;font-weight:700;color:#475569;margin-bottom:7px}
+    .field input{width:100%;padding:12px 14px;border:1.5px solid #E2E8F0;border-radius:11px;font-size:.95rem;font-family:inherit;transition:.15s}
+    .field input:focus{outline:0;border-color:#00C58E;box-shadow:0 0 0 4px rgba(0,197,142,.12)}
+    .err{background:#FEF2F2;color:#B91C1C;border:1px solid #FECACA;border-radius:10px;padding:10px 12px;font-size:.83rem;margin-bottom:16px;display:none}
+    .err.show{display:block}
+
+    /* ---- main ---- */
+    .main{max-width:980px;margin:0 auto;padding:clamp(20px,4vw,40px)}
+    .page-head h1{font-size:1.6rem;font-weight:800;letter-spacing:-.02em}
+    .page-head p{color:#64748B;font-size:.9rem;margin-top:6px}
+    .stage-card{background:#fff;border-radius:18px;border:1px solid rgba(0,197,142,.12);
+      box-shadow:0 8px 24px rgba(15,23,42,.05);padding:22px 24px;margin-top:22px}
+    .stage-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+    .stage-badge{width:38px;height:38px;border-radius:11px;background:#DCFCE7;color:#059669;
+      display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+    .stage-name{font-weight:700;font-size:1.02rem}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:620px){.grid{grid-template-columns:1fr 1fr}}
+    .dim{display:flex;align-items:center;gap:10px;background:#F8FAFC;border:1px solid #EEF2F6;border-radius:12px;padding:10px 12px}
+    .dim .lbl{flex:1;min-width:0}
+    .dim .lbl b{font-size:.86rem;display:block}
+    .dim .lbl small{color:#94A3B8;font-size:.72rem}
+    .dim select{border:1.5px solid #E2E8F0;border-radius:9px;padding:8px 6px;font-family:inherit;font-weight:700;color:#475569;background:#fff}
+    .dim input{width:74px;border:1.5px solid #E2E8F0;border-radius:9px;padding:8px 10px;font-family:inherit;font-weight:700;text-align:center}
+    .dim select:focus,.dim input:focus{outline:0;border-color:#00C58E;box-shadow:0 0 0 3px rgba(0,197,142,.12)}
+
+    .savebar{position:sticky;bottom:0;margin-top:26px;background:rgba(255,255,255,.92);backdrop-filter:blur(16px);
+      border-top:1px solid rgba(0,197,142,.12);padding:14px clamp(16px,4vw,40px);display:flex;align-items:center;gap:14px}
+    .savebar .status{font-size:.85rem;color:#64748B}
+    .savebar .status.ok{color:#059669;font-weight:700}
+    .savebar .status.bad{color:#B91C1C;font-weight:700}
+    .savebar .spacer{flex:1}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+
+  <!-- ===================== LOGIN ===================== -->
+  <div id="loginView" class="login-wrap">
+    <form class="login-card" id="loginForm">
+      <div class="logo-icon" style="margin-bottom:16px">E</div>
+      <h1 class="brand">Edu<span>Assess</span> Admin</h1>
+      <p>Đăng nhập để chỉnh ngưỡng chuẩn (goal) cho từng giai đoạn.</p>
+      <div class="err" id="loginErr"></div>
+      <div class="field">
+        <label for="u">Tài khoản</label>
+        <input id="u" autocomplete="username" placeholder="admin" required />
+      </div>
+      <div class="field">
+        <label for="p">Mật khẩu</label>
+        <input id="p" type="password" autocomplete="current-password" placeholder="••••••" required />
+      </div>
+      <button class="btn btn-primary" style="width:100%" type="submit">Đăng nhập</button>
+    </form>
+  </div>
+
+  <!-- ===================== ADMIN ===================== -->
+  <div id="adminView" class="hidden">
+    <div class="topbar">
+      <div class="logo-icon">E</div>
+      <div class="brand">Edu<span>Assess</span> · Admin</div>
+      <div class="who">Xin chào, <b id="whoName">admin</b> · <a href="#" id="logoutLink" style="color:#00C58E;font-weight:700;text-decoration:none">Đăng xuất</a></div>
+    </div>
+
+    <div class="main">
+      <div class="page-head">
+        <h1>Ngưỡng chuẩn theo giai đoạn</h1>
+        <p>Mỗi giai đoạn có 5 năng lực. Đặt phép so sánh + giá trị ngưỡng (thang điểm 0–4). Ví dụ: <b>≥ 3.0</b>.</p>
+      </div>
+      <div id="stages"></div>
+    </div>
+
+    <div class="savebar">
+      <span class="status" id="status">Sẵn sàng.</span>
+      <span class="spacer"></span>
+      <button class="btn btn-ghost" id="reloadBtn" type="button">Tải lại</button>
+      <button class="btn btn-primary" id="saveBtn" type="button">Lưu thay đổi</button>
+    </div>
+  </div>
+
+<script>
+// Backend API. Khi admin.html chạy trên frontend (port 8080) còn API ở port 8000,
+// dùng absolute URL tới backend. Cùng host khác port -> override qua window.API_BASE nếu cần.
+const API_BASE = window.API_BASE || `${location.protocol}//${location.hostname}:8000`;
+const OPS = [">=", ">", "<=", "<", "=="];
+let DATA = null;       // {dimensions, stages}
+let authHeader = "";   // "Basic ...."
+
+const $ = (id) => document.getElementById(id);
+
+function parseThreshold(t){
+  const m = String(t || "").match(/^\s*(>=|>|<=|<|==)?\s*([\d.]+)/);
+  return { op: (m && m[1]) || ">=", val: (m && m[2]) || "" };
+}
+
+// ---------- login ----------
+$("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const user = $("u").value.trim();
+  const pass = $("p").value;
+  const header = "Basic " + btoa(user + ":" + pass);
+  const errBox = $("loginErr");
+  errBox.classList.remove("show");
+
+  try {
+    const r = await fetch(API_BASE + "/admin/goals", { headers: { Authorization: header } });
+    if (r.status === 401) { errBox.textContent = "Sai tài khoản hoặc mật khẩu."; errBox.classList.add("show"); return; }
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    authHeader = header;
+    sessionStorage.setItem("eduadmin_auth", header);
+    sessionStorage.setItem("eduadmin_user", user);
+    DATA = await r.json();
+    enterAdmin(user);
+  } catch (err) {
+    errBox.textContent = "Không kết nối được server: " + err.message;
+    errBox.classList.add("show");
+  }
+});
+
+function enterAdmin(user){
+  $("whoName").textContent = user;
+  $("loginView").classList.add("hidden");
+  $("adminView").classList.remove("hidden");
+  renderStages();
+}
+
+$("logoutLink").addEventListener("click", (e) => {
+  e.preventDefault();
+  sessionStorage.removeItem("eduadmin_auth");
+  sessionStorage.removeItem("eduadmin_user");
+  authHeader = ""; DATA = null;
+  $("adminView").classList.add("hidden");
+  $("loginView").classList.remove("hidden");
+  $("p").value = "";
+});
+
+// ---------- render ----------
+function renderStages(){
+  const root = $("stages");
+  root.innerHTML = "";
+  DATA.stages.forEach((st) => {
+    const card = document.createElement("div");
+    card.className = "stage-card";
+    card.dataset.stage = st.stage;
+
+    const rows = DATA.dimensions.map((d) => {
+      const cur = parseThreshold(st.thresholds[d.key]);
+      const opts = OPS.map(o => `<option value="${o}" ${o===cur.op?"selected":""}>${o}</option>`).join("");
+      return `
+        <div class="dim" data-key="${d.key}">
+          <div class="lbl"><b>${d.label}</b><small>${d.vi}</small></div>
+          <select class="op">${opts}</select>
+          <input class="val" type="number" step="0.1" min="0" max="4" value="${cur.val}" />
+        </div>`;
+    }).join("");
+
+    card.innerHTML = `
+      <div class="stage-head">
+        <div class="stage-badge">${st.stage}</div>
+        <div class="stage-name">${st.stage_name}</div>
+      </div>
+      <div class="grid">${rows}</div>`;
+    root.appendChild(card);
+  });
+}
+
+function collect(){
+  const stages = [];
+  document.querySelectorAll(".stage-card").forEach((card) => {
+    const thresholds = {};
+    card.querySelectorAll(".dim").forEach((dim) => {
+      const op = dim.querySelector(".op").value;
+      const val = dim.querySelector(".val").value.trim();
+      if (val !== "") thresholds[dim.dataset.key] = op + val;
+    });
+    stages.push({ stage: Number(card.dataset.stage), thresholds });
+  });
+  return { stages };
+}
+
+// ---------- save / reload ----------
+function setStatus(msg, kind){
+  const el = $("status");
+  el.textContent = msg;
+  el.className = "status" + (kind ? " " + kind : "");
+}
+
+$("saveBtn").addEventListener("click", async () => {
+  $("saveBtn").disabled = true;
+  setStatus("Đang lưu...");
+  try {
+    const r = await fetch(API_BASE + "/admin/goals", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json", Authorization: authHeader },
+      body: JSON.stringify(collect()),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error(j.detail || ("HTTP " + r.status));
+    setStatus("Đã lưu ✓ (stage: " + (j.updated_stages || []).join(", ") + ")", "ok");
+  } catch (err) {
+    setStatus("Lỗi lưu: " + err.message, "bad");
+  } finally {
+    $("saveBtn").disabled = false;
+  }
+});
+
+$("reloadBtn").addEventListener("click", async () => {
+  setStatus("Đang tải lại...");
+  try {
+    const r = await fetch(API_BASE + "/admin/goals", { headers: { Authorization: authHeader } });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    DATA = await r.json();
+    renderStages();
+    setStatus("Đã tải lại.", "ok");
+  } catch (err) {
+    setStatus("Lỗi: " + err.message, "bad");
+  }
+});
+
+// ---------- auto-login từ session ----------
+(async function init(){
+  const saved = sessionStorage.getItem("eduadmin_auth");
+  if (!saved) return;
+  try {
+    const r = await fetch(API_BASE + "/admin/goals", { headers: { Authorization: saved } });
+    if (!r.ok) { sessionStorage.removeItem("eduadmin_auth"); return; }
+    authHeader = saved;
+    DATA = await r.json();
+    enterAdmin(sessionStorage.getItem("eduadmin_user") || "admin");
+  } catch (_) { /* ở lại màn login */ }
+})();
+</script>
+</body>
+</html>
